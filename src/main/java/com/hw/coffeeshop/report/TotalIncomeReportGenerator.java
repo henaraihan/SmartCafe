@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.hw.coffeeshop.utils.CsvReportGenerator;
 import com.hw.coffeeshop.utils.ExistingOrderOperations;
 import com.hw.coffeeshop.utils.MenuFileOperations;
 
@@ -75,15 +76,16 @@ public class TotalIncomeReportGenerator {
 			totalWithoutDiscount=totalWithoutDiscount+totalIncomePerItem;
 			
 		}
-		
 		System.out.println("                                                    	                      Total without Discount= "+totalWithoutDiscount);
-		
 		System.out.println("----------------------------------------------------------------------------------------------------------------------");
 		System.out.println("                                                    	                      Total Discount= TBD");
-		
 		System.out.println("----------------------------------------------------------------------------------------------------------------------");
-		
 		System.out.println("                                                    	                      Total with Discount= TBD");
+		
+		
+		CsvReportGenerator generateCsvReport = new CsvReportGenerator();
+		generateCsvReport.generateCSVReport(reportItemsList);
+		
 		
 	}
 	
