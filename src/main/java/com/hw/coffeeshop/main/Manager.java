@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.DiscountCalculator;
 import com.hw.coffeeshop.utils.ExistingOrderOperations;
 import com.hw.coffeeshop.utils.MenuFileOperations;
@@ -73,7 +74,10 @@ public class Manager {
 		existingOrderFile.saveNewOrdersInExistingOrders(newCustomerOrder);
 		
 		
+		System.out.println(" ########################### GENERATE REPORT ###########################");
 		
+		TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
+		report.generateReport();
 		// get the latest Customer No ---- for using this value for taking orders from GUI
 	
 		//
