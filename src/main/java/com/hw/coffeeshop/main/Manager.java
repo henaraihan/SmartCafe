@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.hw.coffeeshop.exceptions.DiscountDoesNotApplyException;
+import com.hw.coffeeshop.exceptions.InvalidDiscountCodeException;
 import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.DiscountCalculator;
 import com.hw.coffeeshop.utils.ExistingOrderOperations;
@@ -17,7 +19,7 @@ public class Manager {
 	TreeMap<Integer, LinkedList<String>> newCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
 	HashMap<String, ArrayList<String>> newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
 	
-	void run(){
+	void run() {
 		//Perform functionalities ( from backend one by one)
 		
 		//1. read MenuFile  & load in data structure
@@ -58,7 +60,12 @@ public class Manager {
 		//Calculate Discount 1
 		
 		DiscountCalculator disc = new DiscountCalculator();
-		System.out.println("New Amount after Discount 1 "+disc.calcDis1("20OFF", 250));
+		try {
+			System.out.println("New Amount after Discount 1 "+disc.calcDis1("20OFF", 250));
+		} catch (InvalidDiscountCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		//6. Calculate Discount 2 
@@ -66,8 +73,15 @@ public class Manager {
 		//Populate Data for new Customer Order in new Data Structure
 		populateNewOrderData4Discount2();
 		
-		Double newAmount = new DiscountCalculator().calcDisc2(100,"5" , newCustomerOrder, newCustomerOrdersMap);
-		System.out.println("New Amount after Discount 2 "+newAmount);
+		Double newAmount;
+		try {
+			newAmount = new DiscountCalculator().calcDisc2(100,"5" , newCustomerOrder, newCustomerOrdersMap);
+			System.out.println("New Amount after Discount 2 "+newAmount);
+		} catch (DiscountDoesNotApplyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		//7. Save new Orders data in existing orders data
 		
