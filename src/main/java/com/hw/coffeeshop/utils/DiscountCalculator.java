@@ -1,4 +1,5 @@
 package com.hw.coffeeshop.utils;
+import com.hw.coffeeshop.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,30 +9,6 @@ import java.util.TreeMap;
 
 public class DiscountCalculator {
 	
-	private String foodCatg;
-	private String drinkCatg;
-	private String otherCatg;
-	/*
-	private Float discount1;
-	private Float discount2;
-	private Float totalIncome;
-	private Integer discount1Count;
-	private Integer discount2Count;*/
-	 /** constructoer
-		 * @param f food catg
-		 * @param d drinkCatg
-		 * @param o othercatg
-		
-		 */
-		  public DiscountCalculator(String f, String d, String o ) {
-			   
-			  foodCatg =f;
-			  drinkCatg= d;
-			  otherCatg=o; 
-		  }
-		  
-		  public DiscountCalculator() {}
-		  
 		  /** check if the first 3 char in the coupon is a number
 		   * @return true or false
 		   */
@@ -56,11 +33,14 @@ public class DiscountCalculator {
 		   * then it check if the first 2 char are int
 		   * lastly it check if the last 2 char are uppercase char
 		   */
-		  public boolean validCoupoun(String p) { 
-			  int size = p.length();
-			  if (size !=5)
-			  return false; 
+		  public boolean validCoupoun(String p)  { 
 			  
+			  int size = p.length();
+			  if (size !=5) 
+				  
+				  return false;
+				  
+				  
 			  for (int i=0; i<2; i++) {
 				 char ch = p.charAt(i); 
 				  if(!firstNumber(ch)) {
@@ -75,7 +55,6 @@ public class DiscountCalculator {
 					  return false;
 				  }
 			  }
-			
 			  
 				  return true;}
 		  
@@ -95,27 +74,32 @@ public class DiscountCalculator {
 		   * if that true the new toatl amount - 20
 		   * else there is no discount so return the same amount 
 		   */
-		  public Double calcDis1 (String coup, double amount) {
+		  public Double calcDis1 (String coup, double amount) throws InvalidDiscountCodeException  {
 			  
 			  if(validCoupoun(coup) && checkOrderAmount(amount)) {
 				  
-				  return amount - 20;
+				  return amount * .20;
 			  }
-			  return amount;
+			  throw new InvalidDiscountCodeException("Not Vaild coupoun "+ coup + " or the total amount is less than 200");
+			//  return amount;
 					  
 		  }
 		  
 		  
-		  public Double calcDisc2(double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Double calcDisc2(double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap)
+		  
+		  throws DiscountDoesNotApplyException {
 			  
 			  if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap)) {
 			  
 				  return amount * 0.9;
 			  }
-			  return amount;
+			  throw new DiscountDoesNotApplyException("we cant apply discount not all categoriies are selected");
+			//  return amount;
 		  }
 		  
-		  public Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap)  
+		  {
 				//if number of order is not equal to 3 then don't apply discount
 				if((newCustomerOrdersMap.get(customerId).size() < 3)) {
 					System.out.println("number of order is not 3");
@@ -148,6 +132,19 @@ public class DiscountCalculator {
 				
 				
 			}
+		  
+		  /**if the 2 disc was applicable give preference for discount 1
+		   * 
+		   **/
+		  public double whichDisc (double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap, String coup) {
+			  
+		 if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap) && validCoupoun(coup) && checkOrderAmount(amount)) {
+			 
+			return amount *.2;
+		
+		 }
+		 return amount;
+		  }
 		  
 		  
 		  
