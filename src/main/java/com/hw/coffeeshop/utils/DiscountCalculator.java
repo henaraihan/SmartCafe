@@ -109,28 +109,28 @@ public class DiscountCalculator {
 				
 			}
 		  
-		  /** check if the first 3 char in the coupon is a number
+		/*  *//** check if the first 3 char in the coupon is a number
 		   * @return true or false
-		   */
+		   *//*
 		 private boolean firstNumber(char ch) { 
 			  return ch >='0' && ch <= '9';
 			  }
 		  
 		  
-		  /** check if the last char in the coupon is a upper case letter
+		  *//** check if the last char in the coupon is a upper case letter
 		   * @return true or false
-		   */
+		   *//*
 		  
 		 private boolean isULetter(char ch){ 
 			  return ch >= 'A' && ch <= 'Z' ;
 		  }
 		  
-		  /**
+		  *//**
 		   * 	first it check if the length =5
 		   * then it check if the first 2 char are int
 		   * lastly it check if the last 2 char are uppercase char
 		   * Valid Coupon 20OFF
-		   */
+		   *//*
 		 private boolean validCoupon(String p) { 
 			  int size = p.length();
 			  if (size !=5)
@@ -154,12 +154,25 @@ public class DiscountCalculator {
 			  
 			  return true;
 		 }
+		 */ 
 		  
-		  /*
-		   * it check if the total amount of the order > 200
+	    /**
+	     *  it check if the total amount of the order > 200
+	     */
+		  private boolean checkOrderAmount(double amount){
+				  return amount> 200;
+		  }
+		  
+		  /**
+		   * Checks if the discount 1 coupon is valid 
+		   * @param coupon
+		   * @return true if valid, else false
 		   */
-		  private boolean checkOrderAmount(double m){
-				  return m> 200;
+		  private boolean validCoupon(String coupon) {
+			 if("20OFF".equalsIgnoreCase(coupon)) {
+				 return true;
+			 }
+				return false;
 		  }
 
 }
