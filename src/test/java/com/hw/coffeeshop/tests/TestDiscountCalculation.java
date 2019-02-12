@@ -16,7 +16,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is greater than 200 and coupon is valid(20OFF) then give Discount 1")
     void whenAmountIsGreaterThan200WithValidCouponThenGiveDiscount1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("20OFF", 250);
+		Double afterDisc = disc1Calc.calculateDiscount1("20OFF", 250);
 		assertEquals(new Double(230), afterDisc);
         
     }
@@ -25,7 +25,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is less than 200 and coupon is valid(20OFF) then do not give Discount 1")
     void whenAmountIsLessThan200WithValidCouponThenDontGiveDiscount1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("20OFF", 150);
+		Double afterDisc = disc1Calc.calculateDiscount1("20OFF", 150);
 		assertEquals(new Double(150), afterDisc);
         
     }
@@ -34,7 +34,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and coupon is valid(20OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithValidCouponThenDontGiveDiscount1_1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("20OFF", 200);
+		Double afterDisc = disc1Calc.calculateDiscount1("20OFF", 200);
 		assertEquals(new Double(200), afterDisc);
         
     }
@@ -43,7 +43,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and coupon is valid(20OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithValidCouponThenDontGiveDiscount1_2() {
 		
-		Double afterDisc = disc1Calc.calcDis1("20OFF", 200);
+		Double afterDisc = disc1Calc.calculateDiscount1("20OFF", 200);
 		assertNotEquals(new Double(180), afterDisc);
         
     }
@@ -53,7 +53,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is greater than 200 and coupon is Invalid(35OFF) then dont give Discount 1")
     void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("35OFF", 250);
+		Double afterDisc = disc1Calc.calculateDiscount1("35OFF", 250);
 		assertNotEquals(new Double(230), afterDisc);
         
     }
@@ -62,7 +62,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is greater than 200 and coupon is Invalid(100OFF) then dont give Discount 1")
     void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1_1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("100OFF", 250);
+		Double afterDisc = disc1Calc.calculateDiscount1("100OFF", 250);
 		assertEquals(new Double(250), afterDisc);
         
     }
@@ -72,7 +72,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is less than 200 and coupon is invalid (30OFF) then dont give Discount 1")
     void whenAmountIsLessThan200WithInvalidCouponThenDontGiveDiscount1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("30OFF", 150);
+		Double afterDisc = disc1Calc.calculateDiscount1("30OFF", 150);
 		assertEquals(new Double(150), afterDisc);
         
     }
@@ -81,7 +81,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and coupon is invalid (10OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("10OFF", 200);
+		Double afterDisc = disc1Calc.calculateDiscount1("10OFF", 200);
 		assertEquals(new Double(200), afterDisc);
         
     }
@@ -90,7 +90,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and coupon is invalid(50OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_2() {
 		
-		Double afterDisc = disc1Calc.calcDis1("50OFF", 200);
+		Double afterDisc = disc1Calc.calculateDiscount1("50OFF", 200);
 		assertNotEquals(new Double(180), afterDisc);
         
     }
@@ -99,17 +99,17 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and also coupon is invalid (10OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1() {
 		
-		Double afterDisc = disc1Calc.calcDis1("10OFF", 200);
+		Double afterDisc = disc1Calc.calculateDiscount1("10OFF", 200);
 		assertNotEquals(new Double(180), afterDisc);
         
     }
 	
 	
 	@Test
-	@DisplayName("When Amount is greater tha 200 and also coupon is invalid (20off) then don't give Discount 1")
+	@DisplayName("When Amount is greater tha 200 and also coupon is invalid (20onn) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_3() {
 		
-		Double afterDisc = disc1Calc.calcDis1("20off", 210);
+		Double afterDisc = disc1Calc.calculateDiscount1("20onn", 210);
 		assertNotEquals(new Double(190), afterDisc);
         
     }
