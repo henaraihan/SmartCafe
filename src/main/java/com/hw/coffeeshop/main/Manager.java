@@ -59,13 +59,8 @@ public class Manager {
 		
 		//Calculate Discount 1
 		
-		DiscountCalculator disc = new DiscountCalculator();
-		try {
-			System.out.println("New Amount after Discount 1 "+disc.calcDis1("20OFF", 250));
-		} catch (InvalidDiscountCodeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//DiscountCalculator disc = new DiscountCalculator();
+		//System.out.println("New Amount after Discount 1 "+disc.calcDis1("20OFF", 250));
 		
 		
 		//6. Calculate Discount 2 
@@ -73,13 +68,18 @@ public class Manager {
 		//Populate Data for new Customer Order in new Data Structure
 		populateNewOrderData4Discount2();
 		
-		Double newAmount;
-		try {
-			newAmount = new DiscountCalculator().calcDisc2(100,"5" , newCustomerOrder, newCustomerOrdersMap);
-			System.out.println("New Amount after Discount 2 "+newAmount);
-		} catch (DiscountDoesNotApplyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//Double newAmount;
+		//newAmount = new DiscountCalculator().calcDisc2(100,"5" , newCustomerOrder, newCustomerOrdersMap);
+		//System.out.println("New Amount after Discount 2 "+newAmount);
+		
+		
+		
+		Double amount = new DiscountCalculator().applyDiscounts("20OFF", 300, "5", newCustomerOrder, newCustomerOrdersMap);
+		if(amount == 250) {
+			System.out.println("NO DISCOUNT APPLIED");
+		}
+		else {
+			System.out.println("Discounted Amount is "+amount);
 		}
 		
 		
