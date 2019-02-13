@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.hw.coffeeshop.model.Order;
 
@@ -17,7 +18,9 @@ public class ExistingOrderOperations {
 
 	public static TreeMap<Integer, LinkedList<String>> existingCustomerOrder;
 	//HashMap<String, ArrayList<String>> customerOrdersMap = new HashMap<String, ArrayList<String>>();
-	public Integer lastOrderNo;
+	public static Integer lastOrderNo;
+	private static Integer lastCustomerID;
+	private static TreeSet<String> uniqueCustomerIDs;
 	private static final String COMMA_DELIMITER = ",";
 	public  void readCSVAndStoreData(){
 		BufferedReader br = null;
@@ -25,7 +28,7 @@ public class ExistingOrderOperations {
 		
 		try {
 			    existingCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
-				
+				uniqueCustomerIDs = new TreeSet<String>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.EXISTINGODER_FILENAME));
 				
@@ -52,6 +55,8 @@ public class ExistingOrderOperations {
 	                	
 	                	//populate order in TreeMap with orderID as Key
 	                	existingCustomerOrder.put(Integer.valueOf(eachOrder[0]),orderDetails); 
+	                	
+	                	uniqueCustomerIDs.add(eachOrder[1]);
 	                	
 	                	//Populate CustomerOrderMap
 	                	/*if(customerOrdersMap != null && customerOrdersMap.containsKey(eachOrder[1])) {
@@ -141,7 +146,7 @@ public class ExistingOrderOperations {
 				
 			}
 			if(uniqueCategory.contains("Beverages")  && uniqueCategory.contains("Other") && uniqueCategory.contains("Food")) {
-				System.out.println("Äll three categories are present");
+				System.out.println("ï¿½ll three categories are present");
 				return true;
 			}
 			else
@@ -154,9 +159,17 @@ public class ExistingOrderOperations {
 		
 		
 	}*/
-	public Integer getLastOrderNumber() {
+	public static Integer getLastOrderNumber() {
 		lastOrderNo = existingCustomerOrder.lastKey();
 		return lastOrderNo;
 	}
+	
+	public static Integer getLastCustomerNumber() {
+		System.out.println("unique Customer Ids "+uniqueCustomerIDs.toString());
+		lastCustomerID = Integer.parseInt(uniqueCustomerIDs.last());
+		
+		return lastCustomerID;
+	}
+	
 	
 }

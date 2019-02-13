@@ -53,9 +53,13 @@ public class Manager {
 		
 		
 		//5. get the latest Order No ---for using this value for orders from GUI
-		Integer lastOrderNo = existingOrderFile.getLastOrderNumber();
+		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		System.out.println("Last Order No: "+lastOrderNo);
 		
+		
+		//get the latest Customer No ---for using this value for customer from GUI
+		Integer lastCustomerId = ExistingOrderOperations.getLastCustomerNumber();
+		System.out.println("Last Customer No: "+lastCustomerId);
 		
 		//Calculate Discount 1
 		
