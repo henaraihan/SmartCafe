@@ -1,3 +1,9 @@
-This is to add this containing folder in git
+# Junit Test case Reference document 
 
-updated something
+
+### Test Case #1 
+
+
+```
+Here is the Test cases in detail 
+```
