@@ -1,25 +1,179 @@
 package com.hw.coffeeshop.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.TreeMap;
+
 public class DiscountCalculator {
 	
-	private Float discount1;
-	private Float discount2;
-	private Float totalIncome;
-	private Integer discount1Count;
-	private Integer discount2Count;
+		  /**
+		   * Common method to apply Discount 1 or 2
+		   * Discount 1 is preferred over Discount 2
+		   * Apply only one Discount
+		   * @param: Coupon, BillAmount, CustomerID, Customer Order from GUI, newCustomer Order Map
+		   * returns billAmount if no discount is applied, else returns discounted amount
+		   * 
+		   */
+		  public Double applyDiscounts(String coup, double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+			  	
+			  	//Check if discount 1 can be applied
+				Double amountAfterDiscount1 = calculateDiscount1(coup, billAmount);
+				
+				//discount 1 is not applied
+				if(billAmount == amountAfterDiscount1 ){ 
+					
+					//check for discount 2
+					Double amountAfterDiscount2 = calculateDiscount2(billAmount, customerId, newCustomerOrder, newCustomerOrdersMap);
+					if(	billAmount != amountAfterDiscount2 ){
+						System.out.println("DISCOUNT 2 is applied, Amount after discount 10 % off is "+amountAfterDiscount2);
+						return amountAfterDiscount2;
+					}
 
-	//TODO: implement logic to calculate discount1
-	public Float calculateDiscount1(String orderID,String totalBill){
-		return new Float(discount1);
-	}
-	
-	//TODO: implement logic to calculate discount2
-	public Float calculateDiscount2(String orderID,String totalBill){
-		return new Float(discount2);
-	}
-	
-	//TODO: implement logic to calculate total income
-	public Float calculateTotalIncome(){
-		return new Float(totalIncome);
-	}
+				}
+				//discount 1 is applied
+				else{ 
+					System.out.println("DISCOUNT 1 is applied, Amount after discount 20OFF is "+amountAfterDiscount1);
+					return amountAfterDiscount1;
+				}
+
+				return billAmount;
+			  
+		  }
+		  
+		  /**
+		   * This method checks if Discount 1 can be applied...It checks below conditions
+		   * 1) Coupon is valid (20OFF)
+		   * 2) Order Amount is > 200
+		   * Discount applied is total amount - 20
+		   * else there is no discount so return the same amount 
+		   * @param: Coupon Code, Bill Amount 
+		   * @return: bill Amount if no discount, BillAmount - 20 if otherwise
+		   */
+		  public Double calculateDiscount1 (String coup, double billAmount) {
+			  if(validCoupon(coup) && checkOrderAmount(billAmount)) {
+				  return billAmount - 20;
+			  }
+			  return billAmount;
+		  }
+		  
+		  
+		  public Double calculateDiscount2(double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+			  
+			  if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap)) {
+				  return amount * 0.9;
+			  }
+			  return amount;
+		  }
+		  
+		  
+		  
+		  // *********** Private Methods *********************//
+		  
+		  /**
+		   * This method checks if Discount 2 can be applied...It checks below conditions
+		   * 1) Size of order is 3 or more ...so that all categories applies
+		   * 2) All three categories(Beverages, Food and Other) are present in the order
+		   * @param : Customer ID, TreeMap with CustomerOrder from GUI, CustomerOrdersMap
+		   * @return : true if discount 2 is applied , false otherwise
+		   */
+		  private Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+				//if number of order is not equal to 3 then don't apply discount
+				if((newCustomerOrdersMap.get(customerId).size() < 3)) {
+					System.out.println("number of order is not 3");
+					return false;
+				}
+				else
+				{
+					HashSet<String> uniqueCategory = new HashSet<String>();
+					for(String custOrder: newCustomerOrdersMap.get(customerId)) {
+						
+						LinkedList<String>  custOrderListValues = newCustomerOrder.get(Integer.parseInt(custOrder));
+						String category = MenuFileOperations.menuItemsHashMap.get(custOrderListValues.get(1)).get(0);
+						
+						System.out.println(category);
+						uniqueCategory.add(category);
+						
+					}
+					if(uniqueCategory.contains("Beverages")  && uniqueCategory.contains("Other") && uniqueCategory.contains("Food")) {
+						System.out.println("All three categories are present");
+						return true;
+					}
+					else {
+						System.out.println("Not all three categories are present");
+						return false;
+					}
+					
+				}
+				
+			}
+		  
+		/*  *//** check if the first 3 char in the coupon is a number
+		   * @return true or false
+		   *//*
+		 private boolean firstNumber(char ch) { 
+			  return ch >='0' && ch <= '9';
+			  }
+		  
+		  
+		  *//** check if the last char in the coupon is a upper case letter
+		   * @return true or false
+		   *//*
+		  
+		 private boolean isULetter(char ch){ 
+			  return ch >= 'A' && ch <= 'Z' ;
+		  }
+		  
+		  *//**
+		   * 	first it check if the length =5
+		   * then it check if the first 2 char are int
+		   * lastly it check if the last 2 char are uppercase char
+		   * Valid Coupon 20OFF
+		   *//*
+		 private boolean validCoupon(String p) { 
+			  int size = p.length();
+			  if (size !=5)
+			  return false; 
+			  
+			  for (int i=0; i<2; i++) {
+				 char ch = p.charAt(i); 
+				  if(!firstNumber(ch)) {
+					  return false;
+				  }
+			  }
+			  
+			  
+			  for (int i=3; i<size; i++) {
+				 char ch = p.charAt(i); 
+				  if(!isULetter(ch)) {
+					  return false;
+				  }
+			  }
+			
+			  
+			  return true;
+		 }
+		 */ 
+		  
+	    /**
+	     *  it check if the total amount of the order > 200
+	     */
+		  private boolean checkOrderAmount(double amount){
+				  return amount> 200;
+		  }
+		  
+		  /**
+		   * Checks if the discount 1 coupon is valid 
+		   * @param coupon
+		   * @return true if valid, else false
+		   */
+		  private boolean validCoupon(String coupon) {
+			 if("20OFF".equalsIgnoreCase(coupon)) {
+				 return true;
+			 }
+				return false;
+		  }
+
 }
+

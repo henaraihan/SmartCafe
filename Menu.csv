@@ -2,10 +2,9 @@ itemID,itemCategory,itemCost,itemDesc
 FOOD251,Beverages,25,Americano
 FOOD252,Food,25,Pizza
 FOOD253,Other,20,GarlicBread
-FOOD254,Drink,10,Pepsi
-FOOD255,Beverages,20,CheeseSalad
-FOOD256,Drink,12,Coke
-FOOD257,Beverages,20,Cheese
-FOOD259,Beverages,20,Salad
-FOOD260,Something,20,salmon
-FOOD261,Beverages,20,papad
+FOOD254,Beverages,10,Pepsi
+FOOD255,Food,20,CheeseSalad
+FOOD256,Beverages,12,Coke
+FOOD257,Food,20,Cheese
+FOOD258,Other,20,Salad
+FOOD259,Beverages,20,Mocktail
