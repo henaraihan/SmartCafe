@@ -2,6 +2,7 @@ package com.hw.cofeeshop.gui;
 
 import com.hw.coffeeshop.utils.*;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ public class GUI_Implementation extends JFrame implements ActionListener
 {
 	
 	 DiscountCalculator dis;
+	 ExistingOrderOperations autoID;
 	//Global instance
 	private JFrame mainFrame = new JFrame();
 	JButton foodCategorySelect = new JButton("Food");
@@ -26,9 +28,10 @@ public class GUI_Implementation extends JFrame implements ActionListener
 	JButton checkBtn= new JButton("Check");
 	JTextField coupCode ;
 	JTextField total ;
-	
-	
 	JButton totalBtn= new JButton("total");
+	JButton discBtn= new JButton("Disc.Calc.");
+	JTextField disc ;
+	
 	
 	JFrame foodCatg = new JFrame();
 	
@@ -56,17 +59,17 @@ public class GUI_Implementation extends JFrame implements ActionListener
 	JTextField oq2 = new JTextField(5);
 	JButton oaddBtn= new JButton("Add");
 	
-	String[] column = { "Item", "Quantity", "Total"};
-	String[][] orderData = { 	{ "Pizza", "0","0"},
-								{ "Cheese Salad", "0","0"},
-								{ "Cheese", "0","0"},
-								{"Salad", "0", "0"},
-								{"Americano","0","0"},
-								{"Pepsi","0","0"},
-								{"Coke","0","0"},
-								{"Mocktail","0","0"},
-								{"GarlicBread","0","0"},
-								{ "Cheese", "0","0"}};
+	String[] column = {"OrderID","CustomerID", "Item", "Quantity", "Total"};
+	String[][] orderData = { 	{"","", "Pizza", "0","0"},
+								{"","", "Cheese Salad", "0","0"},
+								{"","", "Cheese", "0","0"},
+								{"","","Salad", "0", "0"},
+								{"","","Americano","0","0"},
+								{"","","Pepsi","0","0"},
+								{"","","Coke","0","0"},
+								{"","","Mocktail","0","0"},
+								{"","","GarlicBread","0","0"},
+								{ "","","Salad", "0","0"}};
 						   
 	
 	DefaultTableModel model = new DefaultTableModel(orderData, column);
@@ -104,7 +107,7 @@ public class GUI_Implementation extends JFrame implements ActionListener
 		mainFrame.setTitle("Coffee Shop Simulator");
 		//mainFrame.setSize(400, 200);
 		mainFrame.setLocation(600, 200);
-		mainFrame.setLayout(new GridLayout(6, 1));
+		mainFrame.setLayout(new GridLayout(7, 1));
 		mainFrame.setVisible(true);
 	}
 	
@@ -171,12 +174,13 @@ public class GUI_Implementation extends JFrame implements ActionListener
 		orderTable.setCellSelectionEnabled(true);
 		//orderTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		resizeColumnWidth(orderTable);
-		JPanel forOrderTable = new JPanel();
+		//JPanel forOrderTable = new JPanel();
 		//forOrderTable.setBorder(new EmptyBorder(0, 5, 0, 5));
-		forOrderTable.add(new JScrollPane(orderTable));
+		//forOrderTable.add(new JScrollPane(orderTable));
+		 JScrollPane s=new JScrollPane(orderTable);
+		// forOrderTable.add(s);
 		
-		
-		mainFrame.add(forOrderTable);		
+		mainFrame.add(s);		
 	}
 	
 	private void resizeColumnWidth(JTable orderTable) 
@@ -205,11 +209,16 @@ private void setupCalcButtons() {
 		JLabel couplabel = new JLabel("Enter Coupon code");
 		coupCode = new JTextField(5);
 		total = new JTextField(5);
+		disc = new JTextField(5);
 		//JButton checkBtn= new JButton("Check");
 		
 		//calcpanel.add(couplabel);
 		calcpanel.add(checkBtn);
 		calcpanel.add(coupCode);
+		
+		calcpanel.add(discBtn);
+		calcpanel.add(disc);
+		
 		
 		calcpanel.add(totalBtn);
 		calcpanel.add(total);
@@ -503,30 +512,35 @@ private void setupCalcButtons() {
 			
 		}else 
 		try {{
+			
 		String qn1 = q1.getText().trim();
 		int total = Integer.parseInt(qn1);
+		if(total !=0) {int orid=autoID.getLastOrderNumber();
+		String test = String.valueOf(orid +=1);
+		model.setValueAt(test, 0, 1);
+		
 		String value = String.valueOf(total * 25);
-         model.setValueAt(qn1, 0, 1);
-         model.setValueAt(value, 0, 2); 
+         model.setValueAt(qn1, 0, 3);
+         model.setValueAt(value, 0, 4); }
          
          String qn2 = q2.getText().trim();
          int total2 = Integer.parseInt(qn2);
  		String value2 = String.valueOf(total2 * 20);
-          model.setValueAt(qn2, 1, 1);
-          model.setValueAt(value2, 1, 2);
+          model.setValueAt(qn2, 1, 3);
+          model.setValueAt(value2, 1, 4);
           
           String qn3 = q3.getText().trim();
           int total3 = Integer.parseInt(qn3);
   		String value3 = String.valueOf(total3 * 20);
-           model.setValueAt(qn3, 2, 1);
-           model.setValueAt(value3, 2, 2);
+           model.setValueAt(qn3, 2, 3);
+           model.setValueAt(value3, 2, 4);
            
            
            String qn4 = q4.getText().trim();
            int total4 = Integer.parseInt(qn4);
    		String value4 = String.valueOf(total4 * 20);
-            model.setValueAt(qn4, 3, 1);
-            model.setValueAt(value4, 3, 2);
+            model.setValueAt(qn4, 3, 3);
+            model.setValueAt(value4, 3, 4);
          
 		}}catch(NumberFormatException e) {
 		//
@@ -549,27 +563,27 @@ public void addbeverage() {
 		String qn1 = pq1.getText().trim();
 		int total = Integer.parseInt(qn1);
 		String value = String.valueOf(total * 25);
-         model.setValueAt(qn1, 4, 1);
-         model.setValueAt(value, 4, 2); 
+         model.setValueAt(qn1, 4, 3);
+         model.setValueAt(value, 4, 4); 
          
          String qn2 = pq2.getText().trim();
          int total2 = Integer.parseInt(qn2);
  		String value2 = String.valueOf(total2 * 20);
-          model.setValueAt(qn2, 5, 1);
-          model.setValueAt(value2, 5, 2);
+          model.setValueAt(qn2, 5, 3);
+          model.setValueAt(value2, 5, 4);
           
           String qn3 = pq3.getText().trim();
           int total3 = Integer.parseInt(qn3);
   		String value3 = String.valueOf(total3 * 20);
-           model.setValueAt(qn3, 6, 1);
-           model.setValueAt(value3, 6, 2);
+           model.setValueAt(qn3, 6, 3);
+           model.setValueAt(value3, 6, 4);
            
            
            String qn4 = pq4.getText().trim();
            int total4 = Integer.parseInt(qn4);
    		String value4 = String.valueOf(total4 * 20);
-            model.setValueAt(qn4, 7, 1);
-            model.setValueAt(value4, 7, 2);
+            model.setValueAt(qn4, 7, 3);
+            model.setValueAt(value4, 7, 4);
          
 		}}catch(NumberFormatException e) {
 		//
@@ -590,14 +604,14 @@ public void addOther() {
 	String qn1 = oq1.getText().trim();
 	int total = Integer.parseInt(qn1);
 	String value = String.valueOf(total * 25);
-     model.setValueAt(qn1, 8, 1);
-     model.setValueAt(value, 8, 2); 
+     model.setValueAt(qn1, 8, 3);
+     model.setValueAt(value, 8, 4); 
      
      String qn2 = oq2.getText().trim();
      int total2 = Integer.parseInt(qn2);
 		String value2 = String.valueOf(total2 * 20);
-      model.setValueAt(qn2, 9, 1);
-      model.setValueAt(value2, 9, 2);
+      model.setValueAt(qn2, 9, 3);
+      model.setValueAt(value2, 9, 4);
       
     
      
@@ -627,7 +641,7 @@ public void addOther() {
 		int sum =0;
 		for(int i=0 ; i< rowscount ; i++) {
 			
-			sum = sum + Integer.parseInt(orderTable.getValueAt(i, 2).toString());
+			sum = sum + Integer.parseInt(orderTable.getValueAt(i, 4).toString());
 		}
 		return sum;
 		}catch (NumberFormatException e ) {return 0;}}
