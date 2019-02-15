@@ -168,7 +168,7 @@ public class DiscountCalculator {
 		   * @param coupon
 		   * @return true if valid, else false
 		   */
-		  private boolean validCoupon(String coupon) {
+		  public boolean validCoupon(String coupon) {
 			 if("20OFF".equalsIgnoreCase(coupon)) {
 				 return true;
 			 }

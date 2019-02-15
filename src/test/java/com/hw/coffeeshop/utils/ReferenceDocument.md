@@ -4,14 +4,14 @@
 ### Test Case #1 
 
 ```
-To check how the discount-type1 is calculated when total amount is 200 with valid coupon by the application
+Test Case # 1 - > if amt is > 200 with valid coupons
 
 Status : Implemented  
 ```
 ### Test Case #2
 
 ```
-To check how the valid coupon [including case- sensitive ]is handled by the application
+Test Case # 2 - > if amt is < 200 with valid coupons
 
 Status : Implemented  
 ```
@@ -19,7 +19,7 @@ Status : Implemented
 ### Test Case #3
 
 ```
-To check how invalid coupons are handled by the application
+Test Case # 3 - > if amt is > 200 with in-valid coupons
 
 Status : Implemented   
 ```
@@ -27,7 +27,7 @@ Status : Implemented
 ### Test Case #4
 
 ```
-To check  how the discount-type1 is calculated when the amount is less than 200 with valid coupons 
+Test Case# 4 - > if amt =200 with valid coupons
 
 Status : Implemented   
 ```
@@ -35,7 +35,7 @@ Status : Implemented
 ### Test Case #5
 
 ```
-To check  how the discount-type1 is calculated when the amount is more than 200 with valid coupons   
+Test Case# 5 - > check for valid coupons  
 
 Status : Implemented   
 ```
@@ -43,7 +43,7 @@ Status : Implemented
 ### Test Case #6
 
 ```
-To check  how the discount-type1 is calculated when the amount is more than 200 with invalid coupons 
+Test Case# 6 - > check for in-valid coupons
 
 Status : Implemented   
 ```
@@ -53,7 +53,7 @@ Status : Implemented
 ```
 To check  how the discount-type2 is calculated
 
-Status : Implemented   
+Status : pending   
 ```
 
 ### Test Case #8
@@ -61,7 +61,7 @@ Status : Implemented
 ```
 To check  how the discount-type2 is calculated
 
-Status : Implemented   
+Status : pending   
 ```
 
 ### Test Case #9
@@ -69,7 +69,7 @@ Status : Implemented
 ```
 To check  how the discount-type2 is calculated
 
-Status : Implemented   
+Status : pending   
 ```
 
 
@@ -78,6 +78,6 @@ Status : Implemented
 ```
 To check  exceptions 
 
-Status : Implemented   
+Status : pending   
 ```
 
