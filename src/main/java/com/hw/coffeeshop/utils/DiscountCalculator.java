@@ -159,7 +159,7 @@ public class DiscountCalculator {
 	    /**
 	     *  it check if the total amount of the order > 200
 	     */
-		  private boolean checkOrderAmount(double amount){
+		  public boolean checkOrderAmount(double amount){
 				  return amount> 200;
 		  }
 		  
@@ -168,7 +168,7 @@ public class DiscountCalculator {
 		   * @param coupon
 		   * @return true if valid, else false
 		   */
-		  private boolean validCoupon(String coupon) {
+		  public boolean validCoupon(String coupon) {
 			 if("20OFF".equalsIgnoreCase(coupon)) {
 				 return true;
 			 }
