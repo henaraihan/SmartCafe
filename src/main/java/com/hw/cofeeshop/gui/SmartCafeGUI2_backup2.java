@@ -7,7 +7,6 @@ import com.sun.jmx.snmp.Timestamp;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ComponentSampleModel;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,22 +19,85 @@ import java.util.TreeSet;
 
 import javax.swing.*;
 
-public class SmartCafeGUI extends JFrame implements ActionListener
+public class SmartCafeGUI2_backup2 extends JFrame implements ActionListener
 {
 	
 	String selectedCategory = "Select";
 	
 	private JFrame mainFrame = new JFrame();
-	JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
-	JPanel orderIdPanel;
-	JPanel categoryPanel;
-	JPanel itemPanel;
-	JPanel unitPricePanel;
-	JPanel quantityPanel;
-	JPanel amountPanel;
 	
-	HashMap<Integer, Integer> xyCoordinates = new HashMap<Integer, Integer>();
+	JTextField orderidText1 = new JTextField();
+	JTextField orderidText2 = new JTextField();
+	JTextField orderidText3 = new JTextField();
+	JTextField orderidText4 = new JTextField();
+	JTextField orderidText5 = new JTextField();
+	JTextField orderidText6 = new JTextField();
+	JTextField orderidText7 = new JTextField();
+	JTextField orderidText8 = new JTextField();
+	JTextField orderidText9 = new JTextField();
+	JTextField orderidText10 = new JTextField();
 	
+	JTextField categoryText1 = new JTextField();
+	JTextField categoryText2= new JTextField();
+	JTextField categoryText3= new JTextField();
+	JTextField categoryText4= new JTextField();
+	JTextField categoryText5= new JTextField();
+	JTextField categoryText6= new JTextField();
+	JTextField categoryText7= new JTextField();
+	JTextField categoryText8= new JTextField();
+	JTextField categoryText9= new JTextField();
+	JTextField categoryText10= new JTextField();
+	
+	
+	JTextField itemText1= new JTextField();
+	JTextField itemText2= new JTextField();
+	JTextField itemText3= new JTextField();
+	JTextField itemText4= new JTextField();
+	JTextField itemText5= new JTextField();
+	JTextField itemText6= new JTextField();
+	JTextField itemText7= new JTextField();
+	JTextField itemText8= new JTextField();
+	JTextField itemText9= new JTextField();
+	JTextField itemText10= new JTextField();
+	
+	
+	JTextField quantityText1= new JTextField();
+	JTextField quantityText2= new JTextField();
+	JTextField quantityText3= new JTextField();
+	JTextField quantityText4= new JTextField();
+	JTextField quantityText5= new JTextField();
+	JTextField quantityText6= new JTextField();
+	JTextField quantityText7= new JTextField();
+	JTextField quantityText8= new JTextField();
+	JTextField quantityText9= new JTextField();
+	JTextField quantityText10= new JTextField();
+	
+	
+	JTextField priceText1= new JTextField();
+	JTextField priceText2= new JTextField();
+	JTextField priceText3= new JTextField();
+	JTextField priceText4= new JTextField();
+	JTextField priceText5= new JTextField();
+	JTextField priceText6= new JTextField();
+	JTextField priceText7= new JTextField();
+	JTextField priceText8= new JTextField();
+	JTextField priceText9= new JTextField();
+	JTextField priceText10= new JTextField();
+
+	
+	JTextField amountText1= new JTextField();
+	JTextField amountText2= new JTextField();
+	JTextField amountText3= new JTextField();
+	JTextField amountText4= new JTextField();
+	JTextField amountText5= new JTextField();
+	JTextField amountText6= new JTextField();
+	JTextField amountText7= new JTextField();
+	JTextField amountText8= new JTextField();
+	JTextField amountText9= new JTextField();
+	JTextField amountText10= new JTextField();
+	
+    
+    
 	GridBagLayout layout = new GridBagLayout();
 	JComboBox<String> itemListComboBox = new JComboBox<String>();
 	JTextField unitPrice = new JTextField(8);
@@ -72,7 +134,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	int yAxisCounter = 8;
 	boolean first = true;
-	boolean first2 = true;
 	
 	TreeMap<Integer, LinkedList<String>> newCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
 	HashMap<String, ArrayList<String>> newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
@@ -89,7 +150,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	//Constructor
 	
-	public SmartCafeGUI()
+	public SmartCafeGUI2_backup2()
 	{
 		setupMainFrame();
 		setupWelcomeLabel();
@@ -102,6 +163,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		showAmountTextBox();
 		showAddButton();
+		
+		showOrderTable();
+		
 		
 		showTotalAmount();
 		
@@ -128,56 +192,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		mainFrame.setVisible(true);
 	    
 		mainFrame.setLayout(layout);
-		
-		/*if(first2) {
-			yAxisCounter = 8;
-			first2 = false;
-			
-		}
-		else {
-			yAxisCounter = yAxisCounter+1;
-		}
-		
-		System.out.println("Value of yAxisCounter at setupMainframe "+yAxisCounter);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(orderIdPanel,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 2;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(orderIdPanel,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 3;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(itemPanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 4;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(unitPricePanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 5;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(quantityPanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 6;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(amountPanel,gbc);*/
 		//mainFrame.pack();
 	}
 	
 	private void setupWelcomeLabel()
 	{
 		//JPanel forWelcome = new JPanel();
+		JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
@@ -396,7 +417,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == addOrder) {
 
-			showOrderRow();
+			addOrderRow();
 		}
 		if(e.getSource()== itemListComboBox) {
 			JComboBox<String> combo2 = (JComboBox<String>) e.getSource();
@@ -455,210 +476,441 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		amount.setText("");
 		discountText.setText("");
 		grandTotalText.setText("");
-		//newCustomerOrder.clear();
-		//newCustomerOrdersMap.clear();
-		//ordersList.clear();
-		//showCustomerIDTextBox();
-		applyDiscount.setEnabled(false);
-		
-		//mainFrame.remove(welcomeLabel);
-		
-		totalAmountText.setText("");
-		
-		//orderIdPanel.remove(0);
-		//orderIdPanel.remove(1);
-		//orderIdPanel.remove(2);
-		
-		//categoryPanel.remove(0);
-		//categoryPanel.remove(1);
-		//categoryPanel.remove(2);
-		
-		//itemPanel.remove(0);
-		//itemPanel.remove(1);
-		//itemPanel.remove(2);
-		
-		//unitPricePanel.remove(0);
-		//unitPricePanel.remove(1);
-		//unitPricePanel.remove(2);
-		
-		//quantityPanel.remove(0);
-		//quantityPanel.remove(1);
-		//quantityPanel.remove(2);
-		
-		//amountPanel.remove(0);
-		//amountPanel.remove(1);
-		//amountPanel.remove(2);
+		newCustomerOrder.clear();
+		newCustomerOrdersMap.clear();
+		ordersList.clear();
+		showCustomerIDTextBox();
 		
 		
-		//(1,8), (2,8), (3,8) , (4,8) (5,8) (6,8)
-		boolean one = mainFrame.contains(1, 8);
-		System.out.println("one "+one);
+		//orderidText.removeAll();
+		//mainFrame.remove(orderidText);
+		//mainFrame.remove(comp);
 		
 		
-		boolean last = mainFrame.contains(6, 8);
-		System.out.println("last "+last);
+		/*JTextField orderidText = (JTextField) mainFrame.findComponentAt(1,8);
+		if(orderidText != null) {
+			mainFrame.remove(orderidText);
+		}*/
+	}
+
+	private void showOrderTable(){
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        orderidText1.setVisible(true);
+        orderidText1.setEditable(false);
+        mainFrame.add(orderidText1,gbc);
+        
+        
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        orderidText2.setVisible(true);
+        orderidText2.setEditable(false);
+        mainFrame.add(orderidText2,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        orderidText3.setVisible(true);
+        orderidText3.setEditable(false);
+        mainFrame.add(orderidText3,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+        orderidText4.setVisible(true);
+        orderidText4.setEditable(false);
+        mainFrame.add(orderidText4,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 12;
+        orderidText5.setVisible(true);
+        orderidText5.setEditable(false);
+        mainFrame.add(orderidText5,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 13;
+        orderidText6.setVisible(true);
+        orderidText6.setEditable(false);
+        mainFrame.add(orderidText6,gbc);
+        
+        
+        gbc.gridx = 1;
+        gbc.gridy = 14;
+        orderidText7.setVisible(true);
+        orderidText7.setEditable(false);
+        mainFrame.add(orderidText7,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 15;
+        orderidText8.setVisible(true);
+        orderidText8.setEditable(false);
+        mainFrame.add(orderidText8,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 16;
+        orderidText9.setVisible(true);
+        orderidText9.setEditable(false);
+        mainFrame.add(orderidText9,gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 17;
+        orderidText10.setVisible(true);
+        orderidText10.setEditable(false);
+        mainFrame.add(orderidText10,gbc);
+        
+        
+        
+        gbc.gridx = 2;
+        gbc.gridy = 8;
+        categoryText1.setVisible(true);
+        categoryText1.setEditable(false);
+        mainFrame.add(categoryText1,gbc);
+        
+        
+        gbc.gridx = 2;
+        gbc.gridy = 9;
+        categoryText2.setVisible(true);
+        categoryText2.setEditable(false);
+        mainFrame.add(categoryText2,gbc);
+        
+        
+        gbc.gridx = 2;
+        gbc.gridy = 10;
+        categoryText3.setVisible(true);
+        categoryText3.setEditable(false);
+        mainFrame.add(categoryText3,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 11;
+        categoryText4.setVisible(true);
+        categoryText4.setEditable(false);
+        mainFrame.add(categoryText4,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 12;
+        categoryText5.setVisible(true);
+        categoryText5.setEditable(false);
+        mainFrame.add(categoryText5,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 13;
+        categoryText6.setVisible(true);
+        categoryText6.setEditable(false);
+        mainFrame.add(categoryText6,gbc);
+        
+        
+        gbc.gridx = 2;
+        gbc.gridy = 14;
+        categoryText7.setVisible(true);
+        categoryText7.setEditable(false);
+        mainFrame.add(categoryText7,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 15;
+        categoryText8.setVisible(true);
+        categoryText8.setEditable(false);
+        mainFrame.add(categoryText8,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 16;
+        categoryText9.setVisible(true);
+        categoryText9.setEditable(false);
+        mainFrame.add(categoryText9,gbc);
+        
+        gbc.gridx = 2;
+        gbc.gridy = 17;
+        categoryText10.setVisible(true);
+        categoryText10.setEditable(false);
+        mainFrame.add(categoryText10,gbc);
+        
+        
+        gbc.gridx = 3;
+        gbc.gridy = 8;
+        itemText1.setVisible(true);
+        itemText1.setEditable(false);
+        mainFrame.add(itemText1,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 9;
+        itemText2.setVisible(true);
+        itemText2.setEditable(false);
+        mainFrame.add(itemText2,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 10;
+        itemText3.setVisible(true);
+        itemText3.setEditable(false);
+        mainFrame.add(itemText3,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 11;
+        itemText4.setVisible(true);
+        itemText4.setEditable(false);
+        mainFrame.add(itemText4,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 12;
+        itemText5.setVisible(true);
+        itemText5.setEditable(false);
+        mainFrame.add(itemText5,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 13;
+        itemText6.setVisible(true);
+        itemText6.setEditable(false);
+        mainFrame.add(itemText6,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 14;
+        itemText7.setVisible(true);
+        itemText7.setEditable(false);
+        mainFrame.add(itemText7,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 15;
+        itemText8.setVisible(true);
+        itemText8.setEditable(false);
+        mainFrame.add(itemText8,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 16;
+        itemText9.setVisible(true);
+        itemText9.setEditable(false);
+        mainFrame.add(itemText9,gbc);
+        
+        gbc.gridx = 3;
+        gbc.gridy = 17;
+        itemText10.setVisible(true);
+        itemText10.setEditable(false);
+        mainFrame.add(itemText10,gbc);
+        
+        
+        
+        gbc.gridx = 4;
+        gbc.gridy = 8;
+        quantityText1.setVisible(true);
+        quantityText1.setEditable(false);
+        mainFrame.add(quantityText1,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 9;
+        quantityText2.setVisible(true);
+        quantityText2.setEditable(false);
+        mainFrame.add(quantityText2,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 10;
+        quantityText3.setVisible(true);
+        quantityText3.setEditable(false);
+        mainFrame.add(quantityText3,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 11;
+        quantityText4.setVisible(true);
+        quantityText4.setEditable(false);
+        mainFrame.add(quantityText4,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 12;
+        quantityText5.setVisible(true);
+        quantityText5.setEditable(false);
+        mainFrame.add(quantityText5,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 13;
+        quantityText6.setVisible(true);
+        quantityText6.setEditable(false);
+        mainFrame.add(quantityText6,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 14;
+        quantityText7.setVisible(true);
+        quantityText7.setEditable(false);
+        mainFrame.add(quantityText7,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 15;
+        quantityText8.setVisible(true);
+        quantityText8.setEditable(false);
+        mainFrame.add(quantityText8,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 16;
+        quantityText9.setVisible(true);
+        quantityText9.setEditable(false);
+        mainFrame.add(quantityText9,gbc);
+        
+        gbc.gridx = 4;
+        gbc.gridy = 17;
+        quantityText10.setVisible(true);
+        quantityText10.setEditable(false);
+        mainFrame.add(quantityText10,gbc);
+        
+        gbc.gridx = 5;
+        gbc.gridy = 8;
+        priceText1.setVisible(true);
+        priceText1.setEditable(false);
+		mainFrame.add(priceText1,gbc);
+		
+		
+		gbc.gridx = 5;
+        gbc.gridy = 9;
+        priceText2.setVisible(true);
+        priceText2.setEditable(false);
+		mainFrame.add(priceText2,gbc);
+		
+		
+		gbc.gridx = 5;
+        gbc.gridy = 10;
+        priceText3.setVisible(true);
+        priceText3.setEditable(false);
+		mainFrame.add(priceText3,gbc);
+		
+		gbc.gridx = 5;
+        gbc.gridy = 11;
+        priceText4.setVisible(true);
+        priceText4.setEditable(false);
+		mainFrame.add(priceText4,gbc);
+		
+		gbc.gridx = 5;
+        gbc.gridy = 12;
+        priceText5.setVisible(true);
+        priceText5.setEditable(false);
+		mainFrame.add(priceText5,gbc);
+		
+		gbc.gridx = 5;
+        gbc.gridy = 13;
+        priceText6.setVisible(true);
+        priceText6.setEditable(false);
+		mainFrame.add(priceText6,gbc);
+		
+		
+		gbc.gridx = 5;
+        gbc.gridy = 14;
+        priceText7.setVisible(true);
+        priceText7.setEditable(false);
+		mainFrame.add(priceText7,gbc);
+		
+		
+		gbc.gridx = 5;
+        gbc.gridy = 15;
+        priceText8.setVisible(true);
+        priceText8.setEditable(false);
+		mainFrame.add(priceText8,gbc);
+		
+		gbc.gridx = 5;
+        gbc.gridy = 16;
+        priceText9.setVisible(true);
+        priceText9.setEditable(false);
+		mainFrame.add(priceText9,gbc);
+		
+		gbc.gridx = 5;
+        gbc.gridy = 17;
+        priceText10.setVisible(true);
+        priceText10.setEditable(false);
+		mainFrame.add(priceText10,gbc);
 		
 		
 		
-		Component comp = mainFrame.getComponentAt(1, 8);
 		
-		mainFrame.remove(comp);
+		gbc.gridx = 6;
+        gbc.gridy = 8;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+		amountText1.setVisible(true);
+		amountText1.setEditable(false);
+		mainFrame.add(amountText1,gbc);
 		
-		//System.out.println("XY Coordinates: "+xyCoordinates.toString());
-		//orderIdPanel.list();
+		gbc.gridx = 6;
+        gbc.gridy = 9;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText2.setVisible(true);
+        amountText2.setEditable(false);
+		mainFrame.add(amountText2,gbc);
 		
-		//mainFrame.list();
+		gbc.gridx = 6;
+        gbc.gridy = 10;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText3.setVisible(true);
+		amountText3.setEditable(false);
+		mainFrame.add(amountText3,gbc);
 		
-		//mainFrame.dispose();
+		gbc.gridx = 6;
+        gbc.gridy = 11;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText4.setVisible(true);
+		amountText4.setEditable(false);
+		mainFrame.add(amountText4,gbc);
 		
+		gbc.gridx = 6;
+        gbc.gridy = 12;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText5.setVisible(true);
+		amountText5.setEditable(false);
+		mainFrame.add(amountText5,gbc);
 		
-		//System.out.println("Comp Count "+orderIdPanel.getComponentCount());
-		//System.out.println("orderIdPanel.list() "+ orderIdPanel.list());
-		//removeAll();
-		/*categoryPanel.removeAll();
-		itemPanel.removeAll();
-		unitPricePanel.removeAll();
-		quantityPanel.removeAll();
-		amountPanel.removeAll();*/
-		/*mainFrame.remove(orderIdPanel);
-		mainFrame.remove(orderIdPanel);
-		mainFrame.remove(orderIdPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
+		gbc.gridx = 6;
+        gbc.gridy = 13;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText6.setVisible(true);
+		amountText6.setEditable(false);
+		mainFrame.add(amountText6,gbc);
 		
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
+		gbc.gridx = 6;
+        gbc.gridy = 14;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+		amountText7.setVisible(true);
+		amountText7.setEditable(false);
+		mainFrame.add(amountText7,gbc);
 		
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
+		gbc.gridx = 6;
+        gbc.gridy = 15;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+        amountText8.setVisible(true);
+		amountText8.setEditable(false);
+		mainFrame.add(amountText8,gbc);
 		
+		gbc.gridx = 6;
+        gbc.gridy = 16;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+		amountText9.setVisible(true);
+		amountText9.setEditable(false);
+		mainFrame.add(amountText9,gbc);
 		
-		for(java.awt.Component comp : mainFrame.getComponents()) {
-			System.out.println(comp.getName());
-		}
-		*/
-		//System.out.println(" Components: "+mainFrame.getComponents().toString());
+		gbc.gridx = 6;
+        gbc.gridy = 17;
+        //latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+		//amountText.setText(latestAmount);
+		amountText10.setVisible(true);
+		amountText10.setEditable(false);
+		mainFrame.add(amountText10,gbc);
 		
-		//mainFrame.find
 	}
 
 
-
-
-	private void showOrderRow() {
+	private void addOrderRow() {
 		
-		applyDiscount.setEnabled(true);
-		
-		JTextField orderidText = new JTextField(8);
-		JTextField categoryText = new JTextField(8);
-	    JTextField itemText = new JTextField(8);
-	    JTextField quantityText = new JTextField(8);
-	    JTextField priceText = new JTextField(8);
-	    JTextField amountText = new JTextField(8);
-    
 		latestQuantity = quantity.getText();
 		if(first) {
-			yAxisCounter = 8;
+			//yAxisCounter = 8;
 			first = false;
 			
 		}
 		else {
-			yAxisCounter = yAxisCounter+1;
+			//yAxisCounter = yAxisCounter+1;
 			latestOrderNum= String.valueOf((Integer.parseInt(latestOrderNum)+1));
 		}
-		
-		System.out.println("Value of yAxisCounter at showOrderRow "+yAxisCounter);
-		
+			
 	    //System.out.println("yAxisCounter: "+yAxisCounter+" orderId: "+latestOrderNum+" category: "+latestCategory+ " item: "+latestItem+" quantity: "+latestQuantity+" price: " +latestPrice);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridy = yAxisCounter;
-		
-        orderIdPanel = new JPanel();
-        orderidText.setText(latestOrderNum);
-        orderidText.setVisible(true);
-        orderidText.setEditable(false);
-        orderIdPanel.add(orderidText);
-        //orderIdPanel.add(orderidText,gbc);
-        mainFrame.add(orderIdPanel,gbc);
-        
-        // (1,8), (2,8), (3,8) , (4,8) (5,8) (6,8)
-        //xyCoordinates.put(orderIdPanel.getX(), orderIdPanel.getY());
-        
-        System.out.println("orderIdPanel.getX() "+orderIdPanel.getX() +" orderIdPanel.getY() "+orderIdPanel.getY());
-        
-        gbc.gridx = 2;
-        gbc.gridy = yAxisCounter;
-        
-        categoryPanel =new JPanel();
-        categoryText.setText(latestCategory);
-        categoryText.setVisible(true);
-        categoryText.setEditable(false);
-        categoryPanel.add(categoryText);
-        //categoryPanel.add(categoryText,gbc);
-        mainFrame.add(categoryPanel,gbc);
-        
-        //xyCoordinates.put(categoryPanel.getX(), categoryPanel.getY());
-        
-        gbc.gridx = 3;
-        gbc.gridy = yAxisCounter;
-        
-        itemPanel =new JPanel();
-        itemText.setText(latestItem);
-        itemText.setVisible(true);
-        itemText.setEditable(false);
-        itemPanel.add(itemText);
-        //itemPanel.add(itemText,gbc);
-        mainFrame.add(itemPanel,gbc);
-        //xyCoordinates.put(itemPanel.getX(), itemPanel.getY());
-        
-        gbc.gridx = 4;
-        gbc.gridy = yAxisCounter;
-        
-        quantityPanel =new JPanel();
-        quantityText.setText(latestQuantity);
-        quantityText.setVisible(true);
-        quantityText.setEditable(false);
-        quantityPanel.add(quantityText);
-        //quantityPanel.add(quantityText,gbc);
-        mainFrame.add(quantityPanel,gbc);
-        //xyCoordinates.put(quantityPanel.getX(), quantityPanel.getY());
-        
-        gbc.gridx = 5;
-        gbc.gridy = yAxisCounter;
-        
-        unitPricePanel =new JPanel();
-        priceText.setText(latestPrice);
-        priceText.setVisible(true);
-        priceText.setEditable(false);
-        unitPricePanel.add(priceText);
-        //unitPricePanel.add(priceText,gbc);
-        mainFrame.add(unitPricePanel,gbc);
-        //xyCoordinates.put(unitPricePanel.getX(), unitPricePanel.getY());
-		
-		gbc.gridx = 6;
-        gbc.gridy = yAxisCounter;
-        latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
-        
-        amountPanel =new JPanel();
-		amountText.setText(latestAmount);
-		amountText.setVisible(true);
-		amountText.setEditable(false);
-		amountPanel.add(amountText);
-		//amountPanel.add(amountText,gbc);
-		mainFrame.add(amountPanel,gbc);
-		//xyCoordinates.put(amountPanel.getX(), amountPanel.getY());
-        
 		
 		totalAmount= totalAmount+Integer.parseInt(latestAmount);
 				

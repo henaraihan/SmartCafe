@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -114,8 +116,10 @@ public class ExistingOrderOperations {
 	}
 	
 	//Save new Orders data in existing orders
-	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder) {
+	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<String> uniqueCustomerIDs) {
 		ExistingOrderOperations.existingCustomerOrder.putAll(newCustomerOrder);
+		
+		ExistingOrderOperations.uniqueCustomerIDs.addAll(uniqueCustomerIDs);
 		
 		// Just to print ALL data as of now (TreeMap)  
         for (Map.Entry<Integer, LinkedList<String>> entry : ExistingOrderOperations.existingCustomerOrder.entrySet()) {
@@ -166,6 +170,9 @@ public class ExistingOrderOperations {
 	
 	public static Integer getLastCustomerNumber() {
 		System.out.println("unique Customer Ids "+uniqueCustomerIDs.toString());
+		
+		//TreeSet<Integer> uniqueCustomerIds = (TreeSet)existingCustomerOrder.keySet();
+		//lastCustomerID = (uniqueCustomerIds).last();
 		lastCustomerID = Integer.parseInt(uniqueCustomerIDs.last());
 		
 		return lastCustomerID;

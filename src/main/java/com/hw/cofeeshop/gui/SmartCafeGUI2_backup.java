@@ -7,7 +7,6 @@ import com.sun.jmx.snmp.Timestamp;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ComponentSampleModel;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,22 +19,12 @@ import java.util.TreeSet;
 
 import javax.swing.*;
 
-public class SmartCafeGUI extends JFrame implements ActionListener
+public class SmartCafeGUI2_backup extends JFrame implements ActionListener
 {
 	
 	String selectedCategory = "Select";
 	
 	private JFrame mainFrame = new JFrame();
-	JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
-	JPanel orderIdPanel;
-	JPanel categoryPanel;
-	JPanel itemPanel;
-	JPanel unitPricePanel;
-	JPanel quantityPanel;
-	JPanel amountPanel;
-	
-	HashMap<Integer, Integer> xyCoordinates = new HashMap<Integer, Integer>();
-	
 	GridBagLayout layout = new GridBagLayout();
 	JComboBox<String> itemListComboBox = new JComboBox<String>();
 	JTextField unitPrice = new JTextField(8);
@@ -72,7 +61,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	int yAxisCounter = 8;
 	boolean first = true;
-	boolean first2 = true;
 	
 	TreeMap<Integer, LinkedList<String>> newCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
 	HashMap<String, ArrayList<String>> newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
@@ -89,7 +77,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	//Constructor
 	
-	public SmartCafeGUI()
+	public SmartCafeGUI2_backup()
 	{
 		setupMainFrame();
 		setupWelcomeLabel();
@@ -128,56 +116,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		mainFrame.setVisible(true);
 	    
 		mainFrame.setLayout(layout);
-		
-		/*if(first2) {
-			yAxisCounter = 8;
-			first2 = false;
-			
-		}
-		else {
-			yAxisCounter = yAxisCounter+1;
-		}
-		
-		System.out.println("Value of yAxisCounter at setupMainframe "+yAxisCounter);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(orderIdPanel,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 2;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(orderIdPanel,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 3;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(itemPanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 4;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(unitPricePanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 5;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(quantityPanel,gbc);
-        
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 6;
-        gbc.gridy = yAxisCounter;
-        mainFrame.add(amountPanel,gbc);*/
 		//mainFrame.pack();
 	}
 	
 	private void setupWelcomeLabel()
 	{
 		//JPanel forWelcome = new JPanel();
+		JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
@@ -455,108 +400,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		amount.setText("");
 		discountText.setText("");
 		grandTotalText.setText("");
-		//newCustomerOrder.clear();
-		//newCustomerOrdersMap.clear();
-		//ordersList.clear();
-		//showCustomerIDTextBox();
-		applyDiscount.setEnabled(false);
+		newCustomerOrder.clear();
+		newCustomerOrdersMap.clear();
+		ordersList.clear();
+		showCustomerIDTextBox();
 		
-		//mainFrame.remove(welcomeLabel);
-		
-		totalAmountText.setText("");
-		
-		//orderIdPanel.remove(0);
-		//orderIdPanel.remove(1);
-		//orderIdPanel.remove(2);
-		
-		//categoryPanel.remove(0);
-		//categoryPanel.remove(1);
-		//categoryPanel.remove(2);
-		
-		//itemPanel.remove(0);
-		//itemPanel.remove(1);
-		//itemPanel.remove(2);
-		
-		//unitPricePanel.remove(0);
-		//unitPricePanel.remove(1);
-		//unitPricePanel.remove(2);
-		
-		//quantityPanel.remove(0);
-		//quantityPanel.remove(1);
-		//quantityPanel.remove(2);
-		
-		//amountPanel.remove(0);
-		//amountPanel.remove(1);
-		//amountPanel.remove(2);
-		
-		
-		//(1,8), (2,8), (3,8) , (4,8) (5,8) (6,8)
-		boolean one = mainFrame.contains(1, 8);
-		System.out.println("one "+one);
-		
-		
-		boolean last = mainFrame.contains(6, 8);
-		System.out.println("last "+last);
-		
-		
-		
-		Component comp = mainFrame.getComponentAt(1, 8);
-		
-		mainFrame.remove(comp);
-		
-		//System.out.println("XY Coordinates: "+xyCoordinates.toString());
-		//orderIdPanel.list();
-		
-		//mainFrame.list();
-		
-		//mainFrame.dispose();
-		
-		
-		//System.out.println("Comp Count "+orderIdPanel.getComponentCount());
-		//System.out.println("orderIdPanel.list() "+ orderIdPanel.list());
-		//removeAll();
-		/*categoryPanel.removeAll();
-		itemPanel.removeAll();
-		unitPricePanel.removeAll();
-		quantityPanel.removeAll();
-		amountPanel.removeAll();*/
-		/*mainFrame.remove(orderIdPanel);
-		mainFrame.remove(orderIdPanel);
-		mainFrame.remove(orderIdPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(categoryPanel);
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
-		
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
-		
-		mainFrame.remove(itemPanel);
-		mainFrame.remove(unitPricePanel);
-		mainFrame.remove(quantityPanel);
-		mainFrame.remove(amountPanel);
-		
-		
-		for(java.awt.Component comp : mainFrame.getComponents()) {
-			System.out.println(comp.getName());
-		}
-		*/
-		//System.out.println(" Components: "+mainFrame.getComponents().toString());
-		
-		//mainFrame.find
+		/*JTextField orderidText = (JTextField) mainFrame.findComponentAt(1,8);
+		if(orderidText != null) {
+			mainFrame.remove(orderidText);
+		}*/
 	}
 
 
 
 
 	private void showOrderRow() {
-		
-		applyDiscount.setEnabled(true);
 		
 		JTextField orderidText = new JTextField(8);
 		JTextField categoryText = new JTextField(8);
@@ -575,90 +433,58 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 			yAxisCounter = yAxisCounter+1;
 			latestOrderNum= String.valueOf((Integer.parseInt(latestOrderNum)+1));
 		}
-		
-		System.out.println("Value of yAxisCounter at showOrderRow "+yAxisCounter);
-		
+			
 	    //System.out.println("yAxisCounter: "+yAxisCounter+" orderId: "+latestOrderNum+" category: "+latestCategory+ " item: "+latestItem+" quantity: "+latestQuantity+" price: " +latestPrice);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
         gbc.gridy = yAxisCounter;
 		
-        orderIdPanel = new JPanel();
         orderidText.setText(latestOrderNum);
         orderidText.setVisible(true);
         orderidText.setEditable(false);
-        orderIdPanel.add(orderidText);
-        //orderIdPanel.add(orderidText,gbc);
-        mainFrame.add(orderIdPanel,gbc);
-        
-        // (1,8), (2,8), (3,8) , (4,8) (5,8) (6,8)
-        //xyCoordinates.put(orderIdPanel.getX(), orderIdPanel.getY());
-        
-        System.out.println("orderIdPanel.getX() "+orderIdPanel.getX() +" orderIdPanel.getY() "+orderIdPanel.getY());
+        mainFrame.add(orderidText,gbc);
         
         gbc.gridx = 2;
         gbc.gridy = yAxisCounter;
         
-        categoryPanel =new JPanel();
         categoryText.setText(latestCategory);
         categoryText.setVisible(true);
         categoryText.setEditable(false);
-        categoryPanel.add(categoryText);
-        //categoryPanel.add(categoryText,gbc);
-        mainFrame.add(categoryPanel,gbc);
+        mainFrame.add(categoryText,gbc);
         
-        //xyCoordinates.put(categoryPanel.getX(), categoryPanel.getY());
         
         gbc.gridx = 3;
         gbc.gridy = yAxisCounter;
-        
-        itemPanel =new JPanel();
         itemText.setText(latestItem);
         itemText.setVisible(true);
         itemText.setEditable(false);
-        itemPanel.add(itemText);
-        //itemPanel.add(itemText,gbc);
-        mainFrame.add(itemPanel,gbc);
-        //xyCoordinates.put(itemPanel.getX(), itemPanel.getY());
+        mainFrame.add(itemText,gbc);
         
         gbc.gridx = 4;
         gbc.gridy = yAxisCounter;
         
-        quantityPanel =new JPanel();
         quantityText.setText(latestQuantity);
         quantityText.setVisible(true);
         quantityText.setEditable(false);
-        quantityPanel.add(quantityText);
-        //quantityPanel.add(quantityText,gbc);
-        mainFrame.add(quantityPanel,gbc);
-        //xyCoordinates.put(quantityPanel.getX(), quantityPanel.getY());
+        mainFrame.add(quantityText,gbc);
         
         gbc.gridx = 5;
         gbc.gridy = yAxisCounter;
         
-        unitPricePanel =new JPanel();
         priceText.setText(latestPrice);
         priceText.setVisible(true);
         priceText.setEditable(false);
-        unitPricePanel.add(priceText);
-        //unitPricePanel.add(priceText,gbc);
-        mainFrame.add(unitPricePanel,gbc);
-        //xyCoordinates.put(unitPricePanel.getX(), unitPricePanel.getY());
+		mainFrame.add(priceText,gbc);
 		
 		gbc.gridx = 6;
         gbc.gridy = yAxisCounter;
         latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
         
-        amountPanel =new JPanel();
 		amountText.setText(latestAmount);
 		amountText.setVisible(true);
 		amountText.setEditable(false);
-		amountPanel.add(amountText);
-		//amountPanel.add(amountText,gbc);
-		mainFrame.add(amountPanel,gbc);
-		//xyCoordinates.put(amountPanel.getX(), amountPanel.getY());
-        
+		mainFrame.add(amountText,gbc);
 		
 		totalAmount= totalAmount+Integer.parseInt(latestAmount);
 				
