@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-public class GUI_Implementation extends JFrame implements ActionListener
+public class GUI_Implementation_backup extends JFrame implements ActionListener
 {
 	
 	 DiscountCalculator dis;
@@ -76,7 +76,7 @@ public class GUI_Implementation extends JFrame implements ActionListener
 	JTable orderTable = new JTable(model);
 	
 	//Constructor
-	public GUI_Implementation()
+	public GUI_Implementation_backup()
 	{
 		setupMainFrame();
 		setupWelcomeLabel();
@@ -625,12 +625,13 @@ public void addOther() {
 	public void checkcoup() {
 		
 		String ch = coupCode.getText().trim();
-		if(dis.validCoupoun(ch)== true) {
+		/*if(dis.validCoupoun(ch)== true) {
 			JOptionPane.showMessageDialog(mainFrame,"Correct"); 
 		}else
 			{
 				JOptionPane.showMessageDialog(mainFrame,"Wrong"); 
 			}
+			*/
 		}
 	
 	

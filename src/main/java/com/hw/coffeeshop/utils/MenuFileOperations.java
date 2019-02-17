@@ -108,4 +108,19 @@ public class MenuFileOperations {
 		
 		return listOfItems;
 	}
+	
+	public String getPriceForSelectedCategoryAndItem(String selectedCategory, String item) {
+		
+		System.out.println("Selected Category is "+selectedCategory + " Item "+item);
+		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
+			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)  && entry.getValue().get(2).equals(item)){
+					return (entry.getValue().get(1));
+		    	}
+			
+		}
+		return "";
+		
+	}
+	
+	
 }
