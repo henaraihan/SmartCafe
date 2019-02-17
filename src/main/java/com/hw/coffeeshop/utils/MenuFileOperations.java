@@ -14,6 +14,8 @@ import com.hw.coffeeshop.model.Menu;
 public class MenuFileOperations {
 	public static HashMap<String, LinkedList<String>> menuItemsHashMap ;
 	public static HashSet<String> distinctCategory;
+	public static HashMap<String,String> ItemNameItemID;
+	
 	//Delimiters used in the CSV file
 	private static final String COMMA_DELIMITER = ",";
 	
@@ -26,6 +28,7 @@ public class MenuFileOperations {
 		
 		try {
 				menuItemsHashMap = new HashMap<String, LinkedList<String>>();
+				ItemNameItemID = new HashMap<String, String>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.MENU_FILENAME));
 	            //Use Delimiter as COMMA
@@ -52,6 +55,10 @@ public class MenuFileOperations {
 	                	
 	                	//populate Menu in hashMap with itemID as Key
 	                	menuItemsHashMap.put(menuDetails[0],menuItemList); 
+	                	
+	                	//populate Item Name vs Item ID HashMap
+	                	
+	                	ItemNameItemID.put(menuDetails[3], menuDetails[0]);
 	                }
 	            }
 	            // Just to print the HashMap 
@@ -121,6 +128,20 @@ public class MenuFileOperations {
 		return "";
 		
 	}
+	
+	/*public String getItemIDForSelectedCategoryAndItemName(String selectedCategory, String itemName) {
+		
+		System.out.println("Selected Category is "+selectedCategory + " Item Name"+itemName);
+		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
+			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)  && entry.getValue().get(2).equals(itemName)){
+				System.out.println("Item ID:" + entry.getValue().get(2));	
+				return (entry.getValue().get(2));
+		    	}
+			
+		}
+		return "";
+		
+	}*/
 	
 	
 }

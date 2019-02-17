@@ -16,7 +16,7 @@ public class DiscountCalculator {
 		   * returns billAmount if no discount is applied, else returns discounted amount
 		   * 
 		   */
-		  public Double applyDiscounts(String coup, double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Double applyDiscounts(String coup, Double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  	
 			  	//Check if discount 1 can be applied
 				Double amountAfterDiscount1 = calculateDiscount1(coup, billAmount);
@@ -51,7 +51,7 @@ public class DiscountCalculator {
 		   * @param: Coupon Code, Bill Amount 
 		   * @return: bill Amount if no discount, BillAmount - 20 if otherwise
 		   */
-		  public Double calculateDiscount1 (String coup, double billAmount) {
+		  public Double calculateDiscount1 (String coup, Double billAmount) {
 			  if(validCoupon(coup) && checkOrderAmount(billAmount)) {
 				  return billAmount - 20;
 			  }
@@ -59,7 +59,7 @@ public class DiscountCalculator {
 		  }
 		  
 		  
-		  public Double calculateDiscount2(double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Double calculateDiscount2(Double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  
 			  if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap)) {
 				  return amount * 0.9;
@@ -159,7 +159,7 @@ public class DiscountCalculator {
 	    /**
 	     *  it check if the total amount of the order > 200
 	     */
-		  private boolean checkOrderAmount(double amount){
+		  private boolean checkOrderAmount(Double amount){
 				  return amount> 200;
 		  }
 		  

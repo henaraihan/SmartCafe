@@ -78,7 +78,7 @@ public class Manager {
 		
 		
 		
-		Double amount = new DiscountCalculator().applyDiscounts("20OFF", 300, "5", newCustomerOrder, newCustomerOrdersMap);
+		Double amount = new DiscountCalculator().applyDiscounts("20OFF", new Double(300), "5", newCustomerOrder, newCustomerOrdersMap);
 		if(amount == 250) {
 			System.out.println("NO DISCOUNT APPLIED");
 		}

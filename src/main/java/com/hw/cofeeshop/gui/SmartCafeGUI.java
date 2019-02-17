@@ -1,7 +1,7 @@
 package com.hw.cofeeshop.gui;
 
 import com.hw.coffeeshop.utils.*;
-
+import com.sun.jmx.snmp.Timestamp;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,10 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.TreeMap;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -29,29 +32,41 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	JComboBox<String> itemListComboBox = new JComboBox<String>();
 	JTextField unitPrice = new JTextField(8);
 	JTextField amount = new JTextField(8);
+	JTextField discountCoupon = new JTextField(8);
+	Integer lastCustomerNum;
 	String latestOrderNum = "";
 	String latestCategory = "";
 	String latestItem = "";
 	String latestPrice = "";
 	String latestQuantity = "";
+	String latestAmount = "";
 	
 	JButton addOrder = new JButton("Add Order");
 	JComboBox<String> categoriesComboBox = new JComboBox<String>();
 	JTextField quantity = new JTextField(8);
+	JLabel totalAmountLabel = new JLabel("Total Amount ");
 	
+	JLabel discountLabel = new JLabel("Discount  ");
+	JLabel grandTotalLabel = new JLabel("Grand Total  ");
+	JTextField discountText = new JTextField(8);
+	
+	JTextField totalAmountText = new JTextField(8);
+	
+	JTextField grandTotalText = new JTextField(8);
+	
+	JButton applyDiscount = new JButton("Apply Discount");
+	
+	JButton submitOrder = new JButton("Submit");
+	JButton generateReport = new JButton("Generate Report");
+	
+	Double totalAmount = new Double(0);
 	
 	int yAxisCounter = 8;
 	boolean first = true;
-	// DiscountCalculator dis;
-	// ExistingOrderOperations autoID;
-	//Global instance
-	//JButton checkBtn= new JButton("Check");
-	//JTextField coupCode ;
-	//JTextField total ;
-	//JButton totalBtn= new JButton("total");
-	//JButton discBtn= new JButton("Disc.Calc.");
-	//JTextField disc ;
-	//JLabel unitPrice = new JLabel();
+	
+	TreeMap<Integer, LinkedList<String>> newCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
+	HashMap<String, ArrayList<String>> newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
+	ArrayList<String> ordersList = new ArrayList<String>();
 	
 	static
 	{
@@ -74,16 +89,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		showQuantityTextBox();
 		showUnitPriceTextBox();
 		
-		//showOrderTable();
 		showAmountTextBox();
 		showAddButton();
 		
-		//setupCalcButtons();
+		showTotalAmount();
+		
+		showDiscountTextBox();
+		showDiscountCalc();
+		
+		showSubmitButton();
 		mainFrame.show();
 		//mainFrame.pack();
 	}
 	
 	
+
 
 	private void setupMainFrame()
 	{
@@ -97,7 +117,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		mainFrame.setVisible(true);
 	    
 		mainFrame.setLayout(layout);
-		
 		//mainFrame.pack();
 	}
 	
@@ -122,8 +141,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		JLabel newCustomerIDLabel = new JLabel("Customer ID: ");
 		JTextField newCustomerID = new JTextField(8);
 		newCustomerID.setEditable(false);
-		Integer lastCustomerNum = ExistingOrderOperations.getLastCustomerNumber();
-		newCustomerID.setText(String.valueOf(lastCustomerNum+1));
+		lastCustomerNum = ExistingOrderOperations.getLastCustomerNumber()+1;
+		newCustomerID.setText(String.valueOf(lastCustomerNum));
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
@@ -193,24 +212,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		}
 		
 		categoriesComboBox.addActionListener(this);
-		/*categoriesComboBox.addActionListener(new ActionListener() {
-			 
-		    public void actionPerformed(ActionEvent event) {
-		        JComboBox<String> combo = (JComboBox<String>) event.getSource();
-		        selectedCategory = (String) combo.getSelectedItem();
-		        latestCategory = selectedCategory;
-		        if (selectedCategory.equals("Beverages")) {
-		            System.out.println("Selected Beverages");
-		            showItemList4GivenCategory();
-		        } else if (selectedCategory.equals("Food")) {
-		            System.out.println("Selected Food");
-		            showItemList4GivenCategory();
-		    	} else if (selectedCategory.equals("Other")) {
-		    		System.out.println("Selected Other");
-		    		showItemList4GivenCategory();
-		    	}
-		    }  
-		});*/
 		
 		gbc.gridx = 2;
         gbc.gridy = 6;
@@ -221,7 +222,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 
 	private void showItemList() {
 		
-		//JPanel itemListPanel = new JPanel();
 		JLabel ItemListLabel = new JLabel("  Item List  ");
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -229,8 +229,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridx = 3;
         gbc.gridy = 5;
         
-		//itemListPanel.add(ItemListLabel);
-		//itemListPanel.add(itemListComboBox);
 		mainFrame.add(ItemListLabel,gbc);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -240,37 +238,19 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 	}
 	
-	
 	private void showItemList4GivenCategory() {
 		
-		//JLabel categoriesLabel = new JLabel("Category: ");
-		//JTextField newOrderId = new JTextField();
-		
 		ArrayList<String> itemList = new MenuFileOperations().getItemNameListForSelectedCategory(selectedCategory);
-		
-		//itemListComboBox = new JComboBox<String>();
 		
 		itemListComboBox.removeAllItems();
 		for(String item : itemList) {
 			itemListComboBox.addItem(item);
 		}
-		
 		itemListComboBox.addActionListener(this);
-		/*itemListComboBox.addActionListener(new ActionListener() {
-			 
-		    public void actionPerformed(ActionEvent event) {
-		        JComboBox<String> combo2 = (JComboBox<String>) event.getSource();
-		        String selectedItem = (String) combo2.getSelectedItem();
-		        latestItem = selectedItem;
- 		        showUnitPriceTextBox4SelectedCategoryAndItem(selectedCategory, selectedItem);
-		    }  
-		});*/
 		
 	}
 	
 	private void showQuantityTextBox() {
-		
-		//JPanel quantityPanel = new JPanel();
 		
 		JLabel quantityLabel = new JLabel("  Quantity  ");
 		
@@ -278,19 +258,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 4;
         gbc.gridy = 5;
-		
-		//quantityPanel.add(quantityLabel);
-		//quantityPanel.add(quantity);
 		mainFrame.add(quantityLabel,gbc);
-		
-		
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 4;
         gbc.gridy = 6;
         mainFrame.add(quantity,gbc);
-        
-        
 		
 	}
 
@@ -298,17 +271,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		System.out.println("Price for "+item+" is "+price );
-		
 		//price = (price) ? price: "0";
-		
 		unitPrice.setText(price);
-		
 		latestPrice = price;
 	}
 	
 	private void showUnitPriceTextBox() {
-		
-		//JPanel unitPricePanel = new JPanel();
 		
 		JLabel unitPriceLabel = new JLabel("  Unit Price  ");
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -320,8 +288,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 5;
         gbc.gridy = 6;
-		//unitPricePanel.add(unitPriceLabel);
-		//unitPricePanel.add(unitPrice);
         unitPrice.setEditable(false);
 		mainFrame.add(unitPrice,gbc);
 	}
@@ -338,12 +304,26 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 6;
         gbc.gridy = 6;
-		//unitPricePanel.add(unitPriceLabel);
-		//unitPricePanel.add(unitPrice);
         amount.setEditable(false);
 		mainFrame.add(amount,gbc);
 	}
 
+	private void showDiscountTextBox() {
+		
+		JLabel disountLabel = new JLabel("  Discount Coupon  ");
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 6;
+        gbc.gridy = 1;
+        mainFrame.add(disountLabel,gbc);
+		
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 7;
+        gbc.gridy = 1;
+        
+        discountCoupon.setText("20OFF");
+		mainFrame.add(discountCoupon,gbc);
+	}
 
 	private void showAddButton() {
 		
@@ -351,20 +331,14 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 7;
         gbc.gridy = 6;
-        
-		
 		
 		mainFrame.add(addOrder,gbc);
 		addOrder.addActionListener(this);
-		/*addOrder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-		        System.out.println("Add Order Button");
-		        showOrderTable();
-		        
-		    }  
-		});*/
 		
 	}
+	
+	
+	
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == addOrder) {
 
@@ -391,17 +365,28 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	    		showItemList4GivenCategory();
 	    	}
 		}
+		if (e.getSource() == applyDiscount) {
+
+			DiscountCalculator discountCalc = new DiscountCalculator();
+			
+			Double discount = discountCalc.applyDiscounts("20OFF", totalAmount, lastCustomerNum.toString(), newCustomerOrder, newCustomerOrdersMap);
+			System.out.println("discount "+discount);
+			discountText.setText(String.valueOf((totalAmount-discount)));
+			
+			grandTotalText.setText(discount.toString());
+			
+		}
+		
 	}
 	
-private void showOrderRow() {
+	private void showOrderRow() {
 		
-	
 		JTextField orderidText = new JTextField(8);
 		JTextField categoryText = new JTextField(8);
 	    JTextField itemText = new JTextField(8);
 	    JTextField quantityText = new JTextField(8);
 	    JTextField priceText = new JTextField(8);
-	    
+	    JTextField amountText = new JTextField(8);
     
 		latestQuantity = quantity.getText();
 		if(first) {
@@ -420,7 +405,6 @@ private void showOrderRow() {
         gbc.gridx = 1;
         gbc.gridy = yAxisCounter;
 		
-        
         orderidText.setText(latestOrderNum);
         orderidText.setVisible(true);
         orderidText.setEditable(false);
@@ -458,8 +442,106 @@ private void showOrderRow() {
         priceText.setEditable(false);
 		mainFrame.add(priceText,gbc);
 		
+		gbc.gridx = 6;
+        gbc.gridy = yAxisCounter;
+        latestAmount = String.valueOf((Integer.parseInt(latestPrice)*Integer.parseInt(latestQuantity)));
+        
+		amountText.setText(latestAmount);
+		amountText.setVisible(true);
+		amountText.setEditable(false);
+		mainFrame.add(amountText,gbc);
+		
+		totalAmount= totalAmount+Integer.parseInt(latestAmount);
+				
+		totalAmountText.setText(totalAmount.toString());
+		
+		LinkedList<String> orderValues = new LinkedList<String>();
+		
+		//adding customer ID
+		orderValues.add(lastCustomerNum.toString());
+		
+		//adding Item ID
+		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem);
+		System.out.println("itemID: "+itemID);
+		orderValues.add(itemID);
+
+		//adding Quantity
+		orderValues.add(latestQuantity);
+		
+		//adding TimeStamp TODO
+		//orderValues.add(new Timestamp(new Date));
+		
+		
+		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
+		newCustomerOrder.put(Integer.parseInt(latestOrderNum), orderValues);
+		
+		
+		ordersList.add(latestOrderNum);
+		
+		newCustomerOrdersMap.put(lastCustomerNum.toString(), ordersList);
+		
+		System.out.println(newCustomerOrder);
+		System.out.println(newCustomerOrdersMap);
+		
 		mainFrame.repaint();
 	}
+
+	private void showTotalAmount() {
+	
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+	    gbc.gridx = 5;
+	    int totalAmountLabelYAxis = yAxisCounter+10;
+	    gbc.gridy = totalAmountLabelYAxis;
+	    mainFrame.add(totalAmountLabel,gbc);
+	    
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    gbc.gridx = 6;
+	    gbc.gridy = totalAmountLabelYAxis;
+	    
+	    totalAmountText.setEditable(false);
+	    mainFrame.add(totalAmountText,gbc);
+    
+	
+	}
+	private void showDiscountCalc() {
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		int totalApplyDiscountYAxis = yAxisCounter+10;
+		gbc.gridx = 7;
+        gbc.gridy = totalApplyDiscountYAxis;
+        mainFrame.add(applyDiscount,gbc);
+        applyDiscount.addActionListener(this);
+        
+        
+        gbc.gridx = 5;
+        gbc.gridy = totalApplyDiscountYAxis+12;
+        mainFrame.add(discountLabel,gbc);
+        
+        gbc.gridx = 6;
+        gbc.gridy = totalApplyDiscountYAxis+12;
+        discountText.setEditable(false);
+        mainFrame.add(discountText,gbc);
+        
+        gbc.gridx = 5;
+        gbc.gridy = totalApplyDiscountYAxis+14;
+        mainFrame.add(grandTotalLabel,gbc);
+        
+        gbc.gridx = 6;
+        gbc.gridy = totalApplyDiscountYAxis+14;
+        grandTotalText.setEditable(false);
+        mainFrame.add(grandTotalText,gbc);
+	}
+
+	private void showSubmitButton() {
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 4;
+		gbc.gridy = yAxisCounter+18;
+		//mainFrame.add(submitOrder,gbc);
+	}
+
 
 	/*private void setupCategorySelect()
 	{
@@ -499,37 +581,7 @@ private void showOrderRow() {
 		mainFrame.add(forRadio);
 	}
 	*/
-	
 
-	
-	
-/*private void setupCalcButtons() {
-		
-		JPanel calcpanel = new JPanel();
-		calcpanel.setLayout(new GridLayout(3, 2,10,10));
-		JLabel couplabel = new JLabel("Enter Coupon code");
-		coupCode = new JTextField(5);
-		total = new JTextField(5);
-		disc = new JTextField(5);
-		//JButton checkBtn= new JButton("Check");
-		
-		//calcpanel.add(couplabel);
-		calcpanel.add(checkBtn);
-		calcpanel.add(coupCode);
-		
-		calcpanel.add(discBtn);
-		calcpanel.add(disc);
-		
-		
-		calcpanel.add(totalBtn);
-		calcpanel.add(total);
-		
-		
-		mainFrame.add(calcpanel);
-		
-		checkBtn.addActionListener(this);
-		totalBtn.addActionListener(this);
-	}*/
 	private void setupButtonRow()
 	{
 		JButton remove = new JButton("Remove");
@@ -547,178 +599,7 @@ private void showOrderRow() {
 	
 	///////////////////////////////////////////////////////////////////////////////////////
 	//
-	
-	
-	
-	
-	//public void actionPerformed(ActionEvent e) 
-	//{
-		/*if (e.getSource() == addBtn) {
 
-			//addfood();
-			foodCatg.setVisible(false);*/
-			
-		
-	//}
-		/*
-		if (e.getSource() == paddBtn) {
-
-			//addbeverage();
-			beverageCatg.setVisible(false);
-			
-		
-	}
-		if (e.getSource() == oaddBtn) {
-
-			//addOther();
-			/*otherCatg.setVisible(false);
-			
-		
-	}
-		if (e.getSource() == foodCategorySelect) {
-
-			/*foodCatg.setVisible(true);
-			}
-	
-		if (e.getSource() == checkBtn) {
-
-			checkcoup();			
-		
-	}
-		if (e.getSource() == totalBtn) {
-
-			//total.setText(Integer.toString(getTotal()));
-	}
-		if (e.getSource() == beveragesCategorySelect) {
-
-			/*beverageCatg.setVisible(true);
-			}
-	
-		if (e.getSource() == otherCategorySelect) {
-
-			/*otherCatg.setVisible(true);
-			}
-	*/	
-	//} 
-		/////////////////////////////////////////////
-	
-	/*public void addfood() {
-		
-		if(q1.getText().trim().equals("") && q2.getText().trim().equals("") && q3.getText().trim().equals("") && q4.getText().trim().equals("")) {
-			
-			JOptionPane.showMessageDialog(foodCatg,"please choose item first"); 
-			
-		}else 
-		try {{
-			
-		String qn1 = q1.getText().trim();
-		int total = Integer.parseInt(qn1);
-		if(total !=0) {int orid=autoID.getLastOrderNumber();
-		String test = String.valueOf(orid +=1);
-		model.setValueAt(test, 0, 1);
-		
-		String value = String.valueOf(total * 25);
-         model.setValueAt(qn1, 0, 3);
-         model.setValueAt(value, 0, 4); }
-         
-         String qn2 = q2.getText().trim();
-         int total2 = Integer.parseInt(qn2);
- 		String value2 = String.valueOf(total2 * 20);
-          model.setValueAt(qn2, 1, 3);
-          model.setValueAt(value2, 1, 4);
-          
-          String qn3 = q3.getText().trim();
-          int total3 = Integer.parseInt(qn3);
-  		String value3 = String.valueOf(total3 * 20);
-           model.setValueAt(qn3, 2, 3);
-           model.setValueAt(value3, 2, 4);
-           
-           
-           String qn4 = q4.getText().trim();
-           int total4 = Integer.parseInt(qn4);
-   		String value4 = String.valueOf(total4 * 20);
-            model.setValueAt(qn4, 3, 3);
-            model.setValueAt(value4, 3, 4);
-         
-		}}catch(NumberFormatException e) {
-		//
-			//JOptionPane.showMessageDialog(foodCatg,"please enter number"); 
-		}
-		
-	}*/
-	
-	///////////////////////////////////////////////////////
-	//////////////////////////////////
-	
-/*public void addbeverage() {
-		
-		if(pq1.getText().trim().equals("") && pq2.getText().trim().equals("") && pq3.getText().trim().equals("") && pq4.getText().trim().equals("")) {
-			
-			JOptionPane.showMessageDialog(beverageCatg,"please choose item first"); 
-			
-		}else 
-		try {{
-		String qn1 = pq1.getText().trim();
-		int total = Integer.parseInt(qn1);
-		String value = String.valueOf(total * 25);
-         model.setValueAt(qn1, 4, 3);
-         model.setValueAt(value, 4, 4); 
-         
-         String qn2 = pq2.getText().trim();
-         int total2 = Integer.parseInt(qn2);
- 		String value2 = String.valueOf(total2 * 20);
-          model.setValueAt(qn2, 5, 3);
-          model.setValueAt(value2, 5, 4);
-          
-          String qn3 = pq3.getText().trim();
-          int total3 = Integer.parseInt(qn3);
-  		String value3 = String.valueOf(total3 * 20);
-           model.setValueAt(qn3, 6, 3);
-           model.setValueAt(value3, 6, 4);
-           
-           
-           String qn4 = pq4.getText().trim();
-           int total4 = Integer.parseInt(qn4);
-   		String value4 = String.valueOf(total4 * 20);
-            model.setValueAt(qn4, 7, 3);
-            model.setValueAt(value4, 7, 4);
-         
-		}}catch(NumberFormatException e) {
-		//
-			//JOptionPane.showMessageDialog(foodCatg,"please enter number"); 
-		}
-}*/
-/////////////////////////////////////
-//////////////////////////////
-
-/*public void addOther() {
-	
-	if(oq1.getText().trim().equals("") && oq2.getText().trim().equals("") ) {
-		
-		JOptionPane.showMessageDialog(foodCatg,"please choose item first"); 
-		
-	}else 
-	try {{
-	String qn1 = oq1.getText().trim();
-	int total = Integer.parseInt(qn1);
-	String value = String.valueOf(total * 25);
-     model.setValueAt(qn1, 8, 3);
-     model.setValueAt(value, 8, 4); 
-     
-     String qn2 = oq2.getText().trim();
-     int total2 = Integer.parseInt(qn2);
-		String value2 = String.valueOf(total2 * 20);
-      model.setValueAt(qn2, 9, 3);
-      model.setValueAt(value2, 9, 4);
-      
-    
-     
-	}}catch(NumberFormatException e) {
-	//
-		//JOptionPane.showMessageDialog(foodCatg,"please enter number"); 
-	}
-	
-}*/
 
 	public void checkcoup() {
 		
