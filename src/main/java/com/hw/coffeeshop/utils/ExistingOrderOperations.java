@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -20,7 +22,7 @@ public class ExistingOrderOperations {
 	//HashMap<String, ArrayList<String>> customerOrdersMap = new HashMap<String, ArrayList<String>>();
 	public static Integer lastOrderNo;
 	private static Integer lastCustomerID;
-	private static TreeSet<String> uniqueCustomerIDs;
+	private static TreeSet<Integer> uniqueCustomerIDs;
 	private static final String COMMA_DELIMITER = ",";
 	public  void readCSVAndStoreData(){
 		BufferedReader br = null;
@@ -28,7 +30,7 @@ public class ExistingOrderOperations {
 		
 		try {
 			    existingCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
-				uniqueCustomerIDs = new TreeSet<String>();
+				uniqueCustomerIDs = new TreeSet<Integer>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.EXISTINGODER_FILENAME));
 				
@@ -56,7 +58,7 @@ public class ExistingOrderOperations {
 	                	//populate order in TreeMap with orderID as Key
 	                	existingCustomerOrder.put(Integer.valueOf(eachOrder[0]),orderDetails); 
 	                	
-	                	uniqueCustomerIDs.add(eachOrder[1]);
+	                	uniqueCustomerIDs.add(Integer.parseInt(eachOrder[1]));
 	                	
 	                	//Populate CustomerOrderMap
 	                	/*if(customerOrdersMap != null && customerOrdersMap.containsKey(eachOrder[1])) {
@@ -114,8 +116,10 @@ public class ExistingOrderOperations {
 	}
 	
 	//Save new Orders data in existing orders
-	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder) {
+	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<Integer> uniqueCustomerIDs) {
 		ExistingOrderOperations.existingCustomerOrder.putAll(newCustomerOrder);
+		
+		ExistingOrderOperations.uniqueCustomerIDs.addAll(uniqueCustomerIDs);
 		
 		// Just to print ALL data as of now (TreeMap)  
         for (Map.Entry<Integer, LinkedList<String>> entry : ExistingOrderOperations.existingCustomerOrder.entrySet()) {
@@ -166,7 +170,10 @@ public class ExistingOrderOperations {
 	
 	public static Integer getLastCustomerNumber() {
 		System.out.println("unique Customer Ids "+uniqueCustomerIDs.toString());
-		lastCustomerID = Integer.parseInt(uniqueCustomerIDs.last());
+		
+		//TreeSet<Integer> uniqueCustomerIds = (TreeSet)existingCustomerOrder.keySet();
+		//lastCustomerID = (uniqueCustomerIds).last();
+		lastCustomerID = uniqueCustomerIDs.last();
 		
 		return lastCustomerID;
 	}

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import com.hw.coffeeshop.exceptions.DiscountDoesNotApplyException;
 import com.hw.coffeeshop.exceptions.InvalidDiscountCodeException;
@@ -78,7 +79,7 @@ public class Manager {
 		
 		
 		
-		Double amount = new DiscountCalculator().applyDiscounts("20OFF", 300, "5", newCustomerOrder, newCustomerOrdersMap);
+		Double amount = new DiscountCalculator().applyDiscounts("20OFF", new Double(300), "5", newCustomerOrder, newCustomerOrdersMap);
 		if(amount == 250) {
 			System.out.println("NO DISCOUNT APPLIED");
 		}
@@ -89,7 +90,9 @@ public class Manager {
 		
 		//7. Save new Orders data in existing orders data
 		
-		existingOrderFile.saveNewOrdersInExistingOrders(newCustomerOrder);
+		//private static TreeSet<String> uniqueCustomerIDs;
+		
+		existingOrderFile.saveNewOrdersInExistingOrders(newCustomerOrder, null);
 		
 		
 		System.out.println(" ########################### GENERATE REPORT ###########################");

@@ -1,5 +1,6 @@
 package com.hw.coffeeshop.report;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hw.coffeeshop.utils.CsvReportGenerator;
+import com.hw.coffeeshop.utils.DiscountCalculator;
 import com.hw.coffeeshop.utils.ExistingOrderOperations;
 import com.hw.coffeeshop.utils.MenuFileOperations;
 
@@ -52,15 +54,26 @@ public class TotalIncomeReportGenerator {
 	    	reportItems.add(MenuFileOperations.menuItemsHashMap.get(menuItemEntry.getKey()).get(1));
 		    reportItemsList.add(reportItems);
 		    
+		    
+		   //Item Description
+		   reportItems.add(menuItemEntry.getValue().get(2));
+		   
+		   //Categories
+		   reportItems.add(menuItemEntry.getValue().get(0));
+		   
+		   //Cost
+		   reportItems.add(menuItemEntry.getValue().get(1));
+		   
 		}
 		
+		Double totalDiscount = DiscountCalculator.getTotalDiscountAmount();
+		//System.out.println("Total Discount "+totalDiscount);
 		
-		
-		System.out.println("----------------------------------------------------------------------------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("                                              Smart Cafe Report                                                       ");
-		System.out.println("----------------------------------------------------------------------------------------------------------------------");
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		
-		System.out.println("Items:                        Number of Times Ordered	                      Total Income Per Item");
+		System.out.println("Item Name:               Item ID                Category           Quantity Sold           COST	            Total Income Per Item");
 		
 		Integer totalWithoutDiscount = 0;
 		for(ArrayList<String> items : reportItemsList) {
@@ -70,22 +83,33 @@ public class TotalIncomeReportGenerator {
 			Integer itemPrice = Integer.parseInt(items.get(2));
 			
 			Integer totalIncomePerItem = quantitySold*itemPrice;
-			System.out.println(items.get(0)+ "                           "+(quantitySold)+ "                                               "+totalIncomePerItem);
-			System.out.println("----------------------------------------------------------------------------------------------------------------------");
+			System.out.println(items.get(3)+"                   "+items.get(0)+ "              "+items.get(5)+ "            "+quantitySold+ "             "+items.get(4)+ "                         "+totalIncomePerItem);
+			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			
 			totalWithoutDiscount=totalWithoutDiscount+totalIncomePerItem;
 			
 		}
-		System.out.println("                                                    	                      Total without Discount= "+totalWithoutDiscount);
-		System.out.println("----------------------------------------------------------------------------------------------------------------------");
-		System.out.println("                                                    	                      Total Discount= TBD");
-		System.out.println("----------------------------------------------------------------------------------------------------------------------");
-		System.out.println("                                                    	                      Total with Discount= TBD");
+		
+		System.out.println("                                                    	                                       	                      Total without Discount= "+totalWithoutDiscount);
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("                                                    	                                       	                      Total Discount= "+totalDiscount);
+		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("                                                    	                                       	                      Total with Discount= "+(totalWithoutDiscount-totalDiscount));
 		
 		
 		CsvReportGenerator generateCsvReport = new CsvReportGenerator();
 		generateCsvReport.generateCSVReport(reportItemsList);
 		
+		
+		/*
+		PdfReportGenerator generatePdfReport = new PdfReportGenerator();
+		try {
+			generatePdfReport.createPdf(reportItemsList);
+		} catch (FileNotFoundException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 		
 	}
 	
