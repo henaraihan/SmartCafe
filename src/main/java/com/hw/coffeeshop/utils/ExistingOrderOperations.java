@@ -22,7 +22,7 @@ public class ExistingOrderOperations {
 	//HashMap<String, ArrayList<String>> customerOrdersMap = new HashMap<String, ArrayList<String>>();
 	public static Integer lastOrderNo;
 	private static Integer lastCustomerID;
-	private static TreeSet<String> uniqueCustomerIDs;
+	private static TreeSet<Integer> uniqueCustomerIDs;
 	private static final String COMMA_DELIMITER = ",";
 	public  void readCSVAndStoreData(){
 		BufferedReader br = null;
@@ -30,7 +30,7 @@ public class ExistingOrderOperations {
 		
 		try {
 			    existingCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
-				uniqueCustomerIDs = new TreeSet<String>();
+				uniqueCustomerIDs = new TreeSet<Integer>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.EXISTINGODER_FILENAME));
 				
@@ -58,7 +58,7 @@ public class ExistingOrderOperations {
 	                	//populate order in TreeMap with orderID as Key
 	                	existingCustomerOrder.put(Integer.valueOf(eachOrder[0]),orderDetails); 
 	                	
-	                	uniqueCustomerIDs.add(eachOrder[1]);
+	                	uniqueCustomerIDs.add(Integer.parseInt(eachOrder[1]));
 	                	
 	                	//Populate CustomerOrderMap
 	                	/*if(customerOrdersMap != null && customerOrdersMap.containsKey(eachOrder[1])) {
@@ -116,7 +116,7 @@ public class ExistingOrderOperations {
 	}
 	
 	//Save new Orders data in existing orders
-	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<String> uniqueCustomerIDs) {
+	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<Integer> uniqueCustomerIDs) {
 		ExistingOrderOperations.existingCustomerOrder.putAll(newCustomerOrder);
 		
 		ExistingOrderOperations.uniqueCustomerIDs.addAll(uniqueCustomerIDs);
@@ -173,7 +173,7 @@ public class ExistingOrderOperations {
 		
 		//TreeSet<Integer> uniqueCustomerIds = (TreeSet)existingCustomerOrder.keySet();
 		//lastCustomerID = (uniqueCustomerIds).last();
-		lastCustomerID = Integer.parseInt(uniqueCustomerIDs.last());
+		lastCustomerID = uniqueCustomerIDs.last();
 		
 		return lastCustomerID;
 	}

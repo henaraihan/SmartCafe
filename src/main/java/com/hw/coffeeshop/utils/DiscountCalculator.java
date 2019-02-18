@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 public class DiscountCalculator {
 	
+	private static Double totalDiscount = new Double(0);
 		  /**
 		   * Common method to apply Discount 1 or 2
 		   * Discount 1 is preferred over Discount 2
@@ -42,6 +43,13 @@ public class DiscountCalculator {
 			  
 		  }
 		  
+		  public static Double getTotalDiscountAmount() {
+			  return totalDiscount;
+		  }
+		  
+		  public static void setTotalDiscountAmount(Double value) {
+			  totalDiscount = value;
+		  }
 		  /**
 		   * This method checks if Discount 1 can be applied...It checks below conditions
 		   * 1) Coupon is valid (20OFF)
@@ -53,6 +61,7 @@ public class DiscountCalculator {
 		   */
 		  public Double calculateDiscount1 (String coup, Double billAmount) {
 			  if(validCoupon(coup) && checkOrderAmount(billAmount)) {
+				  totalDiscount = totalDiscount + new Double(20);
 				  return billAmount - 20;
 			  }
 			  return billAmount;
@@ -62,6 +71,7 @@ public class DiscountCalculator {
 		  public Double calculateDiscount2(Double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  
 			  if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap)) {
+				  totalDiscount = totalDiscount +  (amount * 0.1);
 				  return amount * 0.9;
 			  }
 			  return amount;

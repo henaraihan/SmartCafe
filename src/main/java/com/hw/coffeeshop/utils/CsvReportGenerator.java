@@ -16,7 +16,7 @@ public class CsvReportGenerator {
 	private static final String NEW_LINE_SEPARATOR = "\n";
 	private FileWriter fileWriter = null;
 	//CSV file header
-	private static final String FILE_HEADER = "ITEM_ID,QUANTITY_SOLD,INCOME_PER_ITEM";
+	private static final String FILE_HEADER = "ITEM_NAME,ITEM_ID,CATEGORY,QUANTITY_SOLD,COST,INCOME_PER_ITEM";
 	private static boolean firstTime = false;
 
 		
@@ -69,11 +69,16 @@ public class CsvReportGenerator {
 			//Add a new line separator after the header
 			fileWriter.append(NEW_LINE_SEPARATOR);
 			
-			
+			Double totalWithoutDiscount = new Double(0);
+			Integer totalIncomePerItem= 0;
 			for(ArrayList<String> itemList: reportItemsList) {
 					
 			       try {
+			    	   fileWriter.append(itemList.get(3));
+						fileWriter.append(COMMA_DELIMITER);
 						fileWriter.append(itemList.get(0));
+						fileWriter.append(COMMA_DELIMITER);
+						fileWriter.append(itemList.get(4));
 						fileWriter.append(COMMA_DELIMITER);
 						/*if(firstTime){
 							fileWriter.append(k);
@@ -87,9 +92,11 @@ public class CsvReportGenerator {
 						
 						Integer itemPrice = Integer.parseInt(itemList.get(2));
 						
-						Integer totalIncomePerItem = quantitySold*itemPrice;
+						totalIncomePerItem = quantitySold*itemPrice;
 						
-						fileWriter.append(quantitySold.toString());
+						fileWriter.append(quantitySold.toString().trim());
+						fileWriter.append(COMMA_DELIMITER);
+						fileWriter.append(itemList.get(5));
 						fileWriter.append(COMMA_DELIMITER);
 						fileWriter.append(totalIncomePerItem.toString());
 						fileWriter.append(NEW_LINE_SEPARATOR);
@@ -98,8 +105,33 @@ public class CsvReportGenerator {
 							//log.error("EXCEPTION", e);
 						}
 			       		
-						
+			       totalWithoutDiscount = totalWithoutDiscount+totalIncomePerItem;
 			}
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Total");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(totalWithoutDiscount.toString());
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Total Discount");
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(DiscountCalculator.getTotalDiscountAmount().toString());
+			fileWriter.append(NEW_LINE_SEPARATOR);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append(COMMA_DELIMITER);
+			fileWriter.append("Total After Discount");
+			fileWriter.append(COMMA_DELIMITER);
+			Double finalTotal = totalWithoutDiscount - DiscountCalculator.getTotalDiscountAmount();
+			fileWriter.append((String.valueOf(finalTotal)));
 	       	//firstTime = false;
 
 	       	System.out.println("CSV file was created successfully !!!");
