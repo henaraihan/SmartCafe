@@ -207,15 +207,15 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	  }
 	private void setupWelcomeLabel()
 	{
-		//JPanel forWelcome = new JPanel();
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        //forWelcome.add(welcomeLabel,gbc);
-        
+		JPanel forWelcome = new JPanel();
+		forWelcome.setPreferredSize(new Dimension(200,200));
+		JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
+		welcomeLabel.setFont(new Font("Serif", Font.BOLD, 15));
+		welcomeLabel.setForeground(Color.RED);;
+		forWelcome.add(welcomeLabel);
+		//forWelcome.setBorder(new EmptyBorder(0, 10, 0, 10));
 		
-		mainFrame.add(welcomeLabel,gbc);
+		mainFrame.add(forWelcome);
 	}
 	
 	private void showCustomerIDTextBox() {
