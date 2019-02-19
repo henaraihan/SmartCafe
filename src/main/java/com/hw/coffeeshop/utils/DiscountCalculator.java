@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
+import com.hw.coffeeshop.exceptions.DiscountDoesNotApplyException;
+import com.hw.coffeeshop.exceptions.InvalidDiscountCodeException;
+
 public class DiscountCalculator {
 	
 	private static Double totalDiscount = new Double(0);
@@ -19,9 +22,14 @@ public class DiscountCalculator {
 		   */
 		  public Double applyDiscounts(String coup, Double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  	
-			  	//Check if discount 1 can be applied
-				Double amountAfterDiscount1 = calculateDiscount1(coup, billAmount);
-				
+			  	Double amountAfterDiscount1 = new Double(0);
+			  	try {
+			  		//Check if discount 1 can be applied
+			  		amountAfterDiscount1 = calculateDiscount1(coup, billAmount);
+			  	}catch(InvalidDiscountCodeException discException) {
+			  		discException.printStackTrace();
+			  	}
+			  	
 				//discount 1 is not applied
 				if(billAmount == amountAfterDiscount1 ){ 
 					
@@ -59,7 +67,7 @@ public class DiscountCalculator {
 		   * @param: Coupon Code, Bill Amount 
 		   * @return: bill Amount if no discount, BillAmount - 20 if otherwise
 		   */
-		  public Double calculateDiscount1 (String coup, Double billAmount) {
+		  public Double calculateDiscount1 (String coup, Double billAmount) throws InvalidDiscountCodeException{
 			  if(validCoupon(coup) && checkOrderAmount(billAmount)) {
 				  totalDiscount = totalDiscount + new Double(20);
 				  return billAmount - 20;
@@ -177,12 +185,15 @@ public class DiscountCalculator {
 		   * Checks if the discount 1 coupon is valid 
 		   * @param coupon
 		   * @return true if valid, else false
+		 * @throws InvalidDiscountCodeException 
 		   */
-		  private boolean validCoupon(String coupon) {
+		  public boolean validCoupon(String coupon) throws InvalidDiscountCodeException {
 			 if("20OFF".equalsIgnoreCase(coupon)) {
 				 return true;
 			 }
-				return false;
+			 else {
+				 throw new InvalidDiscountCodeException("Not Vaild coupoun "+ coupon);
+			 }
 		  }
 
 }
