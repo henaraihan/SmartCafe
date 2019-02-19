@@ -6,11 +6,14 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
-import com.hw.coffeeshop.exceptions.DiscountDoesNotApplyException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.hw.coffeeshop.exceptions.InvalidDiscountCodeException;
 
 public class DiscountCalculator {
 	
+	static Log log = LogFactory.getLog(DiscountCalculator.class);
 	private static Double totalDiscount = new Double(0);
 		  /**
 		   * Common method to apply Discount 1 or 2
@@ -28,6 +31,7 @@ public class DiscountCalculator {
 			  		amountAfterDiscount1 = calculateDiscount1(coup, billAmount);
 			  	}catch(InvalidDiscountCodeException discException) {
 			  		discException.printStackTrace();
+			  		log.error("Exception: "+discException);
 			  	}
 			  	
 				//discount 1 is not applied
@@ -36,14 +40,14 @@ public class DiscountCalculator {
 					//check for discount 2
 					Double amountAfterDiscount2 = calculateDiscount2(billAmount, customerId, newCustomerOrder, newCustomerOrdersMap);
 					if(	billAmount != amountAfterDiscount2 ){
-						System.out.println("DISCOUNT 2 is applied, Amount after discount 10 % off is "+amountAfterDiscount2);
+						log.info("DISCOUNT 2 is applied, Amount after discount 10 % off is "+amountAfterDiscount2);
 						return amountAfterDiscount2;
 					}
 
 				}
 				//discount 1 is applied
 				else{ 
-					System.out.println("DISCOUNT 1 is applied, Amount after discount 20OFF is "+amountAfterDiscount1);
+					log.info("DISCOUNT 1 is applied, Amount after discount 20OFF is "+amountAfterDiscount1);
 					return amountAfterDiscount1;
 				}
 
@@ -99,7 +103,6 @@ public class DiscountCalculator {
 		  private Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 				//if number of order is not equal to 3 then don't apply discount
 				if((newCustomerOrdersMap.get(customerId).size() < 3)) {
-					System.out.println("number of order is not 3");
 					return false;
 				}
 				else
@@ -115,64 +118,17 @@ public class DiscountCalculator {
 						
 					}
 					if(uniqueCategory.contains("Beverages")  && uniqueCategory.contains("Other") && uniqueCategory.contains("Food")) {
-						System.out.println("All three categories are present");
+						log.info("All three categories are present");
 						return true;
 					}
 					else {
-						System.out.println("Not all three categories are present");
+						log.info("Not all three categories are present");
 						return false;
 					}
 					
 				}
 				
 			}
-		  
-		/*  *//** check if the first 3 char in the coupon is a number
-		   * @return true or false
-		   *//*
-		 private boolean firstNumber(char ch) { 
-			  return ch >='0' && ch <= '9';
-			  }
-		  
-		  
-		  *//** check if the last char in the coupon is a upper case letter
-		   * @return true or false
-		   *//*
-		  
-		 private boolean isULetter(char ch){ 
-			  return ch >= 'A' && ch <= 'Z' ;
-		  }
-		  
-		  *//**
-		   * 	first it check if the length =5
-		   * then it check if the first 2 char are int
-		   * lastly it check if the last 2 char are uppercase char
-		   * Valid Coupon 20OFF
-		   *//*
-		 private boolean validCoupon(String p) { 
-			  int size = p.length();
-			  if (size !=5)
-			  return false; 
-			  
-			  for (int i=0; i<2; i++) {
-				 char ch = p.charAt(i); 
-				  if(!firstNumber(ch)) {
-					  return false;
-				  }
-			  }
-			  
-			  
-			  for (int i=3; i<size; i++) {
-				 char ch = p.charAt(i); 
-				  if(!isULetter(ch)) {
-					  return false;
-				  }
-			  }
-			
-			  
-			  return true;
-		 }
-		 */ 
 		  
 	    /**
 	     *  it check if the total amount of the order > 200
@@ -192,6 +148,7 @@ public class DiscountCalculator {
 				 return true;
 			 }
 			 else {
+				 log.error("InvalidDiscountCodeException occurred ..Not a valid coupon "+coupon );
 				 throw new InvalidDiscountCodeException("Not Vaild coupoun "+ coupon);
 			 }
 		  }
