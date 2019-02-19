@@ -2,24 +2,31 @@ package com.hw.cofeeshop.gui;
 
 import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.*;
-import com.sun.jmx.snmp.Timestamp;
-
+import java.io.FilenameFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.ComponentSampleModel;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.swing.*;
+
+import org.apache.commons.lang3.SystemUtils;
 
 public class SmartCafeGUI extends JFrame implements ActionListener
 {
@@ -72,7 +79,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	JButton applyDiscount = new JButton("Apply Discount");
 	JButton submitOrder = new JButton("Submit");
 	JButton clearOrder = new JButton("Clear");
+	JButton viewReport = new JButton("View Report");
 	JButton generateReport = new JButton("Generate Report");
+	JLabel reportIsGenerated = new JLabel("New Report is generated... ");
 	
 	Double totalAmount = new Double(0);
 	
@@ -455,7 +464,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 			System.out.println("Calling generate report ");
 			TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
 			report.generateReport();
+			reportIsGenerated.setVisible(true);
 			
+		}
+		if (e.getSource() == viewReport) {
+			viewReports();
 		}
 		
 		
@@ -489,6 +502,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		latestOrderNum = String.valueOf(lastOrderNo);
+		reportIsGenerated.setVisible(false);
 		
 	}
 
@@ -633,6 +647,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		orderValues.add(latestQuantity);
 		
 		//adding TimeStamp TODO
+		orderValues.add(new Timestamp(System.currentTimeMillis()).toString());
 		//orderValues.add(new Timestamp().toString());
 		
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
@@ -715,9 +730,65 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		gbc.gridy = generateReportYAxis;
 		mainFrame.add(generateReport,gbc);
 		generateReport.addActionListener(this);
+		
+		gbc.gridx = 5;
+		int totalViewReportYAxis = totalApplyDiscountYAxis+20;
+		gbc.gridy = totalViewReportYAxis;
+		mainFrame.add(viewReport,gbc);
+		viewReport.addActionListener(this);
+		
+		gbc.gridx = 6;
+		int totalReportIsGeneratedYAxis = totalApplyDiscountYAxis+20;
+		gbc.gridy = totalReportIsGeneratedYAxis;
+		mainFrame.add(reportIsGenerated,gbc);
+		reportIsGenerated.setVisible(false);
+		
 	}
 
-	
+	private void viewReports() {
+
+    	try {
+    		String reportName = getLatestReportFile(".csv");
+    		Desktop.getDesktop().open(new File(SystemUtils.USER_DIR+"\\reports\\"+reportName));
+    		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+	}
+	private String getLatestReportFile(String reportExtention) {
+		
+		List<String> listofCsvFiles = new ArrayList<String>();
+		
+		String reportPath = SystemUtils.USER_DIR+"\\reports";
+		File[] files = new File(reportPath).listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(reportExtention);
+			}
+		}); 
+		String fileName = "";
+		String fileNameWithCsv = "";
+		List<Long> listOfIntegers = new ArrayList<Long>();
+		Map<Long, String> map = new HashMap<Long, String>();
+		for (File file : files) {
+		    if (file.isFile()) {
+		    	fileNameWithCsv =file.getName();
+		    	fileName = file.getName().split(reportExtention)[0].replace(".", "");
+		    	listofCsvFiles.add(fileName);
+		    	listOfIntegers.add(Long.parseLong(fileName));
+		    	map.put(Long.parseLong(fileName), fileNameWithCsv);
+		    	
+		    }
+		}
+		long fileNameLong=   listOfIntegers != null && !listOfIntegers.isEmpty() ? Collections.max(listOfIntegers) :-1;
+		String reportName = "";
+		if(fileNameLong!= -1) { 
+			reportName =  map.get(fileNameLong);
+			
+		}
+		return reportName;
+	}
 }
 
 

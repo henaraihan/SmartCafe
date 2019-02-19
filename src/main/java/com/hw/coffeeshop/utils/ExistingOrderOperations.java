@@ -54,6 +54,7 @@ public class ExistingOrderOperations {
 	                	orderDetails.add(eachOrder[1]); //customerID
 	                	orderDetails.add(eachOrder[2]); //itemID
 	                	orderDetails.add(eachOrder[3]); //quantity 
+	                	orderDetails.add(eachOrder[4]); //timestamp
 	                	
 	                	//populate order in TreeMap with orderID as Key
 	                	existingCustomerOrder.put(Integer.valueOf(eachOrder[0]),orderDetails); 
