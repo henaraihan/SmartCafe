@@ -1,5 +1,7 @@
 package com.hw.cofeeshop.gui;
 
+import com.hw.coffeeshop.exceptions.InvalidDiscountCodeException;
+import com.hw.coffeeshop.exceptions.NoCategorySelectedException;
 import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.*;
 import com.sun.jmx.snmp.Timestamp;
@@ -20,10 +22,22 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.swing.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang3.SystemUtils;
 
 public class SmartCafeGUI extends JFrame implements ActionListener
 {
 	
+	static{
+		if(SystemUtils.IS_OS_MAC){
+			System.setProperty("logfilename", SystemUtils.USER_DIR+"/logs");
+		}else{
+			System.setProperty("logfilename", SystemUtils.USER_DIR+"\\logs");
+		}
+	}
+	//
+	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	String selectedCategory = "Select";
 	
 	private JFrame mainFrame = new JFrame();
@@ -87,10 +101,17 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	static
 	{
+		log.info("Loading Menu CSV file into HashMap.....");
+		long menuFileReadTimer = System.currentTimeMillis();
 		MenuFileOperations menuFileOperations = new MenuFileOperations(); 
-		ExistingOrderOperations existingOrderFile = new ExistingOrderOperations();
 		menuFileOperations.readCSVAndStoreData();
+		log.info(" Completed loading Menu.csv >>> Total Execution Time:  "+(System.currentTimeMillis() - menuFileReadTimer) +" ms");
+		
+		log.info("Loading Existing Order CSV file into TreeMap.....");
+		long existingOrderFileReadTimer = System.currentTimeMillis();
+		ExistingOrderOperations existingOrderFile = new ExistingOrderOperations();
 		existingOrderFile.readCSVAndStoreData();
+		log.info(" Completed loading Order CSV file >>> Total Execution Time:  "+(System.currentTimeMillis() - existingOrderFileReadTimer) +" ms");
 	}
 	
 	//Constructor
@@ -148,8 +169,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         orderTablePanel.setLayout(layout);
 		mainFrame.add(orderTablePanel,gbc);
 		
-		
-		
 		mainFrame.addWindowListener(new WindowAdapter() {
 	         public void windowClosing(WindowEvent windowEvent){
 	        	 System.out.println("Windows is closing so generate report");
@@ -166,7 +185,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		 * JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { System.exit(0); }
 		 */
 	   int result = JOptionPane.showConfirmDialog(
-	  	      mainFrame, "Are you sure you want to quit?", "Please confirm to Generate report", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.ERROR_MESSAGE);
+	  	      mainFrame, "Are you sure you want to quit?", "Please confirm to Generate report", JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
 	   if(result==JOptionPane.YES_OPTION) {
 		   TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
 		   report.generateReport();
@@ -399,8 +418,40 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == addOrder) {
-
-			showOrderRow();
+			try {
+				boolean isValidationPass = true;
+				if(itemListComboBox.getItemCount()==0) {
+					isValidationPass=false;
+					throw new NoCategorySelectedException();
+				}
+				if("".equals(unitPrice.getText())) {
+					isValidationPass=false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "No Item Selected",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				if("".equals(quantity.getText())) {
+					isValidationPass=false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "No Quantity Entered",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				if(isValidationPass){
+					showOrderRow();
+				}else {
+					unitPrice.setText("");
+				}
+				
+			}catch (NoCategorySelectedException e2) {
+				JOptionPane.showMessageDialog(mainFrame,
+					    "No Category Selected",
+					    "Warning",
+					    JOptionPane.ERROR_MESSAGE);
+				
+			}
+			
 		}
 		if(e.getSource()== itemListComboBox) {
 			JComboBox<String> combo2 = (JComboBox<String>) e.getSource();
@@ -424,32 +475,92 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	    	}
 		}
 		if (e.getSource() == applyDiscount) {
-
-			DiscountCalculator discountCalc = new DiscountCalculator();
+			boolean isValidationPass = false;
+			try {
+				
+				if("".equals(quantity.getText())) {
+					isValidationPass=false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "No Quantity Entered",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				else if("".equals(totalAmountText.getText())) {
+					isValidationPass=false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "Add your Order First",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				else if(new DiscountCalculator().validCoupon(discountCoupon.getText())) {
+					DiscountCalculator discountCalc = new DiscountCalculator();
+					Double discount = discountCalc.applyDiscounts(discountCoupon.getText(), totalAmount, lastCustomerNum.toString(), newCustomerOrder, newCustomerOrdersMap);
+					System.out.println("discount "+discount);
+					discountText.setText(String.valueOf((totalAmount-discount)));
+					
+					grandTotalText.setText(discount.toString());
+					isValidationPass = true;
+				}
+				
+			} catch (InvalidDiscountCodeException e1) {
+				JOptionPane.showMessageDialog(mainFrame,
+					    "Invalid Discount Coupon. Hint:Use 20OFF",
+					    "Warning",
+					    JOptionPane.ERROR_MESSAGE);
+			}
 			
-			Double discount = discountCalc.applyDiscounts(discountCoupon.getText(), totalAmount, lastCustomerNum.toString(), newCustomerOrder, newCustomerOrdersMap);
-			System.out.println("discount "+discount);
-			discountText.setText(String.valueOf((totalAmount-discount)));
 			
-			grandTotalText.setText(discount.toString());
 			
 		}
 		if (e.getSource() == submitOrder) {
-			System.out.println("Calling saveNewOrdersInExistingOrders method to Save order data");
-			ExistingOrderOperations ordersOps = new ExistingOrderOperations();
-			
-			ordersOps.saveNewOrdersInExistingOrders(newCustomerOrder, uniqueCustomerIDs);
-			
-			clearOrderDetails();
+			boolean isValidationPass = true;
+			try {
+				if(itemListComboBox.getItemCount()==0) {
+					isValidationPass = false;
+					throw new NoCategorySelectedException();
+				}
+				if("".equals(unitPrice.getText())) {
+					isValidationPass = false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "No Item Selected",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				if("".equals(quantity.getText())) {
+					isValidationPass = false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "No Quantity Entered",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				if("".equals(totalAmountText.getText())) {
+					isValidationPass = false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "Add your Order First",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+				
+				if(isValidationPass) {
+					ExistingOrderOperations ordersOps = new ExistingOrderOperations();
+					ordersOps.saveNewOrdersInExistingOrders(newCustomerOrder, uniqueCustomerIDs);
+					clearOrderDetails();
+				}
+				
+				
+			}catch (NoCategorySelectedException e2) {
+				JOptionPane.showMessageDialog(mainFrame,
+					    "No Category Selected",
+					    "Warning",
+					    JOptionPane.ERROR_MESSAGE);
+				
+			}
 			
 		}
 		if (e.getSource() == clearOrder) {
-			System.out.println("Calling clear method");
-				
 			clear();
 			
 		}
-		
 		
 		if (e.getSource() == generateReport) {
 			System.out.println("Calling generate report ");
@@ -490,6 +601,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		latestOrderNum = String.valueOf(lastOrderNo);
 		
+		quantity.setText("");
+		
 	}
 
 	private void clearOrderDetails() {
@@ -518,12 +631,17 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		totalAmountText.setText("");
 		
 		totalAmount =new Double(0);
+		
+		quantity.setText("");
 	}
 
 
 
 
 	private void showOrderRow() {
+		
+		
+		
 		
 		applyDiscount.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
