@@ -50,8 +50,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	private JFrame mainFrame = new JFrame();
 	JPanel orderTablePanel = new JPanel();
 	
-	
-	
 	JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
 	JPanel orderIdPanel;
 	JPanel categoryPanel;
@@ -59,8 +57,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	JPanel unitPricePanel;
 	JPanel quantityPanel;
 	JPanel amountPanel;
-	
-	HashMap<Integer, Integer> xyCoordinates = new HashMap<Integer, Integer>();
 	
 	GridBagLayout layout = new GridBagLayout();
 	JComboBox<String> itemListComboBox = new JComboBox<String>();
@@ -95,7 +91,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	JButton clearOrder = new JButton("Clear");
 	JButton viewReport = new JButton("View Report");
 	JButton generateReport = new JButton("Generate Report");
-	JLabel reportIsGenerated = new JLabel("New Report is generated... ");
 	
 	Double totalAmount = new Double(0);
 	
@@ -151,9 +146,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	}
 	
 	private void setupLayout() {
-		
 		orderTablePanel.setLayout(layout);
-		
 	}
 
 
@@ -180,7 +173,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		mainFrame.addWindowListener(new WindowAdapter() {
 	         public void windowClosing(WindowEvent windowEvent){
-	        	 System.out.println("Windows is closing so generate report");
+	        	 log.info("Windows is closing so generate report");
 	        	 confirmAndExit();
 	         }        
 	      });
@@ -207,26 +200,20 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	  }
 	private void setupWelcomeLabel()
 	{
-		//JPanel forWelcome = new JPanel();
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
         gbc.gridy = 0;
-        //forWelcome.add(welcomeLabel,gbc);
-        
 		
 		mainFrame.add(welcomeLabel,gbc);
 	}
 	
 	private void showCustomerIDTextBox() {
 		
-		//JPanel newCustomerIDPanel = new JPanel();
-		
 		JLabel newCustomerIDLabel = new JLabel("Customer ID: ");
 		
 		newCustomerID.setEditable(false);
 		lastCustomerNum = ExistingOrderOperations.getLastCustomerNumber()+1;
-		System.out.println("Last Customer Number: "+lastCustomerNum);
 		newCustomerID.setText(String.valueOf(lastCustomerNum));
 		newCustomerID.repaint();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -235,20 +222,16 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridy = 1;
         
         mainFrame.add(newCustomerIDLabel, gbc);
-        //newCustomerIDPanel.add(newCustomerIDLabel, gbc);
         
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 2;
         gbc.gridy = 1;
-		//newCustomerIDPanel.add(newCustomerID,gbc);
 		mainFrame.add(newCustomerID,gbc);
-		//mainFrame.add(newCustomerIDPanel);
 	}
 	
 	
 	private void showOrderIDTextBox() {
 		
-		//JPanel newOrderIDPanel = new JPanel();
 		JLabel newOrderIDLabel = new JLabel("  Order ID  ");
 		
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -266,17 +249,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		
 		latestOrderNum = String.valueOf(lastOrderNo);
-		//newOrderId.setText(latestOrderNum);
-		//newOrderIDPanel.add(newOrderIDLabel);
-		//newOrderIDPanel.add(newOrderId);
 		
 		mainFrame.add(newOrderId,gbc);
 	}
 	
 	private void showCategories() {
-		
-		//JPanel categoriesPanel = new JPanel();
-		
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -287,11 +264,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 
 		mainFrame.add(categoriesLabel,gbc);
 		
-		
 		HashSet<String> categories = new MenuFileOperations().getDistinctCategory();
-		
-		
-		
 		
 		for(String category : categories) {
 			categoriesComboBox.addItem(category);
@@ -301,8 +274,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		gbc.gridx = 2;
         gbc.gridy = 6;
-		//categoriesPanel.add(categoriesLabel);
-		//categoriesPanel.add(categoriesComboBox);
 		mainFrame.add(categoriesComboBox,gbc);
 	}
 
@@ -357,7 +328,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		System.out.println("Price for "+item+" is "+price );
-		//price = (price) ? price: "0";
 		unitPrice.setText(price);
 		latestPrice = price;
 	}
@@ -554,6 +524,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					ExistingOrderOperations ordersOps = new ExistingOrderOperations();
 					ordersOps.saveNewOrdersInExistingOrders(newCustomerOrder, uniqueCustomerIDs);
 					clearOrderDetails();
+					
+					JOptionPane.showMessageDialog(mainFrame,
+						    "Order Is Submitted",
+						    "Info",
+						    JOptionPane.INFORMATION_MESSAGE);
+					
 				}
 				
 				
@@ -572,10 +548,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		}
 		
 		if (e.getSource() == generateReport) {
-			System.out.println("Calling generate report ");
 			TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
 			report.generateReport();
-			reportIsGenerated.setVisible(true);
+			
+			JOptionPane.showMessageDialog(mainFrame,
+				    "New Report is Generated",
+				    "Info",
+				    JOptionPane.INFORMATION_MESSAGE);
 			
 		}
 		if (e.getSource() == viewReport) {
@@ -613,7 +592,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		latestOrderNum = String.valueOf(lastOrderNo);
-		reportIsGenerated.setVisible(false);
 		
 		quantity.setText("");
 		
@@ -654,9 +632,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 
 	private void showOrderRow() {
 		
-		
-		
-		
 		applyDiscount.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
 		JTextField categoryText = new JTextField(8);
@@ -677,7 +652,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		latestOrderNum = String.valueOf((Integer.parseInt(latestOrderNum)+1));
 		
-	    //System.out.println("yAxisCounter: "+yAxisCounter+" orderId: "+latestOrderNum+" category: "+latestCategory+ " item: "+latestItem+" quantity: "+latestQuantity+" price: " +latestPrice);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 10;
@@ -764,9 +738,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		//adding Quantity
 		orderValues.add(latestQuantity);
 		
-		//adding TimeStamp TODO
 		orderValues.add(new Timestamp(System.currentTimeMillis()).toString());
-		//orderValues.add(new Timestamp().toString());
 		
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
 		newCustomerOrder.put(Integer.parseInt(latestOrderNum), orderValues);
@@ -775,9 +747,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		ordersList.add(latestOrderNum);
 		newCustomerOrdersMap.put(lastCustomerNum.toString(), ordersList);
 		uniqueCustomerIDs.add(lastCustomerNum);
-		System.out.println(newCustomerOrder);
-		System.out.println(newCustomerOrdersMap);
-		
+		log.info(newCustomerOrder);
+		log.info(newCustomerOrdersMap);
 			
 		mainFrame.revalidate();
 		mainFrame.repaint();
@@ -810,7 +781,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridy = totalApplyDiscountYAxis;
         mainFrame.add(applyDiscount,gbc);
         applyDiscount.addActionListener(this);
-        
         
         gbc.gridx = 5;
         gbc.gridy = totalApplyDiscountYAxis+12;
@@ -855,11 +825,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		mainFrame.add(viewReport,gbc);
 		viewReport.addActionListener(this);
 		
-		gbc.gridx = 6;
-		int totalReportIsGeneratedYAxis = totalApplyDiscountYAxis+20;
-		gbc.gridy = totalReportIsGeneratedYAxis;
-		mainFrame.add(reportIsGenerated,gbc);
-		reportIsGenerated.setVisible(false);
 		
 	}
 

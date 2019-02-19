@@ -9,6 +9,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.model.Menu;
 
 public class MenuFileOperations {
@@ -18,7 +23,7 @@ public class MenuFileOperations {
 	
 	//Delimiters used in the CSV file
 	private static final String COMMA_DELIMITER = ",";
-	
+	static Log log = LogFactory.getLog(MenuFileOperations.class);
 	
 	public  void readCSVAndStoreData(){
 		BufferedReader br = null;
@@ -37,13 +42,9 @@ public class MenuFileOperations {
 	            //Read to skip the header
 	            br.readLine();
 	            
-	            //TODO: Reading in Menu menuObject;
-	            //Create List for holding Menu objects
-	            // List<Menu> listOfMenus = new ArrayList<Menu>();
-	            
 	            //Reading from the second line
 	            while ((line = br.readLine()) != null){
-	            	//menuObject = new Menu();
+	            	
 	            	String[] menuDetails = line.split(COMMA_DELIMITER);
 	                menuItemList = new LinkedList<String>();
 	                if(menuDetails.length > 0 )
@@ -57,21 +58,16 @@ public class MenuFileOperations {
 	                	menuItemsHashMap.put(menuDetails[0],menuItemList); 
 	                	
 	                	//populate Item Name vs Item ID HashMap
-	                	
 	                	ItemNameItemID.put(menuDetails[3], menuDetails[0]);
 	                }
 	            }
-	            // Just to print the HashMap 
-	            for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
-	    			
-	    		    System.out.println(entry.getKey() + ":" + entry.getValue());
-	    		    
-	    		}
+	            
 	            
 	    }
         catch(Exception ee)
         {
             ee.printStackTrace();
+            log.error("Exception: "+ee);
         }
         finally
         {
@@ -81,7 +77,7 @@ public class MenuFileOperations {
             }
             catch(IOException ie)
             {
-                System.out.println("Error occured while closing the BufferedReader");
+            	log.error("Error occured while closing the BufferedReader");
                 ie.printStackTrace();
             }
         }
@@ -107,7 +103,6 @@ public class MenuFileOperations {
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
 			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)){
 		    	
-		    	//System.out.println(entry.getValue().get(2));
 		    	listOfItems.add(entry.getValue().get(2));
 		    	
 		    	}
@@ -128,20 +123,6 @@ public class MenuFileOperations {
 		return "";
 		
 	}
-	
-	/*public String getItemIDForSelectedCategoryAndItemName(String selectedCategory, String itemName) {
-		
-		System.out.println("Selected Category is "+selectedCategory + " Item Name"+itemName);
-		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
-			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)  && entry.getValue().get(2).equals(itemName)){
-				System.out.println("Item ID:" + entry.getValue().get(2));	
-				return (entry.getValue().get(2));
-		    	}
-			
-		}
-		return "";
-		
-	}*/
 	
 	
 }

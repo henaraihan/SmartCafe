@@ -5,19 +5,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class FileWriterOperations {
-	//Delimiter used in CSV file
+		//Delimiter used in CSV file
 		private static final String COMMA_DELIMITER = ",";
 		private static final String NEW_LINE_SEPARATOR = "\n";
 		private FileWriter fileWriter = null;
 		private static final String FILE_HEADER = "ITEM_NAME,ITEM_ID,CATEGORY,QUANTITY_SOLD,COST,INCOME_PER_ITEM";
 		
+		static Log log = LogFactory.getLog(FileWriterOperations.class);
+		
 		public void writeCsvFile(String fileName, List<ArrayList<String>> reportItemsList) {
-		
-		
 		try {
 			
-			System.out.println("Report File Name: "+fileName);
+			log.info("Report File Name: "+fileName);
 			fileWriter = new FileWriter(fileName);
 
 			//Write the CSV file header
@@ -37,18 +40,9 @@ public class FileWriterOperations {
 						fileWriter.append(COMMA_DELIMITER);
 						fileWriter.append(itemList.get(4));
 						fileWriter.append(COMMA_DELIMITER);
-						/*if(firstTime){
-							fileWriter.append(k);
-							fileWriter.append(COMMA_DELIMITER);
-							
-						}
-						firstTime = true;
-						*/
 						
 						Integer quantitySold = "null".equals(itemList.get(1)) ?0: Integer.parseInt(itemList.get(1));
-						
 						Integer itemPrice = Integer.parseInt(itemList.get(2));
-						
 						totalIncomePerItem = quantitySold*itemPrice;
 						
 						fileWriter.append(quantitySold.toString().trim());
@@ -59,7 +53,7 @@ public class FileWriterOperations {
 						fileWriter.append(NEW_LINE_SEPARATOR);
 						} catch (IOException e) {
 							e.printStackTrace();
-							//log.error("EXCEPTION", e);
+							log.error("EXCEPTION", e);
 						}
 			       		
 			       totalWithoutDiscount = totalWithoutDiscount+totalIncomePerItem;
@@ -89,13 +83,12 @@ public class FileWriterOperations {
 			fileWriter.append(COMMA_DELIMITER);
 			Double finalTotal = totalWithoutDiscount - DiscountCalculator.getTotalDiscountAmount();
 			fileWriter.append((String.valueOf(finalTotal)));
-	       	//firstTime = false;
 
-	       	System.out.println("CSV file was created successfully !!!");
-			
+	       	log.info("CSV file was created successfully !!!");
 		 
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			log.error("Exception: "+e1);
 		}
 		finally {
 		
@@ -103,7 +96,7 @@ public class FileWriterOperations {
 				fileWriter.flush();
 				fileWriter.close();
 			} catch (IOException e) {
-				//log.error("Error while flushing/closing fileWriter !!!",e);
+				log.error("Error while flushing/closing fileWriter !!!",e);
 			}
 		}
 	}

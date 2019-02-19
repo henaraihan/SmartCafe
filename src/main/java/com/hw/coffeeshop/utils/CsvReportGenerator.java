@@ -6,14 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class CsvReportGenerator {
 
-	
-	//CSV file header
-	
-	private static boolean firstTime = false;
-
+	static Log log = LogFactory.getLog(CsvReportGenerator.class);
 		
 	public void generateCSVReport(List<ArrayList<String>> reportItemsList) {
 		
@@ -31,10 +29,10 @@ public class CsvReportGenerator {
 		        File reportDirFile = new File(reportDirPath);
 		        if(!reportDirFile.exists()){
 		        	if(reportDirFile.mkdir()){
-		        		//log.info("Created Report directory at "+reportDirPath);
+		        		log.info("Created Report directory at "+reportDirPath);
 		        	}
 		        	else{
-		        		//log.info("Failed to create report directory at "+reportDirPath);
+		        		log.info("Failed to create report directory at "+reportDirPath);
 		        	}
 		        }
 		        if(SystemUtils.IS_OS_MAC){
@@ -45,7 +43,7 @@ public class CsvReportGenerator {
 		        
 	  	} catch (Exception e1) {
 	  			e1.printStackTrace();
-	  			//log.error("Exception: ", e1);
+	  			log.error("Exception: ", e1);
 	  	}
 
 	}
