@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import javax.swing.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math3.util.Precision;
 import org.apache.commons.lang3.SystemUtils;
 
 import org.apache.commons.lang3.SystemUtils;
@@ -493,10 +494,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				else if(new DiscountCalculator().validCoupon(discountCoupon.getText())) {
 					DiscountCalculator discountCalc = new DiscountCalculator();
 					Double discount = discountCalc.applyDiscounts(discountCoupon.getText(), totalAmount, lastCustomerNum.toString(), newCustomerOrder, newCustomerOrdersMap);
-					System.out.println("discount "+discount);
-					discountText.setText(String.valueOf((totalAmount-discount)));
+					System.out.println("discount "+(totalAmount-discount));
+					discountText.setText(String.valueOf((Precision.round((totalAmount-discount), 2))));
 					
-					grandTotalText.setText(discount.toString());
+					//grandTotalText.setText(discount.toString());
+					grandTotalText.setText(String.valueOf((Precision.round(discount, 2))));
 					isValidationPass = true;
 				}
 				
@@ -765,7 +767,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		totalAmount= totalAmount+Integer.parseInt(latestAmount);
 				
-		totalAmountText.setText(totalAmount.toString());
+		totalAmountText.setText(String.valueOf(Precision.round(totalAmount, 2)));
 		
 		LinkedList<String> orderValues = new LinkedList<String>();
 		

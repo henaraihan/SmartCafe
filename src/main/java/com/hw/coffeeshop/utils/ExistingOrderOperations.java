@@ -33,8 +33,9 @@ public class ExistingOrderOperations {
 	            String line = "";
 	            
 	            //Read to skip the header
-	            br.readLine();
-	            
+	            if(br!=null) {
+	            	br.readLine();
+	            }
 	            //Reading from the second line
 	            while ((line = br.readLine()) != null){
 	            	
@@ -66,7 +67,10 @@ public class ExistingOrderOperations {
         {
             try
             {
-                br.close();
+                if(br!= null) {
+                	br.close();
+                }
+            	
             }
             catch(IOException ie)
             {

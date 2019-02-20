@@ -35,11 +35,11 @@ public class DiscountCalculator {
 			  	}
 			  	
 				//discount 1 is not applied
-				if(billAmount == amountAfterDiscount1 ){ 
+				if(billAmount!= null && (billAmount.equals(amountAfterDiscount1))){ 
 					
 					//check for discount 2
 					Double amountAfterDiscount2 = calculateDiscount2(billAmount, customerId, newCustomerOrder, newCustomerOrdersMap);
-					if(	billAmount != amountAfterDiscount2 ){
+					if(	billAmount!= null && !(billAmount.equals(amountAfterDiscount2))  ){
 						log.info("DISCOUNT 2 is applied, Amount after discount 10 % off is "+amountAfterDiscount2);
 						return amountAfterDiscount2;
 					}
