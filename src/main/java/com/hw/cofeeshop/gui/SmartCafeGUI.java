@@ -50,7 +50,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	private JFrame mainFrame = new JFrame();
 	JPanel orderTablePanel = new JPanel();
 	
-	JLabel welcomeLabel = new JLabel("Welcome to our Coffee Shop!");
+	JLabel welcomeLabel = new JLabel("Welcome to Smart Cafe!");
 	JPanel orderIdPanel;
 	JPanel categoryPanel;
 	JPanel itemPanel;
@@ -166,8 +166,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 12;
+        gbc.gridx = 1;
         gbc.gridy = 8;
+        gbc.gridwidth=6;
         orderTablePanel.setLayout(layout);
 		mainFrame.add(orderTablePanel,gbc);
 		
@@ -198,19 +199,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	    
 	    
 	  }
-	/*private void setupWelcomeLabel()
+	private void setupWelcomeLabel()
 	{
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 1;
         gbc.gridy = 0;
-		
+        gbc.gridwidth=4;
+        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 25));
+		welcomeLabel.setForeground(Color.BLUE);;
 		mainFrame.add(welcomeLabel,gbc);
 		
 		
 	}
-	*/
-	private void setupWelcomeLabel()
+	
+	/*private void setupWelcomeLabel()
 	{
 		JPanel forWelcome = new JPanel();
 		forWelcome.setPreferredSize(new Dimension(200,200));
@@ -222,6 +225,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		mainFrame.add(forWelcome);
 	}
+	*/
 	
 	private void showCustomerIDTextBox() {
 		
@@ -584,12 +588,24 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		mainFrame.remove(orderTablePanel);
 		orderTablePanel = new JPanel();
 		
+		/*
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 12;
         gbc.gridy = 8;
         orderTablePanel.setLayout(layout);
 		mainFrame.add(orderTablePanel,gbc);
+		*/
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.gridwidth=6;
+        orderTablePanel.setLayout(layout);
+        mainFrame.add(orderTablePanel,gbc);
+        
+        
 		
 		mainFrame.revalidate();
 		mainFrame.repaint();
@@ -616,13 +632,24 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		mainFrame.remove(orderTablePanel);
 		orderTablePanel = new JPanel();
-		
+		/*
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 12;
         gbc.gridy = 8;
         orderTablePanel.setLayout(layout);
 		mainFrame.add(orderTablePanel,gbc);
+		*/
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.gridwidth=6;
+        orderTablePanel.setLayout(layout);
+        mainFrame.add(orderTablePanel,gbc);
+        
+        
 		
 		mainFrame.revalidate();
 		mainFrame.repaint();
