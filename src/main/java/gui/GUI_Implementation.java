@@ -24,7 +24,7 @@ public class GUI_Implementation extends JFrame implements ActionListener
 		setupWelcomeLabel();
 		setupCategorySelect();
 		setupRadioButtons();
-		setupCurrentOrder();
+		//setupCurrentOrder();
 		setupButtonRow();
 		
 		mainFrame.pack();
