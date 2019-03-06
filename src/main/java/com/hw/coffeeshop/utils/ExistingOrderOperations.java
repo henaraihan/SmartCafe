@@ -3,9 +3,12 @@ package com.hw.coffeeshop.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 public class ExistingOrderOperations {
 
 	public static TreeMap<Integer, LinkedList<String>> existingCustomerOrder;
+	private  ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap = new ConcurrentHashMap<String, ArrayList<String>>();
 	public static Integer lastOrderNo;
 	private static Integer lastCustomerID;
 	private static TreeSet<Integer> uniqueCustomerIDs;
@@ -26,6 +30,11 @@ public class ExistingOrderOperations {
 		try {
 			    existingCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
 				uniqueCustomerIDs = new TreeSet<Integer>();
+				//newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
+				
+				//ArrayList<String> ar = new ArrayList<String>();
+				//ar.add("Something");
+				//newCustomerOrdersMap.put("1", ar);
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.EXISTINGODER_FILENAME));
 				
@@ -81,19 +90,25 @@ public class ExistingOrderOperations {
 	}
 	
 	//Save new Orders data in existing orders
-	public void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<Integer> uniqueCustomerIDs) {
+	public synchronized void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<Integer> uniqueCustomerIDs, ConcurrentHashMap<String, ArrayList<String>> customerOrdersMap) {
+		
+		System.out.println(" Inside saveNewOrdersInExistingOrders ");
 		ExistingOrderOperations.existingCustomerOrder.putAll(newCustomerOrder);
 		
 		ExistingOrderOperations.uniqueCustomerIDs.addAll(uniqueCustomerIDs);
+		System.out.println("customerOrdersMap "+customerOrdersMap.toString());
+		//System.out.println("newCustomerOrdersMap "+newCustomerOrdersMap.toString());
+		newCustomerOrdersMap.putAll(customerOrdersMap);
 		
+		//System.out.println(" newCustomerOrdersMap "+newCustomerOrdersMap+" customerOrdersMap:  "+customerOrdersMap);
 	}
 	
-	public static Integer getLastOrderNumber() {
+	public synchronized static Integer getLastOrderNumber() {
 		lastOrderNo = existingCustomerOrder.lastKey();
 		return lastOrderNo;
 	}
 	
-	public static Integer getLastCustomerNumber() {
+	public synchronized static Integer getLastCustomerNumber() {
 		log.info("Unique Customer Ids "+uniqueCustomerIDs.toString());
 		
 		lastCustomerID = uniqueCustomerIDs.last();
@@ -101,5 +116,10 @@ public class ExistingOrderOperations {
 		return lastCustomerID;
 	}
 	
-	
+	public synchronized ArrayList<String> getCustomerOrdersMap(String customerId){ 
+		System.out.println("customerId: "+customerId);
+		System.out.println(" newCustomerOrdersMap:: "+newCustomerOrdersMap);
+		
+		return new ExistingOrderOperations().newCustomerOrdersMap.get(customerId);
+	}
 }
