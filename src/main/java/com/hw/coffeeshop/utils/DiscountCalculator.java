@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,7 +24,7 @@ public class DiscountCalculator {
 		   * returns billAmount if no discount is applied, else returns discounted amount
 		   * 
 		   */
-		  public Double applyDiscounts(String coup, Double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Double applyDiscounts(String coup, Double billAmount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder, ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  	
 			  	Double amountAfterDiscount1 = new Double(0);
 			  	try {
@@ -80,7 +81,7 @@ public class DiscountCalculator {
 		  }
 		  
 		  
-		  public Double calculateDiscount2(Double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  public Double calculateDiscount2(Double amount, String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 			  
 			  if(isDiscount2Applicable(customerId,newCustomerOrder,newCustomerOrdersMap)) {
 				  totalDiscount = totalDiscount +  (amount * 0.1);
@@ -100,7 +101,7 @@ public class DiscountCalculator {
 		   * @param : Customer ID, TreeMap with CustomerOrder from GUI, CustomerOrdersMap
 		   * @return : true if discount 2 is applied , false otherwise
 		   */
-		  private Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , HashMap<String, ArrayList<String>> newCustomerOrdersMap) {
+		  private Boolean isDiscount2Applicable(String customerId, TreeMap<Integer, LinkedList<String>> newCustomerOrder , ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap) {
 				//if number of order is not equal to 3 then don't apply discount
 				if((newCustomerOrdersMap.get(customerId).size() < 3)) {
 					return false;
