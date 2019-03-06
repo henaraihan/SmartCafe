@@ -20,6 +20,7 @@ public class MenuFileOperations {
 	public static HashMap<String, LinkedList<String>> menuItemsHashMap ;
 	public static HashSet<String> distinctCategory;
 	public static HashMap<String,String> ItemNameItemID;
+	public static HashMap<String,String> ItemIDItemName;
 	
 	//Delimiters used in the CSV file
 	private static final String COMMA_DELIMITER = ",";
@@ -34,6 +35,7 @@ public class MenuFileOperations {
 		try {
 				menuItemsHashMap = new HashMap<String, LinkedList<String>>();
 				ItemNameItemID = new HashMap<String, String>();
+				ItemIDItemName = new HashMap<String, String>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.MENU_FILENAME));
 	            //Use Delimiter as COMMA
@@ -61,6 +63,9 @@ public class MenuFileOperations {
 	                	
 	                	//populate Item Name vs Item ID HashMap
 	                	ItemNameItemID.put(menuDetails[3], menuDetails[0]);
+	                	
+	                	//populate Item ID vs Item Name HashMap
+	                	ItemIDItemName.put(menuDetails[0], menuDetails[3]);
 	                }
 	            }
 	            
@@ -87,7 +92,7 @@ public class MenuFileOperations {
 	}
 
 
-	public HashSet<String> getDistinctCategory() {
+	public synchronized HashSet<String> getDistinctCategory() {
 		distinctCategory = new HashSet<String>();
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
 		    distinctCategory.add(entry.getValue().get(0));
@@ -100,7 +105,7 @@ public class MenuFileOperations {
 
 	
 	
-	public ArrayList<String> getItemNameListForSelectedCategory(String selectedCategory) {
+	public synchronized ArrayList<String> getItemNameListForSelectedCategory(String selectedCategory) {
 		ArrayList<String> listOfItems = new ArrayList<String>();
 		
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
@@ -114,7 +119,7 @@ public class MenuFileOperations {
 		return listOfItems;
 	}
 	
-	public String getPriceForSelectedCategoryAndItem(String selectedCategory, String item) {
+	public synchronized String getPriceForSelectedCategoryAndItem(String selectedCategory, String item) {
 		
 		System.out.println("Selected Category is "+selectedCategory + " Item "+item);
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {

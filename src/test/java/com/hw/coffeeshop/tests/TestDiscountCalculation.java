@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	
 	DiscountCalculator discCalc = new DiscountCalculator();
 	static TreeMap<Integer, LinkedList<String>> newCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
-	static HashMap<String, ArrayList<String>> newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
+	static ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap = new ConcurrentHashMap<String, ArrayList<String>>();
 	
 	//getTotalDiscountAmount
 	
