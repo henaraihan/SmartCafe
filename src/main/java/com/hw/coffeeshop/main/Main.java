@@ -4,8 +4,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Manager managerObject = new Manager();
-		managerObject.run();
+		Manager mgr = new Manager();
+		mgr.run();
 		
 	}
 

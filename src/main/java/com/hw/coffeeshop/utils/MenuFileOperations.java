@@ -9,14 +9,22 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.model.Menu;
 
 public class MenuFileOperations {
 	public static HashMap<String, LinkedList<String>> menuItemsHashMap ;
 	public static HashSet<String> distinctCategory;
+	public static HashMap<String,String> ItemNameItemID;
+	public static HashMap<String,String> ItemIDItemName;
+	
 	//Delimiters used in the CSV file
 	private static final String COMMA_DELIMITER = ",";
-	
+	static Log log = LogFactory.getLog(MenuFileOperations.class);
 	
 	public  void readCSVAndStoreData(){
 		BufferedReader br = null;
@@ -26,21 +34,21 @@ public class MenuFileOperations {
 		
 		try {
 				menuItemsHashMap = new HashMap<String, LinkedList<String>>();
+				ItemNameItemID = new HashMap<String, String>();
+				ItemIDItemName = new HashMap<String, String>();
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.MENU_FILENAME));
 	            //Use Delimiter as COMMA
 	            String line = "";
 	            
 	            //Read to skip the header
-	            br.readLine();
-	            
-	            //TODO: Reading in Menu menuObject;
-	            //Create List for holding Menu objects
-	            // List<Menu> listOfMenus = new ArrayList<Menu>();
+	            if(br!=null) {
+	            	br.readLine();
+	            }
 	            
 	            //Reading from the second line
 	            while ((line = br.readLine()) != null){
-	            	//menuObject = new Menu();
+	            	
 	            	String[] menuDetails = line.split(COMMA_DELIMITER);
 	                menuItemList = new LinkedList<String>();
 	                if(menuDetails.length > 0 )
@@ -52,36 +60,39 @@ public class MenuFileOperations {
 	                	
 	                	//populate Menu in hashMap with itemID as Key
 	                	menuItemsHashMap.put(menuDetails[0],menuItemList); 
+	                	
+	                	//populate Item Name vs Item ID HashMap
+	                	ItemNameItemID.put(menuDetails[3], menuDetails[0]);
+	                	
+	                	//populate Item ID vs Item Name HashMap
+	                	ItemIDItemName.put(menuDetails[0], menuDetails[3]);
 	                }
 	            }
-	            // Just to print the HashMap 
-	            for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
-	    			
-	    		    System.out.println(entry.getKey() + ":" + entry.getValue());
-	    		    
-	    		}
+	            
 	            
 	    }
         catch(Exception ee)
         {
             ee.printStackTrace();
+            log.error("Exception: "+ee);
         }
         finally
         {
-            try
-            {
-                br.close();
+            try{
+            	if(br!= null) {
+                	br.close();
+                }
             }
             catch(IOException ie)
             {
-                System.out.println("Error occured while closing the BufferedReader");
+            	log.error("Error occured while closing the BufferedReader");
                 ie.printStackTrace();
             }
         }
 	}
 
 
-	public HashSet<String> getDistinctCategory() {
+	public synchronized HashSet<String> getDistinctCategory() {
 		distinctCategory = new HashSet<String>();
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
 		    distinctCategory.add(entry.getValue().get(0));
@@ -92,13 +103,14 @@ public class MenuFileOperations {
 	}
 
 
-	public ArrayList<String> getItemNameListForSelectedCategory(String selectedCategory) {
+	
+	
+	public synchronized ArrayList<String> getItemNameListForSelectedCategory(String selectedCategory) {
 		ArrayList<String> listOfItems = new ArrayList<String>();
 		
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
 			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)){
 		    	
-		    	//System.out.println(entry.getValue().get(2));
 		    	listOfItems.add(entry.getValue().get(2));
 		    	
 		    	}
@@ -106,4 +118,19 @@ public class MenuFileOperations {
 		
 		return listOfItems;
 	}
+	
+	public synchronized String getPriceForSelectedCategoryAndItem(String selectedCategory, String item) {
+		
+		System.out.println("Selected Category is "+selectedCategory + " Item "+item);
+		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
+			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)  && entry.getValue().get(2).equals(item)){
+					return (entry.getValue().get(1));
+		    	}
+			
+		}
+		return "";
+		
+	}
+	
+	
 }
