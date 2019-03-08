@@ -1,0 +1,26 @@
+ITEM_NAME,ITEM_ID,CATEGORY,QUANTITY_SOLD,COST,INCOME_PER_ITEM
+GreekSalad,FOOD259,Other,0,20,0
+SoftDrink,FOOD254,Beverages,1,10,10
+Brownie,FOOD265,Other,0,10,0
+GarlicBread,FOOD253,Other,7,20,140
+Oatmeal,FOOD264,Food,0,25,0
+VegPizza,FOOD252,Food,8,25,200
+Tea,FOOD263,Beverages,0,7,0
+Americano,FOOD251,Beverages,4,15,60
+PanCake,FOOD262,Other,3,10,30
+CheesePasta,FOOD258,Food,0,20,0
+FruitPunch,FOOD269,Beverages,0,20,0
+Latte,FOOD257,Beverages,0,12,0
+Donuts,FOOD268,Other,0,8,0
+ApplePie,FOOD256,Other,1,8,8
+Burger,FOOD267,Food,0,22,0
+ChickenPizza,FOOD255,Food,1,20,20
+Mocha,FOOD266,Beverages,0,10,0
+ChickenPasta,FOOD261,Food,0,18,0
+Mocktail,FOOD260,Beverages,4,20,80
+IceCream,FOOD271,Other,5,15,75
+VegPatty,FOOD270,Food,0,15,0
+
+,,,,Total,623.0
+,,,,Total Discount,0.0
+,,,,Total After Discount,623.0

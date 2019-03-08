@@ -43,7 +43,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import org.apache.commons.lang3.SystemUtils;
 
-public class SmartCafeGUI extends JFrame implements ActionListener, Observer
+public class SmartCafeGUI extends JFrame implements Observer
 {
 	
 	
@@ -66,7 +66,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	
 	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	
-	private JFrame mainFrame = new JFrame();
+	public static JFrame mainFrame = new JFrame();
 	JPanel orderTablePanel_1 = new JPanel();
 	JPanel orderTablePanel_2 = new JPanel();
 	
@@ -188,8 +188,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	ArrayList<String> ordersList_1 = new ArrayList<String>();
 	ArrayList<String> ordersList_2 = new ArrayList<String>();
 	
-	private static TreeSet<Integer> uniqueCustomerIDs_1 = new TreeSet<Integer>();
-	private static TreeSet<Integer> uniqueCustomerIDs_2 = new TreeSet<Integer>();
+	public static TreeSet<Integer> uniqueCustomerIDs_1 = new TreeSet<Integer>();
+	public static TreeSet<Integer> uniqueCustomerIDs_2 = new TreeSet<Integer>();
 	
 	static
 	{
@@ -226,7 +226,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	}
 	
 	
-	private void setupLayout() {
+	public void setupLayout() {
 		agent1Panel.setLayout(layout);
 		agent2Panel.setLayout(layout);
 		orderTablePanel_1.setLayout(layout);
@@ -238,7 +238,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	}
 	
 	
-	private void setupAgent1GUI()
+	public void setupAgent1GUI()
 	{
 		mainFrame.setTitle("Coffee Shop Simulator");
 		//mainFrame.setSize(1200, 1200);
@@ -376,8 +376,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 			categoriesComboBox_1.addItem(category);
 		}
 		
-		categoriesComboBox_1.addActionListener(this);
-		
 		gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.gridwidth=1;
@@ -453,7 +451,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
         gbc.gridy = 3;
         gbc.gridwidth=1;
         agent1Panel.add(addOrder_1,gbc);
-		addOrder_1.addActionListener(this);
+		
         
 		
 		//orderTable
@@ -485,7 +483,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
         gbc.gridy = yAxisCounter+1;
         gbc.gridwidth=1;
         agent1Panel.add(applyDiscount_1,gbc);
-        applyDiscount_1.addActionListener(this);
         
         gbc.gridx = 5;
         gbc.gridy = yAxisCounter+2;
@@ -513,26 +510,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		gbc.gridy = yAxisCounter+4;
 		gbc.gridwidth=1;
 		agent1Panel.add(submitOrder_1,gbc);
-		submitOrder_1.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+4;
 		gbc.gridwidth=1;
 		agent1Panel.add(clearOrder_1,gbc);
-		clearOrder_1.addActionListener(this);
-		
 		
 		gbc.gridx = 4;
 		gbc.gridy = yAxisCounter+5;
 		gbc.gridwidth=1;
 		agent1Panel.add(generateReport_1,gbc);
-		generateReport_1.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+5;
 		gbc.gridwidth=1;
 		agent1Panel.add(viewReport_1,gbc);
-		viewReport_1.addActionListener(this);
 		
 		//liveOrderStatusPanel
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -602,7 +594,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	      });
 	}
 	
-	private void setupAgent2GUI()
+	public void setupAgent2GUI()
 	{
 		agent2Panel.setLayout(layout);
 		
@@ -707,7 +699,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 			categoriesComboBox_2.addItem(category);
 		}
 		
-		categoriesComboBox_2.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = yAxisCounter+9; //3
         gbc.gridwidth=1;
@@ -778,7 +769,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
         gbc.gridy = yAxisCounter+9; //3
         gbc.gridwidth=1;
         agent2Panel.add(addOrder_2,gbc);
-		addOrder_2.addActionListener(this);
+		
         
 		
 		//orderTable
@@ -809,7 +800,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
         gbc.gridy = yAxisCounter+11; //1
         gbc.gridwidth=1;
         agent2Panel.add(applyDiscount_2,gbc);
-        applyDiscount_2.addActionListener(this);
         
         gbc.gridx = 5;
         gbc.gridy = yAxisCounter+12; //2
@@ -837,392 +827,32 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		gbc.gridy = yAxisCounter+14; //4
 		gbc.gridwidth=1;
 		agent2Panel.add(submitOrder_2,gbc);
-		submitOrder_2.addActionListener(this);
+		
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+14; //4
 		gbc.gridwidth=1;
 		agent2Panel.add(clearOrder_2,gbc);
-		clearOrder_2.addActionListener(this);
+		
 		
 		
 		gbc.gridx = 4;
 		gbc.gridy = yAxisCounter+15; //5
 		gbc.gridwidth=1;
 		agent2Panel.add(generateReport_2,gbc);
-		generateReport_2.addActionListener(this);
+		
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+15; //5
 		gbc.gridwidth=1;
 		agent2Panel.add(viewReport_2,gbc);
-		viewReport_2.addActionListener(this);
-		
-	}
-	
-	public void actionPerformed(ActionEvent e){
-		if (e.getSource() == addOrder_1) {
-			try {
-				boolean isValidationPass = true;
-				if(itemListComboBox_1.getItemCount()==0) {
-					isValidationPass=false;
-					throw new NoCategorySelectedException();
-				}
-				if("".equals(unitPrice_1.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Item Selected",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(quantity_1.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if(isValidationPass){
-					showOrderRow_1();
-				}else {
-					unitPrice_1.setText("");
-				}
-			}catch (NoCategorySelectedException e2) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "No Category Selected",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-			
-		}
-		if (e.getSource() == addOrder_2) {
-			try {
-				boolean isValidationPass = true;
-				if(itemListComboBox_2.getItemCount()==0) {
-					isValidationPass=false;
-					throw new NoCategorySelectedException();
-				}
-				if("".equals(unitPrice_2.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Item Selected",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(quantity_2.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if(isValidationPass){
-					showOrderRow_2();
-				}else {
-					unitPrice_2.setText("");
-				}
-			}catch (NoCategorySelectedException e2) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "No Category Selected",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-				
-			}
-			
-		}
-		if(e.getSource()== itemListComboBox_1) {
-			JComboBox<String> combo2 = (JComboBox<String>) e.getSource();
-	        String selectedItem = (String) combo2.getSelectedItem();
-	        latestItem_1 = selectedItem;
-		    showUnitPriceTextBox4SelectedCategoryAndItem_1(selectedCategory_1, selectedItem);
-		}
-		if(e.getSource()== itemListComboBox_2) {
-			JComboBox<String> combo2 = (JComboBox<String>) e.getSource();
-	        String selectedItem = (String) combo2.getSelectedItem();
-	        latestItem_2 = selectedItem;
-		    showUnitPriceTextBox4SelectedCategoryAndItem_2(selectedCategory_2, selectedItem);
-		}
-		if(e.getSource()== categoriesComboBox_1) {
-			JComboBox<String> combo = (JComboBox<String>) e.getSource();
-	        selectedCategory_1 = (String) combo.getSelectedItem();
-	        latestCategory_1 = selectedCategory_1;
-	        if (selectedCategory_1.equals("Beverages")) {
-	            showItemList4GivenCategory_1();
-	        } else if (selectedCategory_1.equals("Food")) {
-	            showItemList4GivenCategory_1();
-	    	} else if (selectedCategory_1.equals("Other")) {
-	    		showItemList4GivenCategory_1();
-	    	}
-		}
-		if(e.getSource()== categoriesComboBox_2) {
-			JComboBox<String> combo = (JComboBox<String>) e.getSource();
-	        selectedCategory_2 = (String) combo.getSelectedItem();
-	        latestCategory_2 = selectedCategory_2;
-	        if (selectedCategory_2.equals("Beverages")) {
-	            showItemList4GivenCategory_2();
-	        } else if (selectedCategory_2.equals("Food")) {
-	            showItemList4GivenCategory_2();
-	    	} else if (selectedCategory_2.equals("Other")) {
-	    		showItemList4GivenCategory_2();
-	    	}
-		}
-		if (e.getSource() == applyDiscount_1) {
-			boolean isValidationPass = false;
-			try {
-				
-				if("".equals(quantity_1.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				else if("".equals(totalAmountText_1.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Add your Order First",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				else if(new DiscountCalculator().validCoupon(discountCoupon_1.getText())) {
-					DiscountCalculator discountCalc = new DiscountCalculator();
-					Double discount = discountCalc.applyDiscounts(discountCoupon_1.getText(), totalAmount_1, lastCustomerNum_1.toString(), newCustomerOrder_1, newCustomerOrdersMap_1);
-					System.out.println("discount "+(totalAmount_1-discount));
-					discountText_1.setText(String.valueOf((Precision.round((totalAmount_1-discount), 2))));
-					
-					grandTotalText_1.setText(String.valueOf((Precision.round(discount, 2))));
-					isValidationPass = true;
-				}
-			} catch (InvalidDiscountCodeException e1) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "Invalid Discount Coupon. Hint:Use 20OFF",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-			
-		}
-		if (e.getSource() == applyDiscount_2) {
-			boolean isValidationPass = false;
-			try {
-				
-				if("".equals(quantity_2.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				else if("".equals(totalAmountText_2.getText())) {
-					isValidationPass=false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Add your Order First",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				else if(new DiscountCalculator().validCoupon(discountCoupon_2.getText())) {
-					DiscountCalculator discountCalc = new DiscountCalculator();
-					Double discount = discountCalc.applyDiscounts(discountCoupon_2.getText(), totalAmount_2, lastCustomerNum_2.toString(), newCustomerOrder_2, newCustomerOrdersMap_2);
-					System.out.println("discount "+(totalAmount_2-discount));
-					discountText_2.setText(String.valueOf((Precision.round((totalAmount_2-discount), 2))));
-					
-					grandTotalText_2.setText(String.valueOf((Precision.round(discount, 2))));
-					isValidationPass = true;
-				}
-			} catch (InvalidDiscountCodeException e1) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "Invalid Discount Coupon. Hint:Use 20OFF",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-			
-		}
-		if (e.getSource() == submitOrder_1) {
-			boolean isValidationPass = true;
-			try {
-				if(itemListComboBox_1.getItemCount()==0) {
-					isValidationPass = false;
-					throw new NoCategorySelectedException();
-				}
-				if("".equals(unitPrice_1.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Item Selected",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(quantity_1.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(totalAmountText_1.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Add your Order First",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				
-				if(isValidationPass) {
-					//
-					log.info("Populating New order ..... ");
-					
-					//Singleton implementation
-					ExistingOrderOperations existingOrderFile2 = ExistingOrderOperations.getInstance();
-					existingOrderFile2.saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
-					
-					//new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
-					
-					System.out.println(newCustomerOrdersMap_1.toString());
-					System.out.println("Order List "+newCustomerOrder_1.keySet().toString());
-					//threadCount++;
-					
-					Order newOrder = new Order();
-					newOrder.setCustomerName(newCustomerName_1.getText());
-					newOrder.setCustomerID(lastCustomerNum_1.toString());
-					Set<Integer> orderList = newCustomerOrder_1.keySet();
-					newOrder.setOrderIDs(orderList);
-					newOrder.setAmount(grandTotalText_1.getText());
-					newOrder.setDiscount(discountText_1.getText());
-					
-					System.out.println(" Print orderList now: "+newOrder.getOrderIDs());
-					
-					newOrder.setQuantity(newCustomerOrder_1.size());
-					
-					/*
-					 * if(threadCount == 5) { newOrder.setMsg("EXIT"); }
-					 */
-					//
-			        OrderProducer producer = new OrderProducer(queue, newOrder);
-			        //starting producer to produce messages in queue
-			        new Thread(producer).start();
-					//
-					//TODO: display in Live Status Area
-					showNewOrderLive();
-					 OrderConsumer consumer = new OrderConsumer(queue, newOrder);
-					//starting producer to produce messages in queue
-			        new Thread(consumer).start();
-					clearAgent1OrderDetails();
-					
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Order Is Submitted",
-						    "Info",
-						    JOptionPane.INFORMATION_MESSAGE);
-				}
-			}catch (NoCategorySelectedException e2) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "No Category Selected",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-		}
-		if (e.getSource() == submitOrder_2) {
-			boolean isValidationPass = true;
-			try {
-				if(itemListComboBox_2.getItemCount()==0) {
-					isValidationPass = false;
-					throw new NoCategorySelectedException();
-				}
-				if("".equals(unitPrice_2.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Item Selected",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(quantity_2.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "No Quantity Entered",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				if("".equals(totalAmountText_2.getText())) {
-					isValidationPass = false;
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Add your Order First",
-						    "Warning",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				
-				if(isValidationPass) {
-					//
-					log.info("Populating New order .....agent 2 ");
-					
-					//Singleton implementation
-					ExistingOrderOperations existingOrderFile3 = ExistingOrderOperations.getInstance();
-					existingOrderFile3.saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
-					
-					//old imp
-					//new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
-					System.out.println(newCustomerOrdersMap_2.toString());
-					
-					threadCount++;
-					
-					Order newOrder = new Order();
-					newOrder.setCustomerName(newCustomerName_2.getText());
-					newOrder.setCustomerID(lastCustomerNum_2.toString());
-					newOrder.setOrderIDs(newCustomerOrder_2.keySet());
-					newOrder.setQuantity(newCustomerOrder_2.size());
-					newOrder.setAmount(grandTotalText_2.getText());
-					newOrder.setDiscount(discountText_2.getText());
-					
-					if(threadCount == 5) {
-						newOrder.setMsg("EXIT");
-					}
-					//
-			        OrderProducer producer = new OrderProducer(queue, newOrder);
-			        //starting producer to produce messages in queue
-			        new Thread(producer).start();
-					//
-					//TODO: display in Live Status Area
-					showNewOrderLive();
-					 OrderConsumer consumer = new OrderConsumer(queue, newOrder);
-					//starting producer to produce messages in queue
-			        new Thread(consumer).start();
-					
-			        clearAgent2OrderDetails();
-					
-					JOptionPane.showMessageDialog(mainFrame,
-						    "Order Is Submitted",
-						    "Info",
-						    JOptionPane.INFORMATION_MESSAGE);
-				}
-			}catch (NoCategorySelectedException e2) {
-				JOptionPane.showMessageDialog(mainFrame,
-					    "No Category Selected",
-					    "Warning",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-		}
-		if (e.getSource() == clearOrder_1) {
-			clear_agent1_orders();
-		}
-		if (e.getSource() == clearOrder_1) {
-			clear_agent12_orders();
-		}
-		
-		if (e.getSource() == generateReport_1 || e.getSource() == generateReport_2 ) {
-			TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
-			report.generateReport();
-			
-			JOptionPane.showMessageDialog(mainFrame,
-				    "New Report is Generated",
-				    "Info",
-				    JOptionPane.INFORMATION_MESSAGE);
-			
-		}
-		if (e.getSource() == viewReport_1 || e.getSource() == viewReport_2) {
-			viewReports();
-		}
 		
 		
 	}
 	
 	
-	private void showOrderRow_1() {
+	
+	public void showOrderRow_1() {
 		
 		applyDiscount_1.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
@@ -1322,7 +952,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		mainFrame.repaint();
 	}
 	
-	private void showOrderRow_2() {
+	public void showOrderRow_2() {
 		
 		applyDiscount_2.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
@@ -1422,7 +1052,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		mainFrame.repaint();
 	}
 	
-	private void clear_agent1_orders() {
+	public void clear_agent1_orders() {
 		
 		/*
 		mainFrame.remove(orderTablePanel);
@@ -1469,7 +1099,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	}
 
 	
-	private void clear_agent12_orders() {
+	public void clear_agent12_orders() {
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
@@ -1500,7 +1130,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		quantity_2.setText("");
 		
 	}
-	private void clearAgent1OrderDetails() {
+	public void clearAgent1OrderDetails() {
 		
 		agent1Panel.remove(orderTablePanel_1);
 		orderTablePanel_1 = new JPanel();
@@ -1544,7 +1174,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		quantity_1.setText("");
 	}
 
-	private void clearAgent2OrderDetails() {
+	public void clearAgent2OrderDetails() {
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
@@ -1592,7 +1222,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 
 	
 	
-	private static void showNewOrderLive() { 
+	public static void showNewOrderLive() { 
 		log.info("Inside showNewOrderLive method ");
         SwingWorker sw1 = new SwingWorker() { 
             @Override
@@ -1636,7 +1266,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
     } 
 	
 	
-	private void viewReports() {
+	public void viewReports() {
     	try {
     		String reportName = getLatestReportFile(".csv");
     		Desktop.getDesktop().open(new File(SystemUtils.USER_DIR+"\\reports\\"+reportName));
@@ -1646,14 +1276,14 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		}
 	}
 	
-	private void showUnitPriceTextBox4SelectedCategoryAndItem_1(String selectedCategory, String item) {
+	public void showUnitPriceTextBox4SelectedCategoryAndItem_1(String selectedCategory, String item) {
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		unitPrice_1.setText(price);
 		latestPrice_1 = price;
 	}
 	
-	private void showUnitPriceTextBox4SelectedCategoryAndItem_2(String selectedCategory, String item) {
+	public void showUnitPriceTextBox4SelectedCategoryAndItem_2(String selectedCategory, String item) {
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		unitPrice_2.setText(price);
@@ -1674,7 +1304,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	    
 	}
 	
-	private void showItemList4GivenCategory_1() {
+	public void showItemList4GivenCategory_1() {
 		
 		ArrayList<String> itemList = new MenuFileOperations().getItemNameListForSelectedCategory(selectedCategory_1);
 		
@@ -1682,23 +1312,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 		for(String item : itemList) {
 			itemListComboBox_1.addItem(item);
 		}
-		itemListComboBox_1.addActionListener(this);
+		
 		
 	}
 	
-	private void showItemList4GivenCategory_2() {
+	public void showItemList4GivenCategory_2() {
 		
 		ArrayList<String> itemList = new MenuFileOperations().getItemNameListForSelectedCategory(selectedCategory_2);
 		
 		itemListComboBox_2.removeAllItems();
 		for(String item : itemList) {
 			itemListComboBox_2.addItem(item);
-		}
-		itemListComboBox_2.addActionListener(this);
-		
+		}		
 	}
 	
-	private String getLatestReportFile(String reportExtention) {
+	public String getLatestReportFile(String reportExtention) {
 		
 		List<String> listofCsvFiles = new ArrayList<String>();
 		
@@ -1750,6 +1378,27 @@ public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 	public void update(Order o)
 	{
 		updateStatusArea(statusArea, o.getCustomerName() +":            "+o.getCustomerID() +" :            " +o.getQuantity());
+	}
+	
+	public void addSetListener(ActionListener al)
+	{
+		categoriesComboBox_1.addActionListener(al);
+		addOrder_1.addActionListener(al);
+		applyDiscount_1.addActionListener(al);
+		generateReport_1.addActionListener(al);
+		clearOrder_1.addActionListener(al);
+		viewReport_1.addActionListener(al);
+		submitOrder_1.addActionListener(al);
+		categoriesComboBox_2.addActionListener(al);
+		applyDiscount_2.addActionListener(al);
+        addOrder_2.addActionListener(al);
+		submitOrder_2.addActionListener(al);
+		clearOrder_2.addActionListener(al);
+		generateReport_2.addActionListener(al);
+		viewReport_2.addActionListener(al);
+		itemListComboBox_1.addActionListener(al);
+		itemListComboBox_2.addActionListener(al);
+		
 	}
 	
 	
