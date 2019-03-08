@@ -200,7 +200,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		log.info("Loading Existing Order CSV file into TreeMap.....");
 		long existingOrderFileReadTimer = System.currentTimeMillis();
-		ExistingOrderOperations existingOrderFile = new ExistingOrderOperations();
+		//---------------------------------------------
+		//IMPLEMENTING SINGLETON
+		ExistingOrderOperations existingOrderFile = ExistingOrderOperations.getInstance();
+		
+		//---------------------------------------------
+		
 		existingOrderFile.readCSVAndStoreData();
 		log.info(" Completed loading Order CSV file >>> Total Execution Time:  "+(System.currentTimeMillis() - existingOrderFileReadTimer) +" ms");
 	}

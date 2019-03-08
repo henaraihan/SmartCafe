@@ -15,6 +15,13 @@ import org.apache.commons.logging.LogFactory;
 
 public class ExistingOrderOperations {
 
+	private static ExistingOrderOperations instance;
+	
+	private ExistingOrderOperations ()
+	{
+		System.out.println("nothing");
+	}
+	
 	public static TreeMap<Integer, LinkedList<String>> existingCustomerOrder;
 	private  ConcurrentHashMap<String, ArrayList<String>> newCustomerOrdersMap = new ConcurrentHashMap<String, ArrayList<String>>();
 	public static Integer lastOrderNo;
@@ -122,4 +129,10 @@ public class ExistingOrderOperations {
 		
 		return new ExistingOrderOperations().newCustomerOrdersMap.get(customerId);
 	}
+	
+	public static ExistingOrderOperations getInstance() {
+		if (instance == null)
+		instance = new ExistingOrderOperations();
+		return instance;
+		}
 }
