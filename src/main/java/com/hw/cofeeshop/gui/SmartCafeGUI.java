@@ -89,11 +89,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	GridBagLayout layout = new GridBagLayout();
 	
-	Integer lastCustomerNum_1;
-	Integer lastCustomerNum_2;
+	//Integer lastCustomerNum_1;
+	//Integer lastCustomerNum_2;
 	
-	String latestOrderNum_1 = "";
-	String latestOrderNum_2 = "";
+	//String latestOrderNum_1 = "";
+	//String latestOrderNum_2 = "";
 	
 	String latestCategory_1 = "";
 	String latestCategory_2 = "";
@@ -281,8 +281,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		JLabel newCustomerIDLabel = new JLabel("Customer ID: ");
 		
 		newCustomerID_1.setEditable(false);
-		lastCustomerNum_1 = ExistingOrderOperations.getLastCustomerNumber()+1;
-		newCustomerID_1.setText(String.valueOf(lastCustomerNum_1));
+		//lastCustomerNum_1 = ExistingOrderOperations.getLastCustomerNumber()+1;
+		newCustomerID_1.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_1.repaint();
 		//GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -347,8 +347,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridy = 3;
         JTextField newOrderId = new JTextField(8);
 		newOrderId.setEditable(false);
-		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
-		latestOrderNum_1 = String.valueOf(lastOrderNo);
+		//Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
+		//latestOrderNum_1 = String.valueOf(lastOrderNo);
 		agent1Panel.add(newOrderId,gbc);
         
         
@@ -614,8 +614,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		//showCustomerIDTextBox
 		JLabel newCustomerIDLabel = new JLabel("Customer ID: ");
 		newCustomerID_2.setEditable(false);
-		lastCustomerNum_2 = ExistingOrderOperations.getLastCustomerNumber()+1;
-		newCustomerID_2.setText(String.valueOf(lastCustomerNum_2));
+		//lastCustomerNum_2 = ExistingOrderOperations.getLastCustomerNumber()+1;
+		newCustomerID_2.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_2.repaint();
 		//GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -679,8 +679,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridy = yAxisCounter+9; //3
         JTextField newOrderId = new JTextField(8);
 		newOrderId.setEditable(false);
-		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
-		latestOrderNum_2 = String.valueOf(lastOrderNo);
+		//Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
+		//latestOrderNum_2 = String.valueOf(lastOrderNo);
 		agent2Panel.add(newOrderId,gbc);
         
         
@@ -977,7 +977,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				}
 				else if(new DiscountCalculator().validCoupon(discountCoupon_1.getText())) {
 					DiscountCalculator discountCalc = new DiscountCalculator();
-					Double discount = discountCalc.applyDiscounts(discountCoupon_1.getText(), totalAmount_1, lastCustomerNum_1.toString(), newCustomerOrder_1, newCustomerOrdersMap_1);
+					Double discount = discountCalc.applyDiscounts(discountCoupon_1.getText(), totalAmount_1, String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), newCustomerOrder_1, newCustomerOrdersMap_1);
 					System.out.println("discount "+(totalAmount_1-discount));
 					discountText_1.setText(String.valueOf((Precision.round((totalAmount_1-discount), 2))));
 					
@@ -1012,7 +1012,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				}
 				else if(new DiscountCalculator().validCoupon(discountCoupon_2.getText())) {
 					DiscountCalculator discountCalc = new DiscountCalculator();
-					Double discount = discountCalc.applyDiscounts(discountCoupon_2.getText(), totalAmount_2, lastCustomerNum_2.toString(), newCustomerOrder_2, newCustomerOrdersMap_2);
+					Double discount = discountCalc.applyDiscounts(discountCoupon_2.getText(), totalAmount_2, String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), newCustomerOrder_2, newCustomerOrdersMap_2);
 					System.out.println("discount "+(totalAmount_2-discount));
 					discountText_2.setText(String.valueOf((Precision.round((totalAmount_2-discount), 2))));
 					
@@ -1055,6 +1055,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 						    "Warning",
 						    JOptionPane.ERROR_MESSAGE);
 				}
+				if("".equals(grandTotalText_1.getText())) {
+					isValidationPass = false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "Apply Discount first",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
 				
 				if(isValidationPass) {
 					//
@@ -1066,7 +1073,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					
 					Order newOrder = new Order();
 					newOrder.setCustomerName(newCustomerName_1.getText());
-					newOrder.setCustomerID(lastCustomerNum_1.toString());
+					newOrder.setCustomerID(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 					Set<Integer> orderList = newCustomerOrder_1.keySet();
 					newOrder.setOrderIDs(orderList);
 					newOrder.setAmount(grandTotalText_1.getText());
@@ -1131,6 +1138,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 						    "Warning",
 						    JOptionPane.ERROR_MESSAGE);
 				}
+				if("".equals(grandTotalText_2.getText())) {
+					isValidationPass = false;
+					JOptionPane.showMessageDialog(mainFrame,
+						    "Apply Discount first",
+						    "Warning",
+						    JOptionPane.ERROR_MESSAGE);
+				}
 				
 				if(isValidationPass) {
 					//
@@ -1142,7 +1156,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					
 					Order newOrder = new Order();
 					newOrder.setCustomerName(newCustomerName_2.getText());
-					newOrder.setCustomerID(lastCustomerNum_2.toString());
+					//newOrder.setCustomerID(lastCustomerNum_2.toString());
+					newOrder.setCustomerID(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
+					
 					newOrder.setOrderIDs(newCustomerOrder_2.keySet());
 					newOrder.setQuantity(newCustomerOrder_2.size());
 					newOrder.setAmount(grandTotalText_2.getText());
@@ -1221,13 +1237,15 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 			yAxisCounter = yAxisCounter+1;
 		}
 		
-		latestOrderNum_1 = String.valueOf((Integer.parseInt(latestOrderNum_1)+1));
+		//latestOrderNum_1 = String.valueOf((Integer.parseInt(latestOrderNum_1)+1));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = yAxisCounter;
-        orderidText.setText(latestOrderNum_1);
+        //orderidText.setText(latestOrderNum_1);
+        orderidText.setText(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+       
         orderidText.setVisible(true);
         orderidText.setEditable(false);
         orderTablePanel_1.add(orderidText,gbc);
@@ -1275,7 +1293,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		LinkedList<String> orderValues = new LinkedList<String>();
 		
 		//adding customer ID
-		orderValues.add(lastCustomerNum_1.toString());
+		//orderValues.add(lastCustomerNum_1.toString());
+		orderValues.add(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
+		
 		
 		//adding Item ID
 		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem_1);
@@ -1288,12 +1308,14 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		orderValues.add(new Timestamp(System.currentTimeMillis()).toString());
 		
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
-		newCustomerOrder_1.put(Integer.parseInt(latestOrderNum_1), orderValues);
+		//newCustomerOrder_1.put(Integer.parseInt(latestOrderNum_1), orderValues);
+		newCustomerOrder_1.put((ExistingOrderOperations.getLastOrderNumber()+1), orderValues);
 		
+		//ordersList_1.add(latestOrderNum_1);
+		ordersList_1.add(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
 		
-		ordersList_1.add(latestOrderNum_1);
-		newCustomerOrdersMap_1.put(lastCustomerNum_1.toString(), ordersList_1);
-		uniqueCustomerIDs_1.add(lastCustomerNum_1);
+		newCustomerOrdersMap_1.put(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), ordersList_1);
+		uniqueCustomerIDs_1.add((ExistingOrderOperations.getLastCustomerNumber()+1));
 		log.info(newCustomerOrder_1);
 		log.info(newCustomerOrdersMap_1);
 			
@@ -1321,13 +1343,15 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 			yAxisAgent2Counter = yAxisAgent2Counter+1;
 		}
 		
-		latestOrderNum_2 = String.valueOf((Integer.parseInt(latestOrderNum_2)+1));
+		//latestOrderNum_2 = String.valueOf((Integer.parseInt(latestOrderNum_2)+1));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = yAxisAgent2Counter;
-        orderidText.setText(latestOrderNum_2);
+        //orderidText.setText(latestOrderNum_2);
+        orderidText.setText(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+        
         orderidText.setVisible(true);
         orderidText.setEditable(false);
         orderTablePanel_2.add(orderidText,gbc);
@@ -1375,7 +1399,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		LinkedList<String> orderValues = new LinkedList<String>();
 		
 		//adding customer ID
-		orderValues.add(lastCustomerNum_2.toString());
+		//orderValues.add(lastCustomerNum_2.toString());
+		orderValues.add(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		
 		//adding Item ID
 		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem_2);
@@ -1388,12 +1413,14 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		orderValues.add(new Timestamp(System.currentTimeMillis()).toString());
 		
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
-		newCustomerOrder_2.put(Integer.parseInt(latestOrderNum_2), orderValues);
+		//newCustomerOrder_2.put(Integer.parseInt(latestOrderNum_2), orderValues);
+		
+		newCustomerOrder_2.put((ExistingOrderOperations.getLastOrderNumber()+1), orderValues);
 		
 		
-		ordersList_2.add(latestOrderNum_2);
-		newCustomerOrdersMap_2.put(lastCustomerNum_2.toString(), ordersList_2);
-		uniqueCustomerIDs_2.add(lastCustomerNum_2);
+		ordersList_2.add(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+		newCustomerOrdersMap_2.put(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), ordersList_2);
+		uniqueCustomerIDs_2.add(ExistingOrderOperations.getLastCustomerNumber()+1);
 		log.info(newCustomerOrder_2);
 		log.info(newCustomerOrdersMap_2);
 			
@@ -1440,8 +1467,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		totalAmount_1 =new Double(0);
 		
 		
-		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
-		latestOrderNum_1 = String.valueOf(lastOrderNo);
+		//Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
+		//latestOrderNum_1 = String.valueOf(lastOrderNo);
 		
 		quantity_1.setText("");
 		
@@ -1473,8 +1500,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		totalAmount_2 =new Double(0);
 		
 		
-		Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
-		latestOrderNum_2 = String.valueOf(lastOrderNo);
+		//Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
+		//latestOrderNum_2 = String.valueOf(lastOrderNo);
 		
 		quantity_2.setText("");
 		
@@ -1504,11 +1531,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		ordersList_1.clear();
 		
 		//showCustomerIDTextBox();
-		lastCustomerNum_1 = ExistingOrderOperations.getLastCustomerNumber()+1;
-		newCustomerID_1.setText(String.valueOf(lastCustomerNum_1));
+		//lastCustomerNum_1 = ExistingOrderOperations.getLastCustomerNumber()+1;
+		newCustomerID_1.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_1.repaint();
 		
-		newCustomerID_2.setText(String.valueOf(lastCustomerNum_1));
+		newCustomerID_2.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_2.repaint();
 		
 		
@@ -1547,11 +1574,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		ordersList_2.clear();
 		
 		//showCustomerIDTextBox();
-		lastCustomerNum_2 = ExistingOrderOperations.getLastCustomerNumber()+1;
-		newCustomerID_1.setText(String.valueOf(lastCustomerNum_2));
+		//lastCustomerNum_2 = ExistingOrderOperations.getLastCustomerNumber()+1;
+		newCustomerID_1.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_1.repaint();
 		
-		newCustomerID_2.setText(String.valueOf(lastCustomerNum_2));
+		newCustomerID_2.setText(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 		newCustomerID_2.repaint();
 		
 		
