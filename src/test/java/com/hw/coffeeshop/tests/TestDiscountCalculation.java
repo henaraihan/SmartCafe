@@ -2,6 +2,7 @@ package com.hw.coffeeshop.tests;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class TestDiscountCalculation extends BaseTestClass{
 	  discCalc.calculateDiscount1("20OFF", new Double(250));
 	  
 	  // invalid discount 1 
-	  discCalc.calculateDiscount1("2FF", new Double(200));
+	  //discCalc.calculateDiscount1("2FF", new Double(200));
 	  
 	  assertEquals(new Double(20), DiscountCalculator.getTotalDiscountAmount());
 	  
@@ -101,29 +102,35 @@ public class TestDiscountCalculation extends BaseTestClass{
 	//invalid coupons 
 	@Test
 	@DisplayName("When Amount is greater than 200 and coupon is Invalid(35OFF) then dont give Discount 1")
-    void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1() throws InvalidDiscountCodeException {
+    void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1() {
 		
-		Double afterDisc = discCalc.calculateDiscount1("35OFF", new Double(250));
-		assertNotEquals(new Double(230), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("35OFF", new Double(250));
+		//assertNotEquals(new Double(230), afterDisc);
+		
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("35OFF", new Double(250)); });
+        
         
     }
 	
 	@Test
 	@DisplayName("When Amount is greater than 200 and coupon is Invalid(100OFF) then dont give Discount 1")
-    void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1_1() throws InvalidDiscountCodeException {
+    void whenAmountIsGreaterThan200WithInvalidCouponThenDontGiveDiscount1_1() {
 		
-		Double afterDisc = discCalc.calculateDiscount1("100OFF", new Double(250));
-		assertEquals(new Double(250), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("100OFF", new Double(250));
+		//assertEquals(new Double(250), afterDisc);
+		
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("100OFF", new Double(250)); });
         
     }
 	
 	
 	@Test
 	@DisplayName("When Amount is less than 200 and coupon is invalid (30OFF) then dont give Discount 1")
-    void whenAmountIsLessThan200WithInvalidCouponThenDontGiveDiscount1() throws InvalidDiscountCodeException {
+    void whenAmountIsLessThan200WithInvalidCouponThenDontGiveDiscount1()  {
 		
-		Double afterDisc = discCalc.calculateDiscount1("30OFF", new Double(150));
-		assertEquals(new Double(150), afterDisc);
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("30OFF", new Double(150)); });
+		//Double afterDisc = discCalc.calculateDiscount1("30OFF", new Double(150));
+		//assertEquals(new Double(150), afterDisc);
         
     }
 	
@@ -131,17 +138,21 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and coupon is invalid (10OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_1() throws InvalidDiscountCodeException {
 		
-		Double afterDisc = discCalc.calculateDiscount1("10OFF", new Double(200));
-		assertEquals(new Double(200), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("10OFF", new Double(200));
+		//assertEquals(new Double(200), afterDisc);
         
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("10OFF", new Double(200)); });
     }
 	
 	@Test
 	@DisplayName("When Amount is equal to 200 and coupon is invalid(50OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_2() throws InvalidDiscountCodeException {
 		
-		Double afterDisc = discCalc.calculateDiscount1("50OFF", new Double(200));
-		assertNotEquals(new Double(180), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("50OFF", new Double(200));
+		//assertNotEquals(new Double(180), afterDisc);
+		
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("50OFF", new Double(200)); });
+		
         
     }
 	
@@ -149,9 +160,10 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is equal to 200 and also coupon is invalid (10OFF) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1() throws InvalidDiscountCodeException {
 		
-		Double afterDisc = discCalc.calculateDiscount1("10OFF", new Double(200));
-		assertNotEquals(new Double(180), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("10OFF", new Double(200));
+		//assertNotEquals(new Double(180), afterDisc);
         
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("10OFF", new Double(200)); });
     }
 	
 	
@@ -159,9 +171,11 @@ public class TestDiscountCalculation extends BaseTestClass{
 	@DisplayName("When Amount is greater tha 200 and also coupon is invalid (20onn) then don't give Discount 1")
     void whenAmountIsEqualTo200WithInvalidCouponThenDontGiveDiscount1_3() throws InvalidDiscountCodeException {
 		
-		Double afterDisc = discCalc.calculateDiscount1("20onn", new Double(210));
-		assertNotEquals(new Double(190), afterDisc);
+		//Double afterDisc = discCalc.calculateDiscount1("20onn", new Double(210));
+		//assertNotEquals(new Double(190), afterDisc);
         
+		assertThrows(InvalidDiscountCodeException.class, ()-> { discCalc.calculateDiscount1("20onn", new Double(210)); });
+		
     }
 	
 	
