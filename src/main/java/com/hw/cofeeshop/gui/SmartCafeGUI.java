@@ -43,8 +43,9 @@ import org.apache.commons.lang3.SystemUtils;
 
 import org.apache.commons.lang3.SystemUtils;
 
-public class SmartCafeGUI extends JFrame implements ActionListener
+public class SmartCafeGUI extends JFrame implements ActionListener, Observer
 {
+	
 	
 	static{
 		if(SystemUtils.IS_OS_MAC){
@@ -211,9 +212,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	}
 	
 	//Constructor
-	
-	public SmartCafeGUI()
+	public SmartCafeGUI(Subject subject)
 	{
+		//Observer
+		subject.registerObserver(this);
+		
 		setupAgent1GUI();
 		setupAgent2GUI();
 		
@@ -221,6 +224,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		setupLayout();
 		//mainFrame.pack();
 	}
+	
 	
 	private void setupLayout() {
 		agent1Panel.setLayout(layout);
@@ -1064,7 +1068,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				if(isValidationPass) {
 					//
 					log.info("Populating New order ..... ");
-					new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
+					
+					//Singleton implementation
+					ExistingOrderOperations existingOrderFile2 = ExistingOrderOperations.getInstance();
+					existingOrderFile2.saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
+					
+					//new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
+					
 					System.out.println(newCustomerOrdersMap_1.toString());
 					System.out.println("Order List "+newCustomerOrder_1.keySet().toString());
 					//threadCount++;
@@ -1140,7 +1150,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				if(isValidationPass) {
 					//
 					log.info("Populating New order .....agent 2 ");
-					new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
+					
+					//Singleton implementation
+					ExistingOrderOperations existingOrderFile3 = ExistingOrderOperations.getInstance();
+					existingOrderFile3.saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
+					
+					//old imp
+					//new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
 					System.out.println(newCustomerOrdersMap_2.toString());
 					
 					threadCount++;
@@ -1730,6 +1746,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		      + t.getMessage());
 		}
 	}
+	
+	public void update(Order o)
+	{
+		updateStatusArea(statusArea, o.getCustomerName() +":            "+o.getCustomerID() +" :            " +o.getQuantity());
+	}
+	
 	
 }
 

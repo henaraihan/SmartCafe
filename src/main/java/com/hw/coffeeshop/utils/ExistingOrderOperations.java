@@ -130,9 +130,14 @@ public class ExistingOrderOperations {
 		return new ExistingOrderOperations().newCustomerOrdersMap.get(customerId);
 	}
 	
-	public static ExistingOrderOperations getInstance() {
-		if (instance == null)
-		instance = new ExistingOrderOperations();
+	public static synchronized ExistingOrderOperations getInstance() {
+	//----------------------------------------
+		//DOUBLE CHECKING SYNCHRONIZATION FOR MULTITHREADING
+		if (instance == null) // only if no instance
+			synchronized(ExistingOrderOperations.class) { // lock block
+				if (instance == null) // and re-check
+					instance = new ExistingOrderOperations();}
+	//----------------------------------------
 		return instance;
 		}
 }
