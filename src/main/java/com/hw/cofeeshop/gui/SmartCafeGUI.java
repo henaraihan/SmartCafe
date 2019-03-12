@@ -55,13 +55,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	}
 	public static BlockingQueue<Order> queue = new LinkedBlockingQueue<>(10);
 	
-	public static TextArea statusArea = new TextArea();
+	public volatile static TextArea statusArea = new TextArea();
 	public static TextArea server1Area = new TextArea();
 	public static TextArea server2Area = new TextArea();
-	public static TextArea server3Area = new TextArea();
+	//public static TextArea server3Area = new TextArea();
 	
-	public static Boolean server1NotBusy = true;
-	public static Boolean server2NotBusy = true;
+	//public static Boolean server1NotBusy = true;
+	//public static Boolean server2NotBusy = true;
 	
 	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	
@@ -89,6 +89,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	GridBagLayout layout = new GridBagLayout();
 	
+	Integer lastOrderNo = new Integer(0);
 	//Integer lastCustomerNum_1;
 	//Integer lastCustomerNum_2;
 	
@@ -136,6 +137,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	JTextField amount_1 = new JTextField(8);
 	JTextField amount_2 = new JTextField(8);
+	
+	public static JTextField orderPTime_1 = new JTextField(8);
+	JTextField orderPTime_2 = new JTextField(8);
 	
 	JTextField discountCoupon_1 = new JTextField(8);
 	JTextField discountCoupon_2 = new JTextField(8);
@@ -209,6 +213,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	public SmartCafeGUI()
 	{
+	}
+	
+	public void startSmartCafeGUI() {
 		setupAgent1GUI();
 		setupAgent2GUI();
 		
@@ -301,7 +308,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         
         //showCustomerNameTextBox
         JLabel newCustomerNameLabel = new JLabel(" Customer Name: ");
-		newCustomerName_1.setText("<custName>");
+		newCustomerName_1.setText("");
 		newCustomerName_1.repaint();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 2;
@@ -316,16 +323,31 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         agent1Panel.add(newCustomerName_1,gbc);
 		mainFrame.repaint();
         
+		//show Order Processing time
+		JLabel orderPtimeLabel = new JLabel("  Order Processing Time  ");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 4;
+        gbc.gridy = 1;
+        gbc.gridwidth=1;
+        agent1Panel.add(orderPtimeLabel,gbc);
+		
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 5;
+        gbc.gridy = 1;
+        gbc.gridwidth=1;
+        orderPTime_1.setText("60000");
+        agent1Panel.add(orderPTime_1,gbc);
+		
         //showDiscountCouponText
 		JLabel disountLabel = new JLabel("  Discount Coupon  ");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 5;
+		gbc.gridx = 6;
         gbc.gridy = 1;
         gbc.gridwidth=1;
         agent1Panel.add(disountLabel,gbc);
 		
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 1;
         gbc.gridwidth=1;
         discountCoupon_1.setText("20OFF");
@@ -347,7 +369,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridy = 3;
         JTextField newOrderId = new JTextField(8);
 		newOrderId.setEditable(false);
-		//Integer lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
+		lastOrderNo = ExistingOrderOperations.getLastOrderNumber();
 		//latestOrderNum_1 = String.valueOf(lastOrderNo);
 		agent1Panel.add(newOrderId,gbc);
         
@@ -448,7 +470,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         
 		
 		//orderTable
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth=6;
@@ -536,10 +558,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		liveOrderStatusPanel.setBorder(title);
 		liveOrderStatusPanel.setLayout(layout);
 		
-		statusArea.setText("                                                     STATUS \n");
+		statusArea.setText("");
         statusArea.setEditable(false);
-        updateStatusArea(statusArea ,"Cust Name :      Cust ID:        Quantity: ");
-        updateStatusArea(statusArea, "-----------------------------------------------");
+        //updateStatusArea(statusArea ,"Cust Name :      Cust ID:        Quantity: ");
+        //updateStatusArea(statusArea, "-----------------------------------------------");
         liveOrderStatusPanel.add(statusArea);
         
 		mainPanel.add(liveOrderStatusPanel,gbc);
@@ -634,7 +656,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         
         //showCustomerNameTextBox
         JLabel newCustomerNameLabel = new JLabel(" Customer Name: ");
-		newCustomerName_2.setText("<custName>");
+		newCustomerName_2.setText("");
 		newCustomerName_2.repaint();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 2;
@@ -649,16 +671,32 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         agent2Panel.add(newCustomerName_2,gbc);
 		mainFrame.repaint();
         
+		/*
+		JLabel orderPtimeLabel = new JLabel("  Order Processing Time  ");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 4;
+		gbc.gridy = yAxisCounter+7;
+        gbc.gridwidth=1;
+        agent2Panel.add(orderPtimeLabel,gbc);
+		
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 5;
+        gbc.gridy = yAxisCounter+7;
+        gbc.gridwidth=1;
+        orderPTime_2.setText("60000");
+        agent2Panel.add(orderPTime_2,gbc);
+		*/
+		
         //showDiscountCouponText
 		JLabel disountLabel = new JLabel("  Discount Coupon  ");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 5;
+		gbc.gridx = 6;
 		 gbc.gridy = yAxisCounter+7; //1
         gbc.gridwidth=1;
         agent2Panel.add(disountLabel,gbc);
 		
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = yAxisCounter+7; //1
         gbc.gridwidth=1;
         discountCoupon_2.setText("20OFF");
@@ -773,7 +811,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         
 		
 		//orderTable
-		gbc.fill = GridBagConstraints.NONE;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = yAxisCounter+10; //4
         gbc.gridwidth=6;
@@ -1093,10 +1131,21 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					//
 					//TODO: display in Live Status Area
 					showNewOrderLive();
-					 OrderConsumer consumer = new OrderConsumer(queue, newOrder);
+					
+					//Server1OrderConsumer server1Orderconsumer = new Server1OrderConsumer(queue, newOrder);
+			        //starting producer to produce messages in queue
+			       // new Thread(server1Orderconsumer).start();
+					
+					//Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(queue, newOrder);
+					
+					
+					//Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(queue);
 					//starting producer to produce messages in queue
-			        new Thread(consumer).start();
+			        //new Thread(server2Orderconsumer).start();
+			        
 					clearAgent1OrderDetails();
+					
+					
 					
 					JOptionPane.showMessageDialog(mainFrame,
 						    "Order Is Submitted",
@@ -1152,7 +1201,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
 					System.out.println(newCustomerOrdersMap_2.toString());
 					
-					threadCount++;
+					//threadCount++;
 					
 					Order newOrder = new Order();
 					newOrder.setCustomerName(newCustomerName_2.getText());
@@ -1164,9 +1213,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					newOrder.setAmount(grandTotalText_2.getText());
 					newOrder.setDiscount(discountText_2.getText());
 					
+					/*
 					if(threadCount == 5) {
 						newOrder.setMsg("EXIT");
 					}
+					*/
 					//
 			        OrderProducer producer = new OrderProducer(queue, newOrder);
 			        //starting producer to produce messages in queue
@@ -1174,9 +1225,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					//
 					//TODO: display in Live Status Area
 					showNewOrderLive();
-					 OrderConsumer consumer = new OrderConsumer(queue, newOrder);
+					//Server2OrderConsumer consumer = new Server2OrderConsumer(queue, newOrder);
+					//Server2OrderConsumer consumer = new Server2OrderConsumer(queue);
 					//starting producer to produce messages in queue
-			        new Thread(consumer).start();
+			       // new Thread(consumer).start();
 					
 			        clearAgent2OrderDetails();
 					
@@ -1195,8 +1247,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		if (e.getSource() == clearOrder_1) {
 			clear_agent1_orders();
 		}
-		if (e.getSource() == clearOrder_1) {
-			clear_agent12_orders();
+		if (e.getSource() == clearOrder_2) {
+			clear_agent2_orders();
 		}
 		
 		if (e.getSource() == generateReport_1 || e.getSource() == generateReport_2 ) {
@@ -1228,10 +1280,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	    JTextField amountText = new JTextField(8);
     
 		latestQuantity_1 = quantity_1.getText();
+		
+		lastOrderNo = lastOrderNo+1;
 		if(first) {
 			yAxisCounter = 4;
 			first = false;
-			
 		}
 		else {
 			yAxisCounter = yAxisCounter+1;
@@ -1244,7 +1297,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridx = 0;
         gbc.gridy = yAxisCounter;
         //orderidText.setText(latestOrderNum_1);
-        orderidText.setText(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+        orderidText.setText(lastOrderNo.toString());
        
         orderidText.setVisible(true);
         orderidText.setEditable(false);
@@ -1309,10 +1362,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
 		//newCustomerOrder_1.put(Integer.parseInt(latestOrderNum_1), orderValues);
-		newCustomerOrder_1.put((ExistingOrderOperations.getLastOrderNumber()+1), orderValues);
+		newCustomerOrder_1.put(lastOrderNo, orderValues);
 		
 		//ordersList_1.add(latestOrderNum_1);
-		ordersList_1.add(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+		ordersList_1.add(String.valueOf(lastOrderNo));
 		
 		newCustomerOrdersMap_1.put(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), ordersList_1);
 		uniqueCustomerIDs_1.add((ExistingOrderOperations.getLastCustomerNumber()+1));
@@ -1334,10 +1387,12 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	    JTextField amountText = new JTextField(8);
     
 		latestQuantity_2 = quantity_2.getText();
+		//Integer latestOrderNum_2 = ExistingOrderOperations.getLastOrderNumber()+1;
+		
+		lastOrderNo = lastOrderNo+1;
 		if(first2) {
 			yAxisAgent2Counter = yAxisCounter + 4;
 			first2 = false;
-			
 		}
 		else {
 			yAxisAgent2Counter = yAxisAgent2Counter+1;
@@ -1350,7 +1405,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridx = 0;
         gbc.gridy = yAxisAgent2Counter;
         //orderidText.setText(latestOrderNum_2);
-        orderidText.setText(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+        orderidText.setText(lastOrderNo.toString());
         
         orderidText.setVisible(true);
         orderidText.setEditable(false);
@@ -1400,7 +1455,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		//adding customer ID
 		//orderValues.add(lastCustomerNum_2.toString());
-		orderValues.add(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
+		orderValues.add(String.valueOf(lastOrderNo));
 		
 		//adding Item ID
 		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem_2);
@@ -1415,10 +1470,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		//creating Tree Map of Order No as Key and values as Customer ID, Item ID , Quantity , TimeStamp in LinkedList 
 		//newCustomerOrder_2.put(Integer.parseInt(latestOrderNum_2), orderValues);
 		
-		newCustomerOrder_2.put((ExistingOrderOperations.getLastOrderNumber()+1), orderValues);
+		newCustomerOrder_2.put(lastOrderNo, orderValues);
 		
 		
-		ordersList_2.add(String.valueOf(ExistingOrderOperations.getLastOrderNumber()+1));
+		ordersList_2.add(String.valueOf(lastOrderNo));
 		newCustomerOrdersMap_2.put(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), ordersList_2);
 		uniqueCustomerIDs_2.add(ExistingOrderOperations.getLastCustomerNumber()+1);
 		log.info(newCustomerOrder_2);
@@ -1446,8 +1501,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		agent1Panel.remove(orderTablePanel_1);
 		orderTablePanel_1 = new JPanel();
+		orderTablePanel_1.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth=6;
@@ -1475,12 +1531,13 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	}
 
 	
-	private void clear_agent12_orders() {
+	private void clear_agent2_orders() {
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
+		orderTablePanel_2.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = yAxisCounter+10; //4
         gbc.gridwidth=6;
@@ -1510,8 +1567,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		agent1Panel.remove(orderTablePanel_1);
 		orderTablePanel_1 = new JPanel();
+		orderTablePanel_1.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth=6;
@@ -1540,7 +1598,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		
 		//showCustomerNameTextBox();
-		newCustomerName_1.setText("<custName>");
+		newCustomerName_1.setText("");
 		newCustomerName_1.repaint();
 		applyDiscount_1.setEnabled(false);
 		
@@ -1554,8 +1612,9 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
+		orderTablePanel_2.setLayout(layout);
 		GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = yAxisCounter+10; //4
         gbc.gridwidth=6;
@@ -1583,7 +1642,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		
 		//showCustomerNameTextBox();
-		newCustomerName_2.setText("<custName>");
+		newCustomerName_2.setText("");
 		newCustomerName_2.repaint();
 		applyDiscount_2.setEnabled(false);
 		
@@ -1737,7 +1796,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		return reportName;
 	}
 	
-	public static void updateStatusArea(TextArea statusArea, String message) {
+	
+	public synchronized void updateStatusArea(TextArea statusArea, String message) {
 		try {
 		  if (statusArea != null) {
 		    if (statusArea.getText().length() == 0) {
@@ -1753,6 +1813,48 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		}
 	}
 	
+	
+	public synchronized void updateLiveOrderStatusArea(String message) {
+		try {
+		  if (statusArea != null) {
+		    if (statusArea.getText().length() == 0) {
+		      statusArea.setText(message);
+		    } else {
+		      statusArea.getSelectionEnd();
+		      statusArea.append(message+"\n" );
+		    }
+		  }
+		} catch (final Throwable t) {
+		  System.out.println("Error while append to statusArea: "
+		      + t.getMessage());
+		}
+	}
+	public synchronized  void clearLiveOrderStatusArea() {
+		try {
+		  if (statusArea != null) {
+		    if (statusArea.getText().length() != 0) {
+		      statusArea.setText("");
+		    } 
+		  }
+		} catch (final Throwable t) {
+		  System.out.println("Error while append to statusArea: "
+		      + t.getMessage());
+		}
+	}
+	/*
+	public synchronized  void clearStatusArea(TextArea statusArea) {
+		try {
+		  if (statusArea != null) {
+		    if (statusArea.getText().length() != 0) {
+		      statusArea.setText("");
+		    } 
+		  }
+		} catch (final Throwable t) {
+		  System.out.println("Error while append to statusArea: "
+		      + t.getMessage());
+		}
+	}
+	*/
 }
 
 
