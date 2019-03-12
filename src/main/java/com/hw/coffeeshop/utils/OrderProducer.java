@@ -1,29 +1,44 @@
 package com.hw.coffeeshop.utils;
 
 import java.util.concurrent.BlockingQueue;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.model.Order;
 
 public class OrderProducer implements Runnable {
 
-    private BlockingQueue<Order> q;
+	SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
+    private BlockingQueue<Order> queue;
     private Order o;
-    
+    Log log = LogFactory.getLog(OrderProducer.class);
     public OrderProducer(BlockingQueue<Order> queue, Order order){
-        this.q=queue;
+        this.queue=queue;
         this.o=order;
     }
     @Override
-    public void run() {
-            try {
-                q.put(o);
-                System.out.println(" Order details: "+o.toString());
-                SmartCafeGUI.updateStatusArea(SmartCafeGUI.statusArea, o.getCustomerName() +":            "+o.getCustomerID() +" :            " +o.getQuantity());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-         
-    }
-
+	    public void run() {
+	    	try {
+	        	log.info("Adding "+o.getCustomerName()+ " into Queue");
+	            queue.put(o);
+	            
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+	        
+	    	smartCafeGUI.clearLiveOrderStatusArea();
+	        //print all items in the queue 
+	    	smartCafeGUI.updateLiveOrderStatusArea("There are currently "+queue.size()+" people waiting in the queue: \n");
+	        log.info("Queue Content: ");
+	        for(Order order : queue) {
+	            log.info(" "+order.toString());
+	            //String items = ;order.getQuantity()<=1 ? "item" : "items"
+	            smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
+	           
+	        }
+	       
+	    }
 }
 
