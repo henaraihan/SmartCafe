@@ -30,7 +30,7 @@ public class MenuFileOperations {
 		BufferedReader br = null;
 		 
 		LinkedList<String> menuItemList;
-		
+		log.info("Starting to Read and Store Menu CSV data into Data Structures");
 		
 		try {
 				menuItemsHashMap = new HashMap<String, LinkedList<String>>();
@@ -54,9 +54,9 @@ public class MenuFileOperations {
 	                if(menuDetails.length > 0 )
 	                {
 	                    //Save the menu item details in Linked List object
-	                	menuItemList.add(menuDetails[1]);
-	                	menuItemList.add(menuDetails[2]);
-	                	menuItemList.add(menuDetails[3]);
+	                	menuItemList.add(menuDetails[1]); //item category
+	                	menuItemList.add(menuDetails[2]); //item cost
+	                	menuItemList.add(menuDetails[3]); //item desc
 	                	
 	                	//populate Menu in hashMap with itemID as Key
 	                	menuItemsHashMap.put(menuDetails[0],menuItemList); 
@@ -82,6 +82,7 @@ public class MenuFileOperations {
             	if(br!= null) {
                 	br.close();
                 }
+            	log.info("Completed Reading and Storing Menu CSV data into Data Structures");
             }
             catch(IOException ie)
             {
@@ -98,7 +99,7 @@ public class MenuFileOperations {
 		    distinctCategory.add(entry.getValue().get(0));
 		    
 		}
-		System.out.println("Distinct Categories: "+distinctCategory);
+		//log.info("Distinct Categories: "+distinctCategory);
 		return distinctCategory;
 	}
 
@@ -121,7 +122,7 @@ public class MenuFileOperations {
 	
 	public synchronized String getPriceForSelectedCategoryAndItem(String selectedCategory, String item) {
 		
-		System.out.println("Selected Category is "+selectedCategory + " Item "+item);
+		//log.info("Selected Category is "+selectedCategory + " Item "+item);
 		for (Map.Entry<String, LinkedList<String>> entry : menuItemsHashMap.entrySet()) {
 			if(distinctCategory.contains(selectedCategory) && entry.getValue().get(0).equals(selectedCategory)  && entry.getValue().get(2).equals(item)){
 					return (entry.getValue().get(1));
