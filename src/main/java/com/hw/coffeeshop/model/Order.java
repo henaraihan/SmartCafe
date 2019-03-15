@@ -7,9 +7,8 @@ public class Order {
 	private String customerName;
 	private String customerID;
 	private Set<Integer> orderIDs;
-	private Integer quantity;
+	private Integer numberOfItems;
 	private String currTime;
-	private String msg;
 	private String amount;
 	private String discount;
 	
@@ -30,14 +29,6 @@ public class Order {
 		this.amount = amount;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	
-    public String getMsg() {
-        return msg;
-    }
-    
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -57,10 +48,10 @@ public class Order {
 		orderIDs = orderID;
 	}
 	public Integer getQuantity() {
-		return quantity;
+		return numberOfItems;
 	}
 	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+		this.numberOfItems = quantity;
 	}
 	public String getCurrTime() {
 		return currTime;
@@ -72,7 +63,7 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Customer Name "+customerName+" Customer Id: "+customerID+ " quantity:  "+quantity+ " order list  "+orderIDs;
+		return "Customer Name: "+customerName+", Customer Id: "+customerID+ ", quantity:  "+numberOfItems+ ", order list:  "+orderIDs+ ", timestamp: "+currTime;
 	}
 	
 	
