@@ -14,26 +14,19 @@ public class Manager {
 	
 	public void run() {
 		
-		/*
-		SwingUtilities.invokeLater(new Runnable() {
-		   @Override
-		   public void run() {
-		    new SmartCafeGUI().startSmartCafeGUI();
-		   }
-		  });
-		*/
 		SmartCafeGUI guiObj = new SmartCafeGUI();
 		guiObj.startSmartCafeGUI();
 		
 		
 		Server1OrderConsumer server1Orderconsumer = new Server1OrderConsumer(SmartCafeGUI.queue);
-		//starting producer to produce messages in queue
+		//starting server 1 consumer thread
         new Thread(server1Orderconsumer).start();
         
         Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(SmartCafeGUI.queue);
-		//starting producer to produce messages in queue
+        //starting server 2 consumer thread
         new Thread(server2Orderconsumer).start();
         
+        /*
         Thread thread = new Thread(() -> {
             System.out.println("Watching queue length......Show alert if length is Zero");
             while (true) {
@@ -58,7 +51,7 @@ public class Manager {
         });
          
         thread.start();
-        
+        */
         
         
 	}

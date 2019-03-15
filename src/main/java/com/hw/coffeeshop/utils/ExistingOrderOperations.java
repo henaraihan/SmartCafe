@@ -25,16 +25,13 @@ public class ExistingOrderOperations {
 	static Log log = LogFactory.getLog(ExistingOrderOperations.class);
 	
 	public  void readCSVAndStoreData(){
+		log.info("Starting to Read and Store Existing Order CSV data into Data Structures");
 		BufferedReader br = null;
 		LinkedList<String> orderDetails;
 		try {
 			    existingCustomerOrder = new TreeMap<Integer, LinkedList<String>>();
 				uniqueCustomerIDs = new TreeSet<Integer>();
-				//newCustomerOrdersMap = new HashMap<String, ArrayList<String>>();
 				
-				//ArrayList<String> ar = new ArrayList<String>();
-				//ar.add("Something");
-				//newCustomerOrdersMap.put("1", ar);
 				//Reading the csv file
 	            br = new BufferedReader(new FileReader(Constants.EXISTINGODER_FILENAME));
 				
@@ -67,8 +64,7 @@ public class ExistingOrderOperations {
 	            }
 	            
 	    }
-        catch(Exception ee)
-        {
+        catch(Exception ee){
             ee.printStackTrace();
             log.error("Exception :"+ee);
         }
@@ -79,6 +75,7 @@ public class ExistingOrderOperations {
                 if(br!= null) {
                 	br.close();
                 }
+                log.info("Completed Reading and Storing Existing Order CSV data into Data Structures");
             	
             }
             catch(IOException ie)
@@ -91,16 +88,12 @@ public class ExistingOrderOperations {
 	
 	//Save new Orders data in existing orders
 	public synchronized void saveNewOrdersInExistingOrders(TreeMap<Integer, LinkedList<String>> newCustomerOrder, TreeSet<Integer> uniqueCustomerIDs, ConcurrentHashMap<String, ArrayList<String>> customerOrdersMap) {
-		
-		System.out.println(" Inside saveNewOrdersInExistingOrders ");
+		log.info("Saving new orders into existing orders");
 		ExistingOrderOperations.existingCustomerOrder.putAll(newCustomerOrder);
 		
 		ExistingOrderOperations.uniqueCustomerIDs.addAll(uniqueCustomerIDs);
-		System.out.println("customerOrdersMap "+customerOrdersMap.toString());
-		//System.out.println("newCustomerOrdersMap "+newCustomerOrdersMap.toString());
-		newCustomerOrdersMap.putAll(customerOrdersMap);
 		
-		//System.out.println(" newCustomerOrdersMap "+newCustomerOrdersMap+" customerOrdersMap:  "+customerOrdersMap);
+		newCustomerOrdersMap.putAll(customerOrdersMap);
 	}
 	
 	public synchronized static Integer getLastOrderNumber() {
@@ -109,17 +102,11 @@ public class ExistingOrderOperations {
 	}
 	
 	public synchronized static Integer getLastCustomerNumber() {
-		log.info("Unique Customer Ids "+uniqueCustomerIDs.toString());
-		
 		lastCustomerID = uniqueCustomerIDs.last();
-		
 		return lastCustomerID;
 	}
 	
 	public synchronized ArrayList<String> getCustomerOrdersMap(String customerId){ 
-		System.out.println("customerId: "+customerId);
-		System.out.println(" newCustomerOrdersMap:: "+newCustomerOrdersMap);
-		
 		return new ExistingOrderOperations().newCustomerOrdersMap.get(customerId);
 	}
 }

@@ -18,7 +18,7 @@ public class OrderProducer implements Runnable {
         this.queue=queue;
         this.o=order;
     }
-    @Override
+    	@Override
 	    public void run() {
 	    	try {
 	        	log.info("Adding "+o.getCustomerName()+ " into Queue");
@@ -28,16 +28,20 @@ public class OrderProducer implements Runnable {
 	            e.printStackTrace();
 	        }
 	        
-	    	smartCafeGUI.clearLiveOrderStatusArea();
-	        //print all items in the queue 
-	    	smartCafeGUI.updateLiveOrderStatusArea("There are currently "+queue.size()+" people waiting in the queue: \n");
-	        log.info("Queue Content: ");
-	        for(Order order : queue) {
-	            log.info(" "+order.toString());
-	            //String items = ;order.getQuantity()<=1 ? "item" : "items"
-	            smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
-	           
-	        }
+	    	synchronized(smartCafeGUI.liveOrderStatusArea){
+	    		
+	    		smartCafeGUI.clearLiveOrderStatusArea();
+		        //print all items in the queue 
+		    	smartCafeGUI.updateLiveOrderStatusArea("There are currently "+queue.size()+" people waiting in the queue: \n");
+		        log.info("Queue Content: ");
+		        for(Order order : queue) {
+		            log.info(" "+order.toString());
+		            //String items = ;order.getQuantity()<=1 ? "item" : "items"
+		            smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
+		           
+		        }
+	    	}
+	    	
 	       
 	    }
 }

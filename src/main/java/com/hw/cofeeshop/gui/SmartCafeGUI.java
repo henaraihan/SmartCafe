@@ -45,25 +45,11 @@ import org.apache.commons.lang3.SystemUtils;
 
 public class SmartCafeGUI extends JFrame implements ActionListener
 {
-	
-	static{
-		if(SystemUtils.IS_OS_MAC){
-			System.setProperty("logfilename", SystemUtils.USER_DIR+"/logs");
-		}else{
-			System.setProperty("logfilename", SystemUtils.USER_DIR+"\\logs");
-		}
-	}
 	public static BlockingQueue<Order> queue = new LinkedBlockingQueue<>(10);
 	
-	public volatile static TextArea statusArea = new TextArea();
+	public volatile static TextArea liveOrderStatusArea = new TextArea();
 	public static TextArea server1Area = new TextArea();
 	public static TextArea server2Area = new TextArea();
-	//public static TextArea server3Area = new TextArea();
-	
-	//public static Boolean server1NotBusy = true;
-	//public static Boolean server2NotBusy = true;
-	
-	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	
 	private JFrame mainFrame = new JFrame();
 	JPanel orderTablePanel_1 = new JPanel();
@@ -90,11 +76,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	GridBagLayout layout = new GridBagLayout();
 	
 	Integer lastOrderNo = new Integer(0);
-	//Integer lastCustomerNum_1;
-	//Integer lastCustomerNum_2;
-	
-	//String latestOrderNum_1 = "";
-	//String latestOrderNum_2 = "";
 	
 	String latestCategory_1 = "";
 	String latestCategory_2 = "";
@@ -194,26 +175,28 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	private static TreeSet<Integer> uniqueCustomerIDs_1 = new TreeSet<Integer>();
 	private static TreeSet<Integer> uniqueCustomerIDs_2 = new TreeSet<Integer>();
 	
-	static
-	{
-		log.info("Loading Menu CSV file into HashMap.....");
+	static{
+		
+		System.setProperty("logfilename", SystemUtils.USER_DIR+"\\logs");
+		//log.info("Setting the logfilename as "+SystemUtils.USER_DIR+"\\logs");
+		
+		//log.info("Loading Menu CSV file into HashMap.....");
 		long menuFileReadTimer = System.currentTimeMillis();
 		MenuFileOperations menuFileOperations = new MenuFileOperations(); 
 		menuFileOperations.readCSVAndStoreData();
-		log.info(" Completed loading Menu.csv >>> Total Execution Time:  "+(System.currentTimeMillis() - menuFileReadTimer) +" ms");
+		//log.info(" Completed loading Menu.csv >>> Total Execution Time:  "+(System.currentTimeMillis() - menuFileReadTimer) +" ms");
 		
-		log.info("Loading Existing Order CSV file into TreeMap.....");
+		//log.info("Loading Existing Order CSV file into TreeMap.....");
 		long existingOrderFileReadTimer = System.currentTimeMillis();
 		ExistingOrderOperations existingOrderFile = new ExistingOrderOperations();
 		existingOrderFile.readCSVAndStoreData();
-		log.info(" Completed loading Order CSV file >>> Total Execution Time:  "+(System.currentTimeMillis() - existingOrderFileReadTimer) +" ms");
+		//log.info(" Completed loading Order CSV file >>> Total Execution Time:  "+(System.currentTimeMillis() - existingOrderFileReadTimer) +" ms");
 	}
 	
+	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	//Constructor
-	
 	public SmartCafeGUI()
-	{
-	}
+	{}
 	
 	public void startSmartCafeGUI() {
 		setupAgent1GUI();
@@ -558,11 +541,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		liveOrderStatusPanel.setBorder(title);
 		liveOrderStatusPanel.setLayout(layout);
 		
-		statusArea.setText("");
-        statusArea.setEditable(false);
+		liveOrderStatusArea.setText("");
+        liveOrderStatusArea.setEditable(false);
         //updateStatusArea(statusArea ,"Cust Name :      Cust ID:        Quantity: ");
         //updateStatusArea(statusArea, "-----------------------------------------------");
-        liveOrderStatusPanel.add(statusArea);
+        liveOrderStatusPanel.add(liveOrderStatusArea);
         
 		mainPanel.add(liveOrderStatusPanel,gbc);
 		
@@ -895,6 +878,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				boolean isValidationPass = true;
 				if(itemListComboBox_1.getItemCount()==0) {
 					isValidationPass=false;
+					log.error("NoCategorySelectedException is thrown ");
 					throw new NoCategorySelectedException();
 				}
 				if("".equals(unitPrice_1.getText())) {
@@ -1016,7 +1000,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				else if(new DiscountCalculator().validCoupon(discountCoupon_1.getText())) {
 					DiscountCalculator discountCalc = new DiscountCalculator();
 					Double discount = discountCalc.applyDiscounts(discountCoupon_1.getText(), totalAmount_1, String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), newCustomerOrder_1, newCustomerOrdersMap_1);
-					System.out.println("discount "+(totalAmount_1-discount));
+					log.info("discount "+(totalAmount_1-discount));
 					discountText_1.setText(String.valueOf((Precision.round((totalAmount_1-discount), 2))));
 					
 					grandTotalText_1.setText(String.valueOf((Precision.round(discount, 2))));
@@ -1051,7 +1035,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				else if(new DiscountCalculator().validCoupon(discountCoupon_2.getText())) {
 					DiscountCalculator discountCalc = new DiscountCalculator();
 					Double discount = discountCalc.applyDiscounts(discountCoupon_2.getText(), totalAmount_2, String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1), newCustomerOrder_2, newCustomerOrdersMap_2);
-					System.out.println("discount "+(totalAmount_2-discount));
+					log.info("discount "+(totalAmount_2-discount));
 					discountText_2.setText(String.valueOf((Precision.round((totalAmount_2-discount), 2))));
 					
 					grandTotalText_2.setText(String.valueOf((Precision.round(discount, 2))));
@@ -1103,11 +1087,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				
 				if(isValidationPass) {
 					//
-					log.info("Populating New order ..... ");
+					log.info("Agent 1: All validations are passed..Now saving new Order into  existing data structures");
 					new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_1, uniqueCustomerIDs_1,newCustomerOrdersMap_1);
-					System.out.println(newCustomerOrdersMap_1.toString());
-					System.out.println("Order List "+newCustomerOrder_1.keySet().toString());
-					//threadCount++;
+					log.info(newCustomerOrdersMap_1.toString());
+					//log.info("Order List "+newCustomerOrder_1.keySet().toString());
 					
 					Order newOrder = new Order();
 					newOrder.setCustomerName(newCustomerName_1.getText());
@@ -1116,36 +1099,17 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 					newOrder.setOrderIDs(orderList);
 					newOrder.setAmount(grandTotalText_1.getText());
 					newOrder.setDiscount(discountText_1.getText());
-					
-					System.out.println(" Print orderList now: "+newOrder.getOrderIDs());
-					
+					newOrder.setCurrTime(new Timestamp(System.currentTimeMillis()).toString());
 					newOrder.setQuantity(newCustomerOrder_1.size());
 					
-					/*
-					 * if(threadCount == 5) { newOrder.setMsg("EXIT"); }
-					 */
 					//
 			        OrderProducer producer = new OrderProducer(queue, newOrder);
 			        //starting producer to produce messages in queue
-			        new Thread(producer).start();
-					//
-					//TODO: display in Live Status Area
-					showNewOrderLive();
-					
-					//Server1OrderConsumer server1Orderconsumer = new Server1OrderConsumer(queue, newOrder);
-			        //starting producer to produce messages in queue
-			       // new Thread(server1Orderconsumer).start();
-					
-					//Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(queue, newOrder);
-					
-					
-					//Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(queue);
-					//starting producer to produce messages in queue
-			        //new Thread(server2Orderconsumer).start();
+			        Thread producerThread = new Thread(producer);
+			        producerThread.start();
+			        //
 			        
 					clearAgent1OrderDetails();
-					
-					
 					
 					JOptionPane.showMessageDialog(mainFrame,
 						    "Order Is Submitted",
@@ -1197,39 +1161,26 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 				
 				if(isValidationPass) {
 					//
-					log.info("Populating New order .....agent 2 ");
+					log.info("Agent 2: All validations are passed..Now saving new Order into  existing data structures");
 					new ExistingOrderOperations().saveNewOrdersInExistingOrders(newCustomerOrder_2, uniqueCustomerIDs_2,newCustomerOrdersMap_2);
-					System.out.println(newCustomerOrdersMap_2.toString());
-					
-					//threadCount++;
+					//log.info(newCustomerOrdersMap_2.toString());
 					
 					Order newOrder = new Order();
 					newOrder.setCustomerName(newCustomerName_2.getText());
-					//newOrder.setCustomerID(lastCustomerNum_2.toString());
 					newOrder.setCustomerID(String.valueOf(ExistingOrderOperations.getLastCustomerNumber()+1));
 					
 					newOrder.setOrderIDs(newCustomerOrder_2.keySet());
 					newOrder.setQuantity(newCustomerOrder_2.size());
 					newOrder.setAmount(grandTotalText_2.getText());
 					newOrder.setDiscount(discountText_2.getText());
-					
-					/*
-					if(threadCount == 5) {
-						newOrder.setMsg("EXIT");
-					}
-					*/
+					newOrder.setCurrTime(new Timestamp(System.currentTimeMillis()).toString());
 					//
 			        OrderProducer producer = new OrderProducer(queue, newOrder);
 			        //starting producer to produce messages in queue
 			        new Thread(producer).start();
 					//
-					//TODO: display in Live Status Area
-					showNewOrderLive();
-					//Server2OrderConsumer consumer = new Server2OrderConsumer(queue, newOrder);
-					//Server2OrderConsumer consumer = new Server2OrderConsumer(queue);
-					//starting producer to produce messages in queue
-			       // new Thread(consumer).start();
-					
+					//showNewOrderLive();
+										
 			        clearAgent2OrderDetails();
 					
 					JOptionPane.showMessageDialog(mainFrame,
@@ -1352,7 +1303,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		//adding Item ID
 		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem_1);
-		System.out.println("itemID: "+itemID);
 		orderValues.add(itemID);
 
 		//adding Quantity
@@ -1459,7 +1409,6 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		
 		//adding Item ID
 		String itemID = MenuFileOperations.ItemNameItemID.get(latestItem_2);
-		System.out.println("itemID: "+itemID);
 		orderValues.add(itemID);
 
 		//adding Quantity
@@ -1656,7 +1605,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 
 	
-	
+	/*
 	private static void showNewOrderLive() { 
 		log.info("Inside showNewOrderLive method ");
         SwingWorker sw1 = new SwingWorker() { 
@@ -1699,7 +1648,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         // executes the swing worker on worker thread 
         sw1.execute();  
     } 
-	
+	*/
 	
 	private void viewReports() {
     	try {
@@ -1808,36 +1757,41 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		    }
 		  }
 		} catch (final Throwable t) {
-		  System.out.println("Error while append to statusArea: "
+		  log.error("Error while append to statusArea: "
 		      + t.getMessage());
 		}
 	}
 	
 	
-	public synchronized void updateLiveOrderStatusArea(String message) {
+	public void updateLiveOrderStatusArea(String message) {
 		try {
-		  if (statusArea != null) {
-		    if (statusArea.getText().length() == 0) {
-		      statusArea.setText(message);
-		    } else {
-		      statusArea.getSelectionEnd();
-		      statusArea.append(message+"\n" );
-		    }
-		  }
-		} catch (final Throwable t) {
-		  System.out.println("Error while append to statusArea: "
-		      + t.getMessage());
-		}
+			
+			synchronized(liveOrderStatusArea) {
+				  if (liveOrderStatusArea != null) {
+				    if (liveOrderStatusArea.getText().length() == 0) {
+				      liveOrderStatusArea.setText(message);
+				    } else {
+				      liveOrderStatusArea.getSelectionEnd();
+				      liveOrderStatusArea.append(message+"\n" );
+				    }
+				  }
+				}
+			} catch (final Throwable t) {
+				log.error("Error while append to statusArea: "
+			      + t.getMessage());
+			}
+		
+		
 	}
 	public synchronized  void clearLiveOrderStatusArea() {
 		try {
-		  if (statusArea != null) {
-		    if (statusArea.getText().length() != 0) {
-		      statusArea.setText("");
+		  if (liveOrderStatusArea != null) {
+		    if (liveOrderStatusArea.getText().length() != 0) {
+		      liveOrderStatusArea.setText("");
 		    } 
 		  }
 		} catch (final Throwable t) {
-		  System.out.println("Error while append to statusArea: "
+			log.error("Error while append to statusArea: "
 		      + t.getMessage());
 		}
 	}
