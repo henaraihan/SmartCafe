@@ -13,17 +13,16 @@ import org.apache.commons.logging.LogFactory;
 
 import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.model.Order;
+import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 
 public class Server2OrderConsumer implements Runnable{
 
 	private BlockingQueue<Order> queue;
 	
 	SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
-	//private Order o;
 	Log log = LogFactory.getLog(Server2OrderConsumer.class);
     public Server2OrderConsumer(BlockingQueue<Order> q){
         this.queue=q;
-        //this.o=order;
     }
 
     @Override
@@ -38,23 +37,22 @@ public class Server2OrderConsumer implements Runnable{
 	     			}
 	            	
 	            	Order queuedOrder = queue.take();
-	            	log.info("Taking "+queuedOrder.getCustomerName()+ " into Queue");
+	            	log.info("Taking out "+queuedOrder.getCustomerName()+ " order from the Queue");
+	            	
 	            	//update live order status area
-	            	smartCafeGUI.clearLiveOrderStatusArea();
-	            	smartCafeGUI.updateLiveOrderStatusArea("There are currently "+SmartCafeGUI.queue.size()+" people waiting in the queue: \n");
-	                for(Order order : SmartCafeGUI.queue) {
-	                	System.out.println(" Order details: "+order.toString());
-	                	smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
-                    }
+	            	synchronized(smartCafeGUI.liveOrderStatusArea){
+	            		
+	            		smartCafeGUI.clearLiveOrderStatusArea();
+		            	smartCafeGUI.updateLiveOrderStatusArea("There are currently "+SmartCafeGUI.queue.size()+" people waiting in the queue: \n");
+		            	
+		            	for(Order order : SmartCafeGUI.queue) {
+		            		log.info(" Order details: "+order.toString());
+		                	smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
+	                    }
+	            	
+	            	}
 	            	
 	            	Set<Integer> orderList = queuedOrder.getOrderIDs();
-	        		System.out.println("OrderList: "+orderList.toString());
-	        		System.out.println("CustomerID: "+queuedOrder.getCustomerID());
-	        		System.out.println("CustomerName: "+queuedOrder.getCustomerName());
-	        		System.out.println("Quantity : "+queuedOrder.getQuantity());
-	        		System.out.println("CurrTime : "+queuedOrder.getCurrTime());
-	        		System.out.println("Amount : "+queuedOrder.getAmount());
-	        		System.out.println("Discount : "+queuedOrder.getDiscount());
 	        		
 	        		LinkedHashMap<String, String>  orderMap = new LinkedHashMap<String, String>();
 	        		for(Integer order : orderList) {
@@ -94,6 +92,24 @@ public class Server2OrderConsumer implements Runnable{
 							    JOptionPane.YES_NO_CANCEL_OPTION);
 					}
 					*/
+	            	
+	            	try {
+	                	Thread.sleep(TimeUnit.SECONDS.toMillis(60)); 
+	                	 if(SmartCafeGUI.queue.isEmpty()) {
+	                		 
+	                		 int result = JOptionPane.showConfirmDialog(
+	                		  	      null, "Queue is Empty.Do you want to exit?", "Please confirm to Exit & Generate report", JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+	                		   if(result==JOptionPane.YES_OPTION) {
+	                			   TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
+	                			   report.generateReport();
+	                			   System.exit(0);
+	                		   	}
+	 					}
+	                	
+	                } 
+	                catch (InterruptedException e) { 
+	                    e.printStackTrace();
+	                }
 	            	
 	            }
         }catch(InterruptedException e) {
