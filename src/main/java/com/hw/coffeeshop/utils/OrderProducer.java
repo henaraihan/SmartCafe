@@ -36,7 +36,6 @@ public class OrderProducer implements Runnable {
 		        log.info("Queue Content: ");
 		        for(Order order : queue) {
 		            log.info(" "+order.toString());
-		            //String items = ;order.getQuantity()<=1 ? "item" : "items"
 		            smartCafeGUI.updateLiveOrderStatusArea(order.getCustomerName() +" :            " +order.getQuantity() +(order.getQuantity()<=1 ? "  item" : "  items"));
 		           
 		        }

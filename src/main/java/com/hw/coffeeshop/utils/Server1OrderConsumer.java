@@ -30,10 +30,10 @@ public class Server1OrderConsumer implements Runnable{
             while(true){
 	            		
 	            	try {
-	     				//Thread.sleep(50000);
 	            		Thread.sleep(Integer.parseInt(SmartCafeGUI.orderPTime_1.getText())-10000);
 	     			} catch (InterruptedException e) {
 	     				e.printStackTrace();
+	     				log.error("Exception: "+e.getMessage());
 	     			}
 	            	
 	            	Order queuedOrder = queue.take();
@@ -77,6 +77,7 @@ public class Server1OrderConsumer implements Runnable{
          				Thread.sleep(30000);
          			} catch (InterruptedException e) {
          				e.printStackTrace();
+         				log.error("Exception: "+e.getMessage());
          			}
             		smartCafeGUI.updateStatusArea(SmartCafeGUI.server1Area,"===================================================");
             		smartCafeGUI.updateStatusArea(SmartCafeGUI.server1Area,""+queuedOrder.getCustomerName()+"'s Order is PROCESSED..Take the next order in the queue"); 
@@ -84,15 +85,8 @@ public class Server1OrderConsumer implements Runnable{
             		
             		log.info(""+queuedOrder.getCustomerName()+"'s Order is PROCESSED..Take the next order in the queue");
             		
-            		/*
-                    if(queue.isEmpty()) {
-						JOptionPane.showMessageDialog(null,
-							    "Queue is Empty.Do you want to exit",
-							    "Warning",
-							    JOptionPane.YES_NO_CANCEL_OPTION);
-					} 
-					*/ 
             		
+            		/*
             		try {
 	                	Thread.sleep(TimeUnit.SECONDS.toMillis(60)); 
 	                	 if(SmartCafeGUI.queue.isEmpty()) {
@@ -110,12 +104,13 @@ public class Server1OrderConsumer implements Runnable{
 	                catch (InterruptedException e) { 
 	                    e.printStackTrace();
 	                }
-            		
+            		*/
             		
 	            	
 		        }
         }catch(InterruptedException e) {
             e.printStackTrace();
+            log.error("Exception: "+e.getMessage());
         }
     }
 }
