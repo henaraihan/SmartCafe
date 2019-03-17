@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.Server1OrderConsumer;
@@ -12,8 +15,12 @@ import com.hw.coffeeshop.utils.Server2OrderConsumer;
 
 public class Manager {
 	
+	static Log log = LogFactory.getLog(Manager.class);
+	
 	public void run() {
 		
+		
+		log.info("Loading GUI");
 		SmartCafeGUI guiObj = new SmartCafeGUI();
 		guiObj.startSmartCafeGUI();
 		
@@ -21,17 +28,20 @@ public class Manager {
 		Server1OrderConsumer server1Orderconsumer = new Server1OrderConsumer(SmartCafeGUI.queue);
 		//starting server 1 consumer thread
         new Thread(server1Orderconsumer).start();
+        log.info("Starting Serving Staff 1 Order Consumer thread");
+        
         
         Server2OrderConsumer server2Orderconsumer = new Server2OrderConsumer(SmartCafeGUI.queue);
         //starting server 2 consumer thread
         new Thread(server2Orderconsumer).start();
+        log.info("Starting Serving Staff 2 Order Consumer thread");
         
-        /*
         Thread thread = new Thread(() -> {
-            System.out.println("Watching queue length......Show alert if length is Zero");
             while (true) {
                 try {
-                	Thread.sleep(TimeUnit.SECONDS.toMillis(3*60)); 
+                	log.info("Queue length is Zero, Waiting for 90 seconds ");
+                	Thread.sleep(TimeUnit.SECONDS.toMillis(90)); 
+                	
                 	 if(SmartCafeGUI.queue.isEmpty()) {
                 		 
                 		 int result = JOptionPane.showConfirmDialog(
@@ -51,7 +61,7 @@ public class Manager {
         });
          
         thread.start();
-        */
+        log.info("Starting Queue Length Watcher Thread....To show alert if length is Zero");
         
         
 	}

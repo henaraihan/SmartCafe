@@ -177,7 +177,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	static{
 		
-		System.setProperty("logfilename", SystemUtils.USER_DIR+"\\logs");
+		System.setProperty("logfilename", SystemUtils.USER_DIR+"\\SmartCafeGUILogs");
 		//log.info("Setting the logfilename as "+SystemUtils.USER_DIR+"\\logs");
 		
 		//log.info("Loading Menu CSV file into HashMap.....");
@@ -556,7 +556,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         gbc.gridwidth=6;
         gbc.gridheight=6;
         server1StatusPanel.setLayout(layout);
-        title = BorderFactory.createTitledBorder("Server 1");
+        title = BorderFactory.createTitledBorder("Serving Staff 1");
         server1StatusPanel.setBorder(title);
         server1StatusPanel.setLayout(layout);
         
@@ -574,7 +574,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener
         server2Area.setEditable(false);
         server2StatusPanel.add(server2Area);
         
-        title = BorderFactory.createTitledBorder("Server 2");
+        title = BorderFactory.createTitledBorder("Serving Staff 2");
         server2StatusPanel.setBorder(title);
         server2StatusPanel.setLayout(layout);
         
