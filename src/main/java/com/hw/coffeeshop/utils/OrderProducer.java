@@ -19,7 +19,8 @@ public class OrderProducer implements Runnable {
         this.o=order;
     }
     	@Override
-	    public void run() {
+	    //Producer thread puts the customer order in the queue
+    	public void run() {
 	    	try {
 	        	log.info("Adding "+o.getCustomerName()+ " into Queue");
 	            queue.put(o);

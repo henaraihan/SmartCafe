@@ -37,6 +37,7 @@ public class Server2OrderConsumer implements Runnable{
 	     				log.error("Exception: "+e.getMessage());
 	     			}
 	            	
+	            	//Consumer2 thread takes the order from the queue
 	            	Order queuedOrder = queue.take();
 	            	log.info("Taking out "+queuedOrder.getCustomerName()+ " order from the Queue");
 	            	
@@ -86,25 +87,7 @@ public class Server2OrderConsumer implements Runnable{
 	            	
 	            	log.info(""+queuedOrder.getCustomerName()+"'s Order is PROCESSED..Take the next order in the queue");
 	            	
-	            	/*
-	            	try {
-	                	Thread.sleep(TimeUnit.SECONDS.toMillis(60)); 
-	                	 if(SmartCafeGUI.queue.isEmpty()) {
-	                		 
-	                		 int result = JOptionPane.showConfirmDialog(
-	                		  	      null, "Queue is Empty.Do you want to exit?", "Please confirm to Exit & Generate report", JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
-	                		   if(result==JOptionPane.YES_OPTION) {
-	                			   TotalIncomeReportGenerator report = new TotalIncomeReportGenerator();
-	                			   report.generateReport();
-	                			   System.exit(0);
-	                		   	}
-	 					}
-	                	
-	                } 
-	                catch (InterruptedException e) { 
-	                    e.printStackTrace();
-	                }
-	            	*/
+	            	
 	            }
         }catch(InterruptedException e) {
             e.printStackTrace();
