@@ -36,6 +36,7 @@ public class Manager {
         new Thread(server2Orderconsumer).start();
         log.info("Starting Serving Staff 2 Order Consumer thread");
         
+        //Empty queue checker thread
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
