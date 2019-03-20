@@ -43,7 +43,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import org.apache.commons.lang3.SystemUtils;
 
-public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
+public class SmartCafeGUI extends JFrame implements   Observer
 {
 	public static BlockingQueue<Order> queue = new LinkedBlockingQueue<>(10);
 	
@@ -51,7 +51,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	public static TextArea server1Area = new TextArea();
 	public static TextArea server2Area = new TextArea();
 	
-	private JFrame mainFrame = new JFrame();
+	public JFrame mainFrame = new JFrame();
 	JPanel orderTablePanel_1 = new JPanel();
 	JPanel orderTablePanel_2 = new JPanel();
 	
@@ -172,8 +172,8 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	ArrayList<String> ordersList_1 = new ArrayList<String>();
 	ArrayList<String> ordersList_2 = new ArrayList<String>();
 	
-	private static TreeSet<Integer> uniqueCustomerIDs_1 = new TreeSet<Integer>();
-	private static TreeSet<Integer> uniqueCustomerIDs_2 = new TreeSet<Integer>();
+	public static TreeSet<Integer> uniqueCustomerIDs_1 = new TreeSet<Integer>();
+	public static TreeSet<Integer> uniqueCustomerIDs_2 = new TreeSet<Integer>();
 	
 	static{
 		
@@ -210,7 +210,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		//mainFrame.pack();
 	}
 	
-	private void setupLayout() {
+	public void setupLayout() {
 		agent1Panel.setLayout(layout);
 		agent2Panel.setLayout(layout);
 		orderTablePanel_1.setLayout(layout);
@@ -222,7 +222,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	}
 	
 	
-	private void setupAgent1GUI()
+	public void setupAgent1GUI()
 	{
 		mainFrame.setTitle("Coffee Shop Simulator");
 		//mainFrame.setSize(1200, 1200);
@@ -375,7 +375,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 			categoriesComboBox_1.addItem(category);
 		}
 		
-		categoriesComboBox_1.addActionListener(this);
+		//categoriesComboBox_1.addActionListener(this);
 		
 		gbc.gridx = 1;
         gbc.gridy = 3;
@@ -452,7 +452,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
         gbc.gridy = 3;
         gbc.gridwidth=1;
         agent1Panel.add(addOrder_1,gbc);
-		addOrder_1.addActionListener(this);
+		//addOrder_1.addActionListener(this);
         
 		
 		//orderTable
@@ -484,7 +484,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
         gbc.gridy = yAxisCounter+1;
         gbc.gridwidth=1;
         agent1Panel.add(applyDiscount_1,gbc);
-        applyDiscount_1.addActionListener(this);
+    //    applyDiscount_1.addActionListener(this);
         
         gbc.gridx = 5;
         gbc.gridy = yAxisCounter+2;
@@ -512,26 +512,26 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		gbc.gridy = yAxisCounter+4;
 		gbc.gridwidth=1;
 		agent1Panel.add(submitOrder_1,gbc);
-		submitOrder_1.addActionListener(this);
+		//submitOrder_1.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+4;
 		gbc.gridwidth=1;
 		agent1Panel.add(clearOrder_1,gbc);
-		clearOrder_1.addActionListener(this);
+	//	clearOrder_1.addActionListener(this);
 		
 		
 		gbc.gridx = 4;
 		gbc.gridy = yAxisCounter+5;
 		gbc.gridwidth=1;
 		agent1Panel.add(generateReport_1,gbc);
-		generateReport_1.addActionListener(this);
+	//	generateReport_1.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+5;
 		gbc.gridwidth=1;
 		agent1Panel.add(viewReport_1,gbc);
-		viewReport_1.addActionListener(this);
+	//	viewReport_1.addActionListener(this);
 		
 		//liveOrderStatusPanel
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -601,7 +601,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	      });
 	}
 	
-	private void setupAgent2GUI()
+	public void setupAgent2GUI()
 	{
 		agent2Panel.setLayout(layout);
 		
@@ -722,7 +722,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 			categoriesComboBox_2.addItem(category);
 		}
 		
-		categoriesComboBox_2.addActionListener(this);
+		//categoriesComboBox_2.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = yAxisCounter+9; //3
         gbc.gridwidth=1;
@@ -793,7 +793,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
         gbc.gridy = yAxisCounter+9; //3
         gbc.gridwidth=1;
         agent2Panel.add(addOrder_2,gbc);
-		addOrder_2.addActionListener(this);
+	//	addOrder_2.addActionListener(this);
         
 		
 		//orderTable
@@ -824,7 +824,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
         gbc.gridy = yAxisCounter+11; //1
         gbc.gridwidth=1;
         agent2Panel.add(applyDiscount_2,gbc);
-        applyDiscount_2.addActionListener(this);
+   //     applyDiscount_2.addActionListener(this);
         
         gbc.gridx = 5;
         gbc.gridy = yAxisCounter+12; //2
@@ -852,28 +852,28 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		gbc.gridy = yAxisCounter+14; //4
 		gbc.gridwidth=1;
 		agent2Panel.add(submitOrder_2,gbc);
-		submitOrder_2.addActionListener(this);
+	//	submitOrder_2.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+14; //4
 		gbc.gridwidth=1;
 		agent2Panel.add(clearOrder_2,gbc);
-		clearOrder_2.addActionListener(this);
+	//	clearOrder_2.addActionListener(this);
 		
 		
 		gbc.gridx = 4;
 		gbc.gridy = yAxisCounter+15; //5
 		gbc.gridwidth=1;
 		agent2Panel.add(generateReport_2,gbc);
-		generateReport_2.addActionListener(this);
+	//	generateReport_2.addActionListener(this);
 		
 		gbc.gridx = 5;
 		gbc.gridy = yAxisCounter+15; //5
 		gbc.gridwidth=1;
 		agent2Panel.add(viewReport_2,gbc);
-		viewReport_2.addActionListener(this);
+	//	viewReport_2.addActionListener(this);
 		
-	}
+	}/*
 	
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == addOrder_1) {
@@ -1220,10 +1220,10 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		}
 		
 		
-	}
+	}*/
 	
 	
-	private void showOrderRow_1() {
+	public void showOrderRow_1() {
 		
 		applyDiscount_1.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
@@ -1329,7 +1329,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		mainFrame.repaint();
 	}
 	
-	private void showOrderRow_2() {
+	public void showOrderRow_2() {
 		
 		applyDiscount_2.setEnabled(true);
 		JTextField orderidText = new JTextField(8);
@@ -1435,7 +1435,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		mainFrame.repaint();
 	}
 	
-	private void clear_agent1_orders() {
+	public void clear_agent1_orders() {
 		
 		/*
 		mainFrame.remove(orderTablePanel);
@@ -1483,7 +1483,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	}
 
 	
-	private void clear_agent2_orders() {
+	public void clear_agent2_orders() {
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
@@ -1515,7 +1515,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		quantity_2.setText("");
 		
 	}
-	private void clearAgent1OrderDetails() {
+	public void clearAgent1OrderDetails() {
 		
 		agent1Panel.remove(orderTablePanel_1);
 		orderTablePanel_1 = new JPanel();
@@ -1560,7 +1560,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		quantity_1.setText("");
 	}
 
-	private void clearAgent2OrderDetails() {
+	public void clearAgent2OrderDetails() {
 		
 		agent2Panel.remove(orderTablePanel_2);
 		orderTablePanel_2 = new JPanel();
@@ -1653,7 +1653,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
     } 
 	*/
 	
-	private void viewReports() {
+	public void viewReports() {
     	try {
     		String reportName = getLatestReportFile(".csv");
     		Desktop.getDesktop().open(new File(SystemUtils.USER_DIR+"\\reports\\"+reportName));
@@ -1663,14 +1663,14 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		}
 	}
 	
-	private void showUnitPriceTextBox4SelectedCategoryAndItem_1(String selectedCategory, String item) {
+	public void showUnitPriceTextBox4SelectedCategoryAndItem_1(String selectedCategory, String item) {
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		unitPrice_1.setText(price);
 		latestPrice_1 = price;
 	}
 	
-	private void showUnitPriceTextBox4SelectedCategoryAndItem_2(String selectedCategory, String item) {
+	public void showUnitPriceTextBox4SelectedCategoryAndItem_2(String selectedCategory, String item) {
 		
 		String price = new MenuFileOperations().getPriceForSelectedCategoryAndItem(selectedCategory, item);
 		unitPrice_2.setText(price);
@@ -1691,7 +1691,7 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 	    
 	}
 	
-	private void showItemList4GivenCategory_1() {
+	public void showItemList4GivenCategory_1() {
 		
 		ArrayList<String> itemList = new MenuFileOperations().getItemNameListForSelectedCategory(selectedCategory_1);
 		
@@ -1699,11 +1699,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		for(String item : itemList) {
 			itemListComboBox_1.addItem(item);
 		}
-		itemListComboBox_1.addActionListener(this);
+	//	itemListComboBox_1.addActionListener(this);
 		
 	}
 	
-	private void showItemList4GivenCategory_2() {
+	public void showItemList4GivenCategory_2() {
 		
 		ArrayList<String> itemList = new MenuFileOperations().getItemNameListForSelectedCategory(selectedCategory_2);
 		
@@ -1711,11 +1711,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		for(String item : itemList) {
 			itemListComboBox_2.addItem(item);
 		}
-		itemListComboBox_2.addActionListener(this);
+	//	itemListComboBox_2.addActionListener(this);
 		
 	}
 	
-	private String getLatestReportFile(String reportExtention) {
+	public String getLatestReportFile(String reportExtention) {
 		
 		List<String> listofCsvFiles = new ArrayList<String>();
 		
@@ -1805,7 +1805,26 @@ public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 		updateStatusArea(liveOrderStatusArea, o.getCustomerName() +":            "+o.getCustomerID() +" :            " +o.getQuantity());
 	}
 	
-	
+	public void addSetListener(ActionListener al)
+	{
+		categoriesComboBox_1.addActionListener(al);
+		addOrder_1.addActionListener(al);
+		applyDiscount_1.addActionListener(al);
+		generateReport_1.addActionListener(al);
+		clearOrder_1.addActionListener(al);
+		viewReport_1.addActionListener(al);
+		submitOrder_1.addActionListener(al);
+		categoriesComboBox_2.addActionListener(al);
+		applyDiscount_2.addActionListener(al);
+        addOrder_2.addActionListener(al);
+		submitOrder_2.addActionListener(al);
+		clearOrder_2.addActionListener(al);
+		generateReport_2.addActionListener(al);
+		viewReport_2.addActionListener(al);
+		itemListComboBox_1.addActionListener(al);
+		itemListComboBox_2.addActionListener(al);
+		
+	}
 	/*
 	public synchronized  void clearStatusArea(TextArea statusArea) {
 		try {

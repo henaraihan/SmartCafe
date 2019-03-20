@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.hw.cofeeshop.gui.ControllerGUI;
 import com.hw.cofeeshop.gui.SmartCafeGUI;
 import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 import com.hw.coffeeshop.utils.OrderProducer;
@@ -28,6 +29,8 @@ public class Manager {
 				
 				//VIEW: OBSERVER
 				SmartCafeGUI view = new SmartCafeGUI(model);
+				//CONTROLLER: ACTION LISTENER
+				ControllerGUI obj = new ControllerGUI(view, model);
 				
 		view.startSmartCafeGUI();
 		
