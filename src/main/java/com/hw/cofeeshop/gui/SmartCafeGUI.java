@@ -43,7 +43,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import org.apache.commons.lang3.SystemUtils;
 
-public class SmartCafeGUI extends JFrame implements ActionListener
+public class SmartCafeGUI extends JFrame implements ActionListener ,  Observer
 {
 	public static BlockingQueue<Order> queue = new LinkedBlockingQueue<>(10);
 	
@@ -195,8 +195,11 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 	
 	static Log log = LogFactory.getLog(SmartCafeGUI.class);
 	//Constructor
-	public SmartCafeGUI()
-	{}
+	public SmartCafeGUI(Subject subject)
+	{
+		//Observer
+		subject.registerObserver(this);
+	}
 	
 	public void startSmartCafeGUI() {
 		setupAgent1GUI();
@@ -1793,8 +1796,16 @@ public class SmartCafeGUI extends JFrame implements ActionListener
 		} catch (final Throwable t) {
 			log.error("Error while append to statusArea: "
 		      + t.getMessage());
-		}
+		}}
+	
+	
+	
+	public void update(Order o)
+	{
+		updateStatusArea(liveOrderStatusArea, o.getCustomerName() +":            "+o.getCustomerID() +" :            " +o.getQuantity());
 	}
+	
+	
 	/*
 	public synchronized  void clearStatusArea(TextArea statusArea) {
 		try {

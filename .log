@@ -1,0 +1,232 @@
+2019-03-20 16:00:25 INFO  Manager:23 - Loading GUI
+2019-03-20 16:00:25 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 16:00:25 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 16:00:25 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 16:00:25 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 16:00:25 INFO  Manager:31 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 16:00:26 INFO  Manager:37 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 16:00:26 INFO  Manager:65 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 16:00:26 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 16:01:13 INFO  SmartCafeGUI:1322 - {13=[9, FOOD253, 2, 2019-03-20 16:01:13.497]}
+2019-03-20 16:01:13 INFO  SmartCafeGUI:1323 - {9=[13]}
+2019-03-20 16:01:16 INFO  SmartCafeGUI:1003 - discount 0.0
+2019-03-20 16:01:17 INFO  SmartCafeGUI:1090 - Agent 1: All validations are passed..Now saving new Order into  existing data structures
+2019-03-20 16:01:17 INFO  ExistingOrderOperations:91 - Saving new orders into existing orders
+2019-03-20 16:01:17 INFO  SmartCafeGUI:1092 - {9=[13]}
+2019-03-20 16:01:17 INFO  OrderProducer:25 - Adding  into Queue
+2019-03-20 16:01:17 INFO  Server1OrderConsumer:41 - Taking  into Queue
+2019-03-20 16:01:17 INFO  OrderProducer:37 - Queue Content: 
+2019-03-20 16:01:17 INFO  Server1OrderConsumer:68 - Processing 's order 
+
+2019-03-20 16:01:17 INFO  Server1OrderConsumer:74 - Total Amount is 40.0 AED with 0.0 discount
+2019-03-20 16:01:47 INFO  Server1OrderConsumer:87 - 's Order is PROCESSED..Take the next order in the queue
+2019-03-20 16:01:49 INFO  SmartCafeGUI:1428 - {14=[14, FOOD253, 4, 2019-03-20 16:01:49.618]}
+2019-03-20 16:01:49 INFO  SmartCafeGUI:1429 - {10=[14]}
+2019-03-20 16:01:50 INFO  SmartCafeGUI:1038 - discount 0.0
+2019-03-20 16:01:52 INFO  SmartCafeGUI:1164 - Agent 2: All validations are passed..Now saving new Order into  existing data structures
+2019-03-20 16:01:52 INFO  ExistingOrderOperations:91 - Saving new orders into existing orders
+2019-03-20 16:01:52 INFO  OrderProducer:25 - Adding  into Queue
+2019-03-20 16:01:52 INFO  Server2OrderConsumer:42 - Taking out  order from the Queue
+2019-03-20 16:01:52 INFO  OrderProducer:37 - Queue Content: 
+2019-03-20 16:01:52 INFO  Server2OrderConsumer:68 - Processing 's order 
+
+2019-03-20 16:01:52 INFO  Server2OrderConsumer:74 - Total Amount is 80.0 AED with 0.0 discount
+2019-03-20 16:01:59 INFO  CsvReportGenerator:54 - Report File Name: C:\Users\Rayan\Documents\SmartCafe\reports\2019.03.20.16.01.59.csv
+2019-03-20 16:01:59 INFO  CsvReportGenerator:118 - CSV file was created successfully !!!
+2019-03-20 16:13:54 INFO  Manager:23 - Loading GUI
+2019-03-20 16:13:55 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 16:13:55 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 16:13:55 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 16:13:55 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 16:13:55 INFO  Manager:31 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 16:13:55 INFO  Manager:37 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 16:13:55 INFO  Manager:65 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 16:13:55 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 16:13:58 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 16:14:04 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 16:14:11 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 16:14:14 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 16:15:47 INFO  Manager:23 - Loading GUI
+2019-03-20 16:15:47 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 16:15:47 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 16:15:47 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 16:15:47 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 16:15:47 INFO  Manager:31 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 16:15:47 INFO  Manager:37 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 16:15:47 INFO  Manager:65 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 16:15:47 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 16:15:58 INFO  SmartCafeGUI:1322 - {13=[9, FOOD252, 2, 2019-03-20 16:15:58.111]}
+2019-03-20 16:15:58 INFO  SmartCafeGUI:1323 - {9=[13]}
+2019-03-20 16:15:59 INFO  SmartCafeGUI:1003 - discount 0.0
+2019-03-20 16:16:01 INFO  SmartCafeGUI:1090 - Agent 1: All validations are passed..Now saving new Order into  existing data structures
+2019-03-20 16:16:01 INFO  ExistingOrderOperations:91 - Saving new orders into existing orders
+2019-03-20 16:16:01 INFO  SmartCafeGUI:1092 - {9=[13]}
+2019-03-20 16:16:01 INFO  OrderProducer:25 - Adding  into Queue
+2019-03-20 16:16:01 INFO  OrderProducer:37 - Queue Content: 
+2019-03-20 16:16:01 INFO  OrderProducer:39 -  Customer Name: , Customer Id: 10, quantity:  1, order list:  [13], timestamp: 2019-03-20 16:16:01.063
+2019-03-20 16:16:06 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 16:16:08 INFO  CsvReportGenerator:74 - Report File Name: C:\Users\Rayan\Documents\SmartCafe\reports\2019.03.20.16.16.08.csv
+2019-03-20 16:16:08 INFO  CsvReportGenerator:138 - CSV file was created successfully !!!
+2019-03-20 16:16:20 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 16:19:17 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 18:25:10 INFO  Manager:23 - Loading GUI
+2019-03-20 18:25:10 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 18:25:10 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 18:25:10 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 18:25:10 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 18:25:11 INFO  Manager:31 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 18:25:11 INFO  Manager:37 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 18:25:11 INFO  Manager:65 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 18:25:11 INFO  Manager:43 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 18:25:25 INFO  SmartCafeGUI:1322 - {13=[9, FOOD267, 2, 2019-03-20 18:25:25.262]}
+2019-03-20 18:25:25 INFO  SmartCafeGUI:1323 - {9=[13]}
+2019-03-20 18:25:26 INFO  SmartCafeGUI:1003 - discount 0.0
+2019-03-20 18:25:28 INFO  SmartCafeGUI:1090 - Agent 1: All validations are passed..Now saving new Order into  existing data structures
+2019-03-20 18:25:28 INFO  ExistingOrderOperations:91 - Saving new orders into existing orders
+2019-03-20 18:25:28 INFO  SmartCafeGUI:1092 - {9=[13]}
+2019-03-20 18:25:28 INFO  OrderProducer:25 - Adding  into Queue
+2019-03-20 18:25:28 INFO  OrderProducer:37 - Queue Content: 
+2019-03-20 18:25:28 INFO  OrderProducer:39 -  Customer Name: , Customer Id: 10, quantity:  1, order list:  [13], timestamp: 2019-03-20 18:25:28.364
+2019-03-20 18:25:33 INFO  SmartCafeGUI:595 - Windows is closing so generate report
+2019-03-20 18:25:35 INFO  CsvReportGenerator:74 - Report File Name: C:\Users\Rayan\Documents\SmartCafe\reports\2019.03.20.18.25.35.csv
+2019-03-20 18:25:35 INFO  CsvReportGenerator:138 - CSV file was created successfully !!!
+2019-03-20 21:24:21 INFO  Manager:24 - Loading GUI
+2019-03-20 21:29:18 INFO  Manager:24 - Loading GUI
+2019-03-20 21:41:51 INFO  Manager:24 - Loading GUI
+2019-03-20 21:43:25 INFO  Manager:24 - Loading GUI
+2019-03-20 21:44:47 INFO  Manager:24 - Loading GUI
+2019-03-20 21:44:48 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:44:48 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:44:48 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:44:48 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:45:43 INFO  Manager:24 - Loading GUI
+2019-03-20 21:45:43 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:45:43 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:45:43 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:45:43 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:45:43 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 21:46:27 INFO  Manager:24 - Loading GUI
+2019-03-20 21:46:27 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:46:27 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:46:27 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:46:27 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:46:27 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 21:46:27 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 21:46:27 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 21:46:27 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 21:47:13 INFO  Manager:24 - Loading GUI
+2019-03-20 21:47:13 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:47:13 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:47:13 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:47:13 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:47:13 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 21:47:13 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 21:47:13 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 21:47:13 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 21:48:54 INFO  Manager:24 - Loading GUI
+2019-03-20 21:48:54 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:48:54 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:48:54 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:48:54 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:48:54 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 21:48:54 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 21:48:54 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 21:48:54 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 21:50:08 INFO  Manager:24 - Loading GUI
+2019-03-20 21:50:08 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:50:08 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:50:08 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:50:08 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 21:50:08 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 21:50:08 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 21:50:08 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 21:50:08 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 21:53:37 INFO  Manager:24 - Loading GUI
+2019-03-20 21:53:38 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 21:53:38 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 21:53:38 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 21:53:38 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:20:54 INFO  Manager:24 - Loading GUI
+2019-03-20 22:23:06 INFO  Manager:24 - Loading GUI
+2019-03-20 22:23:07 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:23:07 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:23:07 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:23:07 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:23:07 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:23:07 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:23:07 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:23:07 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:23:49 INFO  Manager:24 - Loading GUI
+2019-03-20 22:23:49 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:23:49 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:23:49 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:23:49 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:23:49 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:23:49 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:23:49 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:23:49 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:24:46 INFO  Manager:24 - Loading GUI
+2019-03-20 22:24:46 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:24:46 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:24:46 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:24:46 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:24:46 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:26:47 INFO  Manager:24 - Loading GUI
+2019-03-20 22:26:47 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:26:47 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:26:47 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:26:47 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:26:47 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:26:47 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:26:47 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:26:47 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:27:47 INFO  Manager:24 - Loading GUI
+2019-03-20 22:27:47 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:27:47 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:27:47 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:27:47 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:27:47 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:27:47 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:27:47 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:27:47 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:28:17 INFO  Manager:24 - Loading GUI
+2019-03-20 22:28:17 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:28:17 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:28:17 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:28:17 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:28:18 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:28:18 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:28:18 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:28:18 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:29:03 INFO  Manager:24 - Loading GUI
+2019-03-20 22:29:03 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:29:03 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:29:03 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:29:03 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:29:03 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:29:03 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:29:03 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:29:03 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:29:44 INFO  Manager:24 - Loading GUI
+2019-03-20 22:29:44 INFO  MenuFileOperations:33 - Starting to Read and Store Menu CSV data into Data Structures
+2019-03-20 22:29:44 INFO  MenuFileOperations:85 - Completed Reading and Storing Menu CSV data into Data Structures
+2019-03-20 22:29:44 INFO  ExistingOrderOperations:28 - Starting to Read and Store Existing Order CSV data into Data Structures
+2019-03-20 22:29:44 INFO  ExistingOrderOperations:78 - Completed Reading and Storing Existing Order CSV data into Data Structures
+2019-03-20 22:29:45 INFO  Manager:38 - Starting Serving Staff 1 Order Consumer thread
+2019-03-20 22:29:45 INFO  Manager:44 - Starting Serving Staff 2 Order Consumer thread
+2019-03-20 22:29:45 INFO  Manager:72 - Starting Queue Length Watcher Thread....To show alert if length is Zero
+2019-03-20 22:29:45 INFO  Manager:50 - Queue length is Zero, Waiting for 90 seconds 
+2019-03-20 22:29:55 INFO  SmartCafeGUI:1325 - {13=[9, FOOD262, 2, 2019-03-20 22:29:55.768]}
+2019-03-20 22:29:55 INFO  SmartCafeGUI:1326 - {9=[13]}
+2019-03-20 22:29:57 INFO  SmartCafeGUI:1006 - discount 0.0
+2019-03-20 22:29:59 INFO  SmartCafeGUI:1093 - Agent 1: All validations are passed..Now saving new Order into  existing data structures
+2019-03-20 22:29:59 INFO  ExistingOrderOperations:91 - Saving new orders into existing orders
+2019-03-20 22:29:59 INFO  SmartCafeGUI:1095 - {9=[13]}
+2019-03-20 22:29:59 INFO  OrderProducer:44 - Adding  into Queue
+2019-03-20 22:29:59 INFO  OrderProducer:57 - Queue Content: 
+2019-03-20 22:29:59 INFO  OrderProducer:59 -  Customer Name: , Customer Id: 10, quantity:  1, order list:  [13], timestamp: 2019-03-20 22:29:59.008
+2019-03-20 22:30:04 INFO  SmartCafeGUI:598 - Windows is closing so generate report
+2019-03-20 22:30:06 INFO  CsvReportGenerator:74 - Report File Name: C:\Users\Rayan\Documents\SmartCafe\reports\2019.03.20.22.30.06.csv
+2019-03-20 22:30:06 INFO  CsvReportGenerator:138 - CSV file was created successfully !!!
+2019-03-20 22:30:11 INFO  CsvReportGenerator:74 - Report File Name: C:\Users\Rayan\Documents\SmartCafe\reports\2019.03.20.22.30.11.csv
+2019-03-20 22:30:11 INFO  CsvReportGenerator:138 - CSV file was created successfully !!!
