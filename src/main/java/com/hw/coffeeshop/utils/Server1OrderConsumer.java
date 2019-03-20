@@ -17,7 +17,15 @@ import com.hw.coffeeshop.report.TotalIncomeReportGenerator;
 
 public class Server1OrderConsumer implements Runnable{
 
-	SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
+	//SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
+	//SmartCafeGUI smartCafeGUI;
+	
+	OrderProducer model = new OrderProducer();
+	
+	//VIEW: OBSERVER
+	SmartCafeGUI smartCafeGUI = new SmartCafeGUI(model);
+	
+	
 	Log log = LogFactory.getLog(Server1OrderConsumer.class);
 	private BlockingQueue<Order> queue;
     public Server1OrderConsumer(BlockingQueue<Order> q){

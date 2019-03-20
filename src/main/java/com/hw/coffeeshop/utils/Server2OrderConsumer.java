@@ -19,7 +19,14 @@ public class Server2OrderConsumer implements Runnable{
 
 	private BlockingQueue<Order> queue;
 	
-	SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
+	//SmartCafeGUI smartCafeGUI = new SmartCafeGUI();
+	//SmartCafeGUI smartCafeGUI;
+	//MODEL: SUBJECT
+	OrderProducer model = new OrderProducer();
+	
+	//VIEW: OBSERVER
+	SmartCafeGUI smartCafeGUI = new SmartCafeGUI(model);
+	
 	Log log = LogFactory.getLog(Server2OrderConsumer.class);
     public Server2OrderConsumer(BlockingQueue<Order> q){
         this.queue=q;

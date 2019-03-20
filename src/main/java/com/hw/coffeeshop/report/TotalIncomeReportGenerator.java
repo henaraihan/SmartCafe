@@ -64,7 +64,8 @@ public class TotalIncomeReportGenerator {
 		   
 		}
 		
-		CsvReportGenerator generateCsvReport = new CsvReportGenerator();
+		//changed to implement singleton
+				CsvReportGenerator generateCsvReport = CsvReportGenerator.getInstance();
 		generateCsvReport.generateCSVReport(reportItemsList);
 		
 				
