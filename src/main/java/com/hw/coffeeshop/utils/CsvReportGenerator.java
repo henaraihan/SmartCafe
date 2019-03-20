@@ -12,6 +12,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class CsvReportGenerator {
+	
+	//Singleton instance
+		private static CsvReportGenerator instance = new CsvReportGenerator();
+		
+		//Singleton constructor private
+		private CsvReportGenerator()
+		{
+			
+		}
+		
+		//get instance that is accessible anywhere
+		public static synchronized CsvReportGenerator getInstance()
+		{
+			if(instance == null)
+				synchronized(CsvReportGenerator.class) {
+					if(instance == null)
+						instance = new CsvReportGenerator();
+				}
+			return instance;
+		}
 
 	//Delimiter used in CSV file
 	private static final String COMMA_DELIMITER = ",";
